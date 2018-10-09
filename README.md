@@ -1,2 +1,36 @@
-# liveportal
-A web application used for LIVE Competition in 2019 for both delegates and partners to use. Mainly on the partner side, they will be able to view delegates, their teams and their submissions. Mainly on the delegate side, delegates will be able to see the itinerary of the LIVE Competition event, view their teams, submit rounds and other features. This application is sponsored and powered by Microsoft Azure. There is no license, and as such, all files under this project is owned by Alvin Tang and LIVE Competition, and is not free to distribute unless you have written consent from both parties.
+# LIVE PORTAL
+
+## Description of the Portal
+A web application used by both delegates and partners during LIVE Competition in 2019. This application is sponsored and powered by Microsoft Azure.
+
+Partners will be able to:
+- View the President’s message
+- View delegates
+- View teams
+- View rounds
+- View contact details of important LIVE members
+
+Delegates will be able to:
+- View the President’s message
+- View their team
+- View everything corporate
+- View/upload rounds
+- View contact details of important LIVE members
+- Send feedback
+- View itinerary
+
+## Technologies Used
+- Django (a Python Framework)
+- Python 3 or above
+- Azure (PAAS and/or IAAS)
+
+## Owners
+These parties have access to use the files in this project as they please.
+* Alvin Tang (IT Solutions Manager at LIVE 2018-2019 // Developer of LIVE Portal)
+* LIVE Competition (https://live-competition.org/)
+
+## License
+The files under this project does not have a license. As such, these files are not free to distribute and use unless you have written consent from all owners.
+
+## Acknowledgments
+None.
