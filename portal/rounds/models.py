@@ -3,6 +3,9 @@ from django.db import models
 from users.models import Team
 
 class Round(models.Model):
+
+
+class RoundFile(models.Model):
 	
 	uuid = models.UUIDField(
 		'unique identifier',
@@ -29,6 +32,17 @@ class Round(models.Model):
 	deactive_deadline = models.BooleanField('deactive at deadline',
 		default=False)
 
+	FILETYPES = [
+		(0, "PDF"),
+		(1, "XLSX"),
+		(2, "XLS, XLS"),
+		(3, "DOC, DOCX"),
+	]
+
+	files_accepted = models.SmallIntegerField('file types accepted',
+		choices=
+		)
+
 class Submission(models.Model):
 
 	asc_team = models.ForeignKey(Team,
@@ -39,12 +53,4 @@ class Submission(models.Model):
 		on_delete=models.SET_NULL,
 		null=True)
 
-	latest = models.BooleanField(default=True)
-
-	next_sub = models.IntegerField('identification of the next submission',
-		null=True)
-
-	prev_sub = models.IntegerField('identification of the previous submission',
-		null=True)
-
-	expected_deadline = models.DateTimeField('date and time of submission')
+	expected_submission = models.DateTimeField('date and time of submission')

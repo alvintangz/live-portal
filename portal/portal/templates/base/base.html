@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="en-CA">
+<head>
+    <meta charset="utf-8">
+    <title>LIVE Competition Portal - {% block title %}{% endblock %}</title>
+    <meta name="description" content="LIVE Competition Portal is to be used by delegates and partners to streamline the competition.">
+    <!-- Branding: Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'branding/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'branding/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'branding/favicon-16x16' %}">
+    <link rel="manifest" href="{% static 'branding/site.webmanifest' %}">
+    <link rel="shortcut icon" href="{% static 'branding/favicon.ico' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="{% static 'branding/browserconfig.xml' %}">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">
+    <link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link type="text/css" href="{% static 'css/argon.css' %}" rel="stylesheet">
+</head>
+<body>
+    {% block body %}
+    {% endblock %}
+    {% block scripts %}
+    {% endblock %}
+</body>
+</html>
