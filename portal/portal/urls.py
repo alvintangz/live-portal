@@ -26,8 +26,8 @@ def privacy_policy(request):
 #	return render(request, '404.html')
 
 urlpatterns = [
-	path('', index, name='index'),
-	path('accounts/', include('users.urls')),
+	path('', include('users.urls')),
+	path('', include('notifications.urls')),
     path('admin/', admin.site.urls),
 	path('credits', credits, name='credits'),
 	path('tos', terms_of_service, name='terms_of_service'),

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
+    'notifications.apps.NotificationsConfig',
     'corporate.apps.CorporateConfig',
     'contacts.apps.ContactsConfig',
 ]
@@ -122,9 +123,15 @@ USE_TZ = True
 
 STATIC_URL = '/assets/'
 
+LOGIN_URL = '/'
+#LOGIN_REDIRECT_URL = '/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     'portal/assets/',
 ]
 
 AUTH_USER_MODEL = 'users.User'
+
+# Sessions time limit
+SESSION_COOKIE_AGE = 86400

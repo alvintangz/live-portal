@@ -26,7 +26,8 @@ class Contact(models.Model):
 		default=False)
 
 	show_partners = models.BooleanField('viewable to partners',
-		default=False)
+		default=True,
+		help_text="Recommended. Displays in a section about the LIVE team.")
 
 	full_name = models.CharField('full name',
 		max_length=150)
@@ -42,6 +43,8 @@ class Contact(models.Model):
 
 	linkedin = models.URLField('linkedin account',
 		help_text="i.e. https://www.linkedin.com/in/alvintangz/")
+
+	resume = models.FileField('resume')
 
 	def __str__(self):
 		return '{}'.format(self.full_name)

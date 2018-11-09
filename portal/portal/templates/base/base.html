@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>LIVE Competition Portal - {% block title %}{% endblock %}</title>
-    <meta name="description" content="LIVE Competition Portal is to be used by delegates and partners to streamline the competition.">
+    <meta name="description" content="The LIVE Competition Portal is a platform for LIVE, in which this competition in itself is a platform to showcase elite talent amongst partners and delegates.">
     <!-- Branding: Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'branding/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'branding/favicon-32x32.png' %}">
@@ -19,6 +19,8 @@
     <link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
     <!-- Custom CSS -->
     <link type="text/css" href="{% static 'css/argon.css' %}" rel="stylesheet">
+    {% block headfiles %}
+    {% endblock %}
 </head>
 <body>
     {% block body %}

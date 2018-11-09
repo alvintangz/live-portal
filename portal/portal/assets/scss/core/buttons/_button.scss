@@ -13,7 +13,6 @@
    will-change: transform;
 
    &:hover {
-      @include box-shadow($btn-hover-box-shadow);
       transform: translateY($btn-hover-translate-y);
    }
 

@@ -89,6 +89,10 @@ class Delegate(models.Model):
 		blank=True,
 		null=True)
 
+	is_invisible = models.BooleanField('invisible to partners',
+		default=False,
+		help_text="Set this as True if you want to make this delegate invisible to partners. This option is used for testing purposes.")
+
 	def __str__(self):
 		'''
 		Returns a string that represents the current Delegate.
