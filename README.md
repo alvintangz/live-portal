@@ -1,4 +1,4 @@
-# LIVE PORTAL
+<img src="../master/portal/portal/assets/branding/logo.png" alt="LIVE Portal" width="220px"/>
 
 ## Description of the Portal
 A web application used by both delegates and partners during LIVE Competition in 2019. This application is sponsored and powered by Microsoft Azure.
@@ -33,4 +33,6 @@ These parties have access to use the files in this project as they please.
 The files under this project does not have a license. As such, these files are not free to distribute and use unless you have written consent from all owners.
 
 ## Acknowledgments
-None.
+* Argon Dashboard - [Github Repository](https://github.com/creativetimofficial/argon-dashboard)
+* Django - [Github Repository](https://github.com/django/django)
+* Django Multiple User Types Example - [Github Repository](https://github.com/sibtc/django-multiple-user-types-example)
