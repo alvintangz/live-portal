@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'notifications.apps.NotificationsConfig',
-    'corporate.apps.CorporateConfig',
+    'rounds.apps.RoundsConfig',
+    #'corporate.apps.CorporateConfig',
     'contacts.apps.ContactsConfig',
 ]
+# Contacts, Users, Notifications, Rounds, Accepted done by Dec 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -123,8 +125,8 @@ USE_TZ = True
 
 STATIC_URL = '/assets/'
 
-LOGIN_URL = '/'
-#LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/sign-in'
+LOGIN_REDIRECT_URL = '/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -135,3 +137,8 @@ AUTH_USER_MODEL = 'users.User'
 
 # Sessions time limit
 SESSION_COOKIE_AGE = 86400
+
+# MEDIA ROOT
+MEDIA_URL = "/media/"
+
+# FILE SIZE WHEN UPLOADING

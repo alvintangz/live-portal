@@ -1,0 +1,73 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Rounds{% endblock %}
+{% block contenttitle %}Rounds{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='D' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+{% for round in object_list %}
+	<div class="col-12 mb-4">
+		<div class="card bg-white">
+			<div class="card-header">
+				{% if round.active or user.partner %}
+				<h2 class="h3 mb-0 text-primary text-uppercase">Round {{round.number}}: {{round.title}}</h2>	
+				{% else %}
+				<h2 class="h3 mb-0 text-muted text-uppercase">Round {{round.number}}: {{round.title}}</h2>	
+				{% endif %}
+			</div>
+			<div class="card-body">
+				{% if round.description %}
+				{% if round.active %}
+				<p>{{round.description}}</p>	
+				{% else %}
+				<p class="text-muted">{{round.description}}</p>
+				{% endif %}
+				{% endif %}
+				{% if round.show_deadline or user.partner %}
+				<p class="small">Expected to be due at at {{round.get_expected_deadline}}</p>
+				{% endif %}
+				{% if round.active or user.partner %}
+				{% if round.details_file %}
+				<div class="btn-group">
+				{% endif %}
+				{% endif %}
+				{% if round.details_file %}
+				{% if round.active or user.partner %}
+				<a href="{{round.details_file.url}}" download class="btn btn-dark">Download Details</a>
+				{% else %}
+				<a href="{{round.details_file.url}}" download class="btn btn-dark disabled">Download Details</a>
+				{% endif %}
+				{% endif %}
+				{% if round.active or user.partner %}
+				<a href="/round/{{round.pk}}" class="btn btn-primary">Upload Solutions</a>
+				{% endif %}
+				{% if round.active or user.partner %}
+				{% if round.details_file %}
+				</div>
+				{% endif %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="col">
+		<div class="card bg-white">
+			<div class="card-body">
+				<p class="m-0"><strong>There are no rounds available at the moment.</strong> Check back soon!</p>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

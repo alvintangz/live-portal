@@ -14,10 +14,24 @@
 {% block content %}
 <div class="row">
 	<div class="col">
-		<div class="card bg-white p-5">
-			<p>Cupcake ipsum dolor sit amet lemon drops marzipan oat cake candy canes. Biscuit bear claw jelly beans dragée powder I love jelly-o. Dragée biscuit I love chocolate bar. Icing liquorice icing I love sugar plum. Donut cheesecake lollipop bear claw danish topping chocolate I love. Danish pastry cotton candy cheesecake gingerbread wafer dessert I love chocolate. I love I love soufflé gummi bears dessert candy. I love macaroon pastry sesame snaps cake cotton candy topping jelly toffee. I love cupcake dessert tart pastry cotton candy wafer lollipop topping. Lollipop cupcake sweet bonbon chocolate lollipop I love. Jelly wafer cake biscuit. Pie I love candy biscuit I love gummies tart.</p>
-			<p>Wafer marshmallow toffee sweet roll chocolate bar. Candy canes pastry sweet gummies lollipop liquorice bonbon. Chocolate ice cream caramels donut topping. Bear claw pastry biscuit macaroon liquorice jujubes. Chocolate marshmallow gummi bears dessert. Gingerbread wafer brownie chupa chups pie. Icing lemon drops donut dessert cookie. Chocolate bar sweet icing candy candy. Cupcake I love I love sesame snaps. Carrot cake fruitcake I love. Dessert macaroon brownie sweet cookie. Sesame snaps I love brownie I love wafer marshmallow oat cake tootsie roll. Jujubes pastry halvah. Tiramisu icing sweet roll donut tootsie roll donut chocolate bar pastry jelly beans.</p>
-			<p>Apple pie donut cake oat cake. Chupa chups marzipan candy canes chupa chups I love. Cheesecake oat cake I love soufflé. I love chocolate bar carrot cake I love sesame snaps icing marshmallow. Bonbon cake chocolate cupcake. Ice cream caramels donut pastry pie gummi bears macaroon. Cheesecake chupa chups pudding cookie tootsie roll gummi bears. Fruitcake cookie I love. Caramels soufflé tart I love soufflé. Donut candy jujubes. Powder donut bonbon. Tiramisu tiramisu halvah. Muffin croissant gummies. Bear claw cupcake cookie.</p>
+		<div class="alert alert-warning">
+			<p class="m-0">Please upload a profile picture as your picture is public to all partners. <a href="{% url 'profile' %}" class="text-white">Click to edit profile.</a></p>
+		</div>
+		<div class="card bg-white p-4">
+			<div class="card-body">
+			{% if user.is_delegate %}
+				<p>Greetings Delegates,</p>
+				<p>Cupcake ipsum dolor sit amet halvah I love topping. Jelly-o candy canes chocolate oat cake. Pudding jelly beans powder liquorice bonbon chocolate tiramisu cake. Sugar plum sweet roll ice cream sweet marshmallow tootsie roll soufflé sesame snaps pie. Lollipop sesame snaps chupa chups jujubes toffee jujubes. Fruitcake croissant soufflé toffee candy canes gingerbread soufflé. Cheesecake toffee tart. Icing gummi bears danish powder. Chocolate bar apple pie croissant carrot cake tiramisu. Dragée candy canes apple pie pastry dragée dragée cake. Cake pie jelly jelly beans lollipop dragée tiramisu. Sweet roll dessert jelly-o I love cookie. Sesame snaps chupa chups lemon drops. Jelly liquorice donut gummi bears cake jelly-o gingerbread cake.</p>
+				<p>Croissant ice cream cake I love. Biscuit pudding candy canes chocolate liquorice cake. Jelly icing halvah gummi bears I love macaroon pastry. Cupcake lemon drops danish dragée carrot cake. Oat cake macaroon fruitcake. Cake donut cupcake tart. Cake cotton candy caramels chupa chups. Jelly marshmallow I love. Soufflé carrot cake pie. Toffee cake pie sweet powder toffee bonbon. Pudding liquorice topping caramels muffin dessert sweet. Caramels brownie pie liquorice.</p>
+				<p class="m-0">All the best in the competition,</p>
+				<div class="my-2" style="width:200px">
+					<img src="http://www.acd.ae/wp-content/uploads/2018/09/random-signature-png.png" class="img-fluid" />
+				</div>
+				<p class="m-0">Megha Lad</p>
+				<p class="m-0">President of LIVE Competition 2019</p>
+			{% else %}
+			{% endif %}
+			</div>
 		</div>
 	</div>
 </div>

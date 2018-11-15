@@ -5,6 +5,10 @@ class CorporateOrganization(models.Model):
 	name = models.CharField('name',
 		max_length=150)
 
+	description = models.TextField('description',
+		null=True,
+		blank=True)
+
 	logo = models.ImageField('logo',
 		null=True,
 		blank=True,
