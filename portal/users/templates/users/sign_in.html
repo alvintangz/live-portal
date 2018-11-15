@@ -17,7 +17,11 @@
 <div class="container mt--8 pb-5">
 	<div class="row justify-content-center">
 		<div class="col-lg-6 col-md-7">
-			<img src="{% static 'img/cover-1.jpg' %}" class="img-fluid" />
+            <!--
+            <div class="card border-bottom-0 p-6">
+                <img src="{% static 'branding/logo.png' %}" class="img-fluid" />
+            </div>
+            --->
 			<div class="card">
 				<div class="card-body p-5">
 					{% if form.errors %}
@@ -44,7 +48,7 @@
     						</div>
     					</div>
     					<div class="text-center">
-                <p><small>By signing in, you agree to the <a href="{% url 'terms_of_service' %}">Terms of Service</a>.</small></p>
+                            <p><small>By signing in, you agree to the <a href="{% url 'terms_of_service' %}">Terms of Service</a>.</small></p>
     						<input type="submit" value="Sign In" class="btn btn-primary" />
     					</div>
   					</form>

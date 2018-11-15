@@ -1,68 +1,78 @@
 from django.contrib import admin
-from django import forms
 from django.contrib.auth.models import Group
 from .models import Team, User, Delegate, Partner
+from .forms import DelegateUserForm, PartnerUserForm
 
+# Unregister Group that was automatically registered
 admin.site.unregister(Group)
+
+# Register Team
 admin.site.register(Team)
 
-# Admin for Delegate User
+# DELEGATES
+
+# The inline group for delegate model
 class DelegateInline(admin.StackedInline):
 	model = Delegate
 
+# The proxy for User, acting as a model of User
 class DelegateUser(User):
 	class Meta:
 		proxy = True
 
-class DelegateUserForm(forms.ModelForm):
-	class Meta:
-		model = User
-		exclude = ['is_partner', 'is_delegate', 'is_superuser', 'is_staff', 'groups', 'user_permissions', 'last_login', 'email']
-
-	def save(self, commit=True):
-		user = super(DelegateUserForm, self).save(commit=False)
-		if(user.check_password(self.cleaned_data["password"])):
-			user.set_password(self.cleaned_data["password"])
-		user.set_delegate()
-		user.set_email(self.cleaned_data["username"])
-		if commit:
-			user.save()
-		return user
-
+# Where the magic begins, add the fields in Delegate on top of User, with specific form
+@admin.register(DelegateUser)
 class DelegateUserAdmin(admin.ModelAdmin):
+	list_display = ('first_name', 'last_name', 'email', 'get_team_number')
 	inlines = [DelegateInline]
 	form = DelegateUserForm
 
+	def get_team_number(self, x):
+		return x.delegate.team.number
+
 	def get_queryset(self, request):
-		return User.objects.filter(is_delegate=True)
+		return User.objects.filter(is_delegate=True).order_by('delegate__team__number')
 
-admin.site.register(DelegateUser, DelegateUserAdmin)
+# PARTNERS
 
-# Admin for Partner User
+# The inline group for partner model
 class PartnerInline(admin.StackedInline):
 	model = Partner
 
+# The proxy for User, acting as a model of User
 class PartnerUser(User):
 	class Meta:
 		proxy = True
 
+# Where the magic begins, add the fields in Partner on top of User, with specific form
+@admin.register(PartnerUser)
 class PartnerUserAdmin(admin.ModelAdmin):
+	list_display = ('get_company_name', 'get_partner_package')
 	inlines = [PartnerInline]
+	form = PartnerUserForm
+
+	def get_company_name(self, x):
+		return x.partner.company_name
+
+	def get_partner_package(self, x):
+		return x.partner.partner_package
 
 	def get_queryset(self, request):
 		return User.objects.filter(is_partner=True)
 
-admin.site.register(PartnerUser, PartnerUserAdmin)
+# OTHER USERS
 
-# Admin for Regular User (Not Partner/Delegate)
-class UserAdmin(admin.ModelAdmin):
-	model = User
-
-	def get_queryset(self, request):
-		return User.objects.filter(is_partner=False).filter(is_delegate=False)
-
+# The proxy for User, acting as a model of User
+class OtherUser(User):
 	class Meta:
+		proxy = True
 		verbose_name = "other user"
 		verbose_name_plural = "other users"
 
-admin.site.register(User, UserAdmin)
+# Admin for Regular User (Not Partners/Delegates)
+@admin.register(OtherUser)
+class UserAdmin(admin.ModelAdmin):
+	model = OtherUser
+
+	def get_queryset(self, request):
+		return User.objects.filter(is_partner=False).filter(is_delegate=False)

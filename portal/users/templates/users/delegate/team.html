@@ -1,0 +1,59 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Your Team{% endblock %}
+{% block contenttitle %}Your Team{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='B' %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+{% for delegate in object_list %}
+	<div class="col-lg-4 col-sm-6 mb-4">
+		<div class="card bg-white">
+			{% if delegate.user.profile_picture %}
+			<img src="{{delegate.user.profile_picture.url}}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
+			{% else %}
+			<img src="{% static 'img/default-user.jpg' %}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
+			{% endif %}
+			<div class="card-body">
+				<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">Delegate</span><br/>{{delegate.user.get_full_name}}</p>
+				<hr class="my-2" />
+				<ul class="list-unstyled my-1 mb-0 text-muted small" style="line-height: normal;">
+					<li>{{delegate.year_of_study}}</li>
+					<li>{{delegate.program}}</li>
+					<li><strong>{{delegate.school}}</strong></li>
+				</ul>
+				{% if delegate.linkedin or delegate.user.email %}
+				<ul class="list-unstyled pt-1 mb-0" style="line-height: normal;">
+					{% if delegate.linkedin %}
+					<li class="mt-2"><strong><a href="{{delegate.linkedin}}" target="_blank">Linkedin</a></strong></li>
+					{% endif %}
+					{% if delegate.user.email %}
+					<li><strong><a href="mailto:{{delegate.user.email}}">Email</a></strong> <span class="text-muted small">{{delegate.user.email}}</span></li>
+					{% endif %}
+				</ul>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="col">
+		<div class="card bg-white">
+    		<div class="card-body">
+				<p class="m-0"><strong>Your team members cannot be shown at the moment.</strong></p>
+				<p class="m-0 small">It is either because your team members have not accepted their offer to participate in the competition, or there is a mistake on our end.</small>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

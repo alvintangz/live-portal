@@ -1,0 +1,37 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block title %}Signed Out{% endblock %}
+{% block contenttitle %}Signed Out{% endblock %}
+{% block contentsubtitle %}You have been signed out.{% endblock %}
+
+{% block headfiles %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt--8 pb-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-6 col-md-7">
+			<div class="card">
+				<div class="card-body">
+					<div class="text-center">
+                        <p><strong>Missed something?</strong></p>
+						<a href="{% url 'sign-in' %}" class="btn btn-primary">Sign Back In</a>
+					</div>
+            	</div>
+			</div>
+            <div class="card border-top-0 p-6">
+                <img src="{% static 'branding/logo.png' %}" class="img-fluid" />
+            </div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

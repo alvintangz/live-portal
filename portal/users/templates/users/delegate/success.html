@@ -1,0 +1,54 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+{% block contenttitle %}Edit Profile{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+	<div class="col-lg-9 order-2 order-lg-1">
+		<div class="card bg-white">
+    		<div class="card-body">
+				{% if success %}
+					<div class="alert alert-success">
+						<p class="m-0">{{success}}</p>
+					</div>
+				{% elif danger %}
+					<div class="alert alert-danger">
+						<p class="m-0">{{danger}}</p>
+					</div>
+				{% endif %}
+			</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3 order-1 order-lg-2">
+		<div class="card bg-white">
+			{% if user.delegate.profile_picture %}
+			<img src="{{delegate.user.profile_picture.url}}" alt="{{user.delegate.get_full_name}}" class="img-fluid" />
+			{% else %}
+			<img src="{% static 'img/default-user.jpg' %}" alt="{{user.delegate.get_full_name}}" class="img-fluid" />
+			{% endif %}
+    		<div class="card-body">
+				<p class="h2 text-uppercase text-secondary mt-0 mb-3 mb-md-0" style="line-height: 0.6;word-wrap: break-word;"><span class="h4 text-uppercase text-primary">Delegate</span><br/><span>{{user.get_full_name}}</span></p>
+				<hr class="my-2" />
+				<ul class="list-unstyled my-1 mb-0 text-muted small" style="line-height: normal;">
+					<li>{{user.delegate.year_of_study}}</li>
+					<li>{{user.delegate.program}}</li>
+					<li><strong>{{user.delegate.school}}</strong></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -54,8 +54,6 @@ class Delegate(models.Model):
 		related_name='delegate')
 
 	profile_picture = models.ImageField('profile picture',
-		height_field=500,
-		width_field=500,
 		blank=True)
 
 	year_of_study = models.CharField('year in school', max_length=40,
