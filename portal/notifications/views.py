@@ -1,6 +1,9 @@
+# django modules
 from django.views.generic import ListView
 from django.shortcuts import redirect
+# helpers
 from users.functions import viewByUser
+# models
 from .models import PortalWidget
 
 def mainView(request):

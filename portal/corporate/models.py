@@ -1,9 +1,13 @@
+# django modules
 from django.db import models
-from .constants.corporate_individual_types import CORPORTATE_INDIVIDUAL_TYPES
-from users.constants.partner_types import PARTNER_TYPES_TO_DELEGATES
-from portal.functions import resize_and_convert
 from django.db.models.query import QuerySet
+# constants
+from .constants.corporate_individual_types import CORPORTATE_INDIVIDUAL_TYPES
+from .constants.partner_types import PARTNER_TYPES
+# helpers
+from portal.functions import resize_and_convert
 import math
+# managers
 from .managers import (
 	CorporateIndividualManager,
 	MentorManager,
@@ -31,10 +35,10 @@ class CorporateOrganization(models.Model):
 		default=False,
 		help_text="If true, this organization will be viewable to delegates.")
 
-	partner_type = models.CharField('partner type',
+	partner_type = models.SmallIntegerField('partner type',
 		blank=True,
 		max_length=60,
-		choices=PARTNER_TYPES_TO_DELEGATES,
+		choices=PARTNER_TYPES,
 		help_text=("Leave blank if organization is not a partner. " +
 			"This is viewable to delegates if organization is a partner. " +
 			"As well, this will determine the ordering when partners listed." +
@@ -43,6 +47,11 @@ class CorporateOrganization(models.Model):
 	class Meta:
 		verbose_name = "corporate organization"
 		ordering = ['partner_type']
+
+	def get_partner_type(self):
+		for number, partner_type in PARTNER_TYPES:
+			if number == self.partner_type:
+				return partner_type
 
 	def __str__(self):
 		return self.name

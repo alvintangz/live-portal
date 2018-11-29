@@ -1,4 +1,6 @@
+# django modules
 from django.contrib import admin
+# models
 from .models import (
 	CorporateOrganization,
 	CorporateIndividual,

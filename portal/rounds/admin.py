@@ -5,7 +5,13 @@ from .models import Round, AcceptedRoundFile, Submission
 
 @admin.register(Round)
 class RoundAdmin(admin.ModelAdmin):
-	list_display = ('title', 'number', 'active', 'visible', 'expected_deadline')
+	list_display = (
+		'title',
+		'number',
+		'active',
+		'visible',
+		'expected_deadline'
+	)
 
 # ACCEPTED ROUND FILE
 
@@ -17,5 +23,10 @@ class AcceptedRoundFileAdmin(admin.ModelAdmin):
 
 @admin.register(Submission)
 class SubmissionAdmin(admin.ModelAdmin):
-	list_display = ('asc_round_file', 'asc_team', 'latest', 'get_submitted_by_name')
+	list_display = (
+		'asc_round_file',
+		'asc_team', 
+		'latest', 
+		'get_submitted_by_name'
+	)
 	ordering = ('-latest','-submitted_at')

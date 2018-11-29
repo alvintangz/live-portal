@@ -1,10 +1,15 @@
+# django modules
 from django.db import models
-from users.models import User
-from .managers import AnswerManager
-from portal.functions import default_shortstrftime, send_email
-import portal.variables as imp
 from django.urls import reverse_lazy
+# models
+from users.models import User
+# managers
+from .managers import AnswerManager
+# helpers
+from portal.functions import default_shortstrftime, send_email
 import datetime
+# constants
+import portal.variables as imp
 
 # Create your models here.
 class Question(models.Model):

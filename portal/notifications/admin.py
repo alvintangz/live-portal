@@ -1,8 +1,12 @@
+# django modules
 from django.contrib import admin
+# models
 from .models import PortalWidget, ImageWidget, TextWidget, TextNotification
-import portal.variables as imp
-from portal.functions import send_sms
 from users.models import Delegate
+# constants
+import portal.variables as imp
+# helpers
+from portal.functions import send_sms
 import datetime
 
 # IMAGE WIDGETS
@@ -55,7 +59,6 @@ class TextWidgetProxyAdmin(admin.ModelAdmin):
 		return PortalWidget.objects.filter(text_widget__pk__isnull=False
 			).order_by('-pinned', '-pk')
 
-# TBD: TEXT NOTIFICATIONS
 @admin.register(TextNotification)
 class TextNotificationAdmin(admin.ModelAdmin):
 	list_display = ('title', 'sent')

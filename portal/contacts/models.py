@@ -1,26 +1,14 @@
+# django modules
 from django.db import models
-
-POSITIONS = [
-		(1, 'President'),
-		(2, 'VP of Corporate Relations'),
-		(3, 'Corporate Relations Manager'),
-		(4, 'VP of Operations'),
-		(5, 'Delegate Experience Manager'),
-		(6, 'VP of Curriculum'),
-		(7, 'Curriculum Manager'),
-		(8, 'VP of Business Intelligence'),
-		(9, 'Business Analyst'),
-		(10, 'VP of Marketing'),
-		(11, 'Marketing Manager'),
-		(12, 'External Relations Manager'),
-		(13, 'IT Solutions Manager'),
-		(14, 'Board Member')
-]
+# helpers
+from portal.functions import resize_and_convert
+# constants
+from .constants.live_positions import LIVE_POSITIONS
 
 class Contact(models.Model):
 
 	position_title = models.IntegerField('position',
-		choices=POSITIONS)
+		choices=LIVE_POSITIONS)
 	
 	show_delegates = models.BooleanField('viewable to delegates',
 		default=True)
@@ -49,13 +37,20 @@ class Contact(models.Model):
 	resume = models.FileField('resume',
 		help_text="visible only to partners")
 
+	class Meta:
+		ordering = ['position_title']
+
 	def get_position_title(self):
-		for number, position in POSITIONS:
+		for number, position in LIVE_POSITIONS:
 			if number == self.position_title:
 				return position
 
 	def __str__(self):
 		return '{}'.format(self.full_name)
 
-	class Meta:
-		ordering = ['position_title']
+	def save(self):
+		"""Resize profile picture before being saved."""
+		super(Contact, self).save()
+		if self.profile_picture:
+			resize_and_convert(self.profile_picture).save(
+				self.profile_picture.path)

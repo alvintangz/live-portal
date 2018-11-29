@@ -1,6 +1,9 @@
+# django modules
 from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
+# helpers
 from users.decorators import delegate_required
+# models
 from .models import (
 	CorporateOrganization,
 	Mentor,

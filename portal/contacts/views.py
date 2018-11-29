@@ -1,6 +1,9 @@
+# django modules
 from django.views.generic import ListView
+# models
 from contacts.models import Contact
 from users.models import Delegate, Partner
+# helpers
 from users.functions import viewByUser
 
 def contactUsView(request):

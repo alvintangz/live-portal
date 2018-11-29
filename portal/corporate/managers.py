@@ -1,7 +1,7 @@
+# django modules
 from django.db import models
+# constants
 from .constants.corporate_individual_types import CORPORTATE_INDIVIDUAL_TYPES
-
-# Managers
 
 class CorporateIndividualManager(models.Manager):
 	def is_mentor(self):

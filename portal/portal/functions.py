@@ -1,10 +1,13 @@
+# django modules
 from django.core.mail import EmailMultiAlternatives
 from django.utils.safestring import mark_safe
 from django.template.loader import get_template
+# helpers
 from hashids import Hashids
-import portal.variables as imp
 from twilio.rest import Client
 from PIL import Image
+# constants
+import portal.variables as imp
 
 def hashid_encode(value, salt=imp.encoded_urls["salt"], min_length=imp.encoded_urls["min_length"]):
 	hashids = Hashids(alphabet=imp.encoded_urls["alphabet"],

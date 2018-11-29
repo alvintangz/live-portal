@@ -1,4 +1,6 @@
+# django modules
 from django.db import models
+# helpers
 import datetime
 
 class PortalWidget(models.Model):
