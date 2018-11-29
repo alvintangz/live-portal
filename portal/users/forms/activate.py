@@ -1,9 +1,32 @@
 from django.core.validators import FileExtensionValidator
 from django import forms
 from users.models import Delegate
-from portal.functions import send_email
+from portal.functions import send_email, send_sms
+import portal.variables as imp
 import re
 import datetime
+
+class EmailForm(forms.Form):
+	delegate_name = forms.CharField(label="Delegate Name")
+	delegate_email = forms.EmailField(label="Delegate Email")
+	activation_link = forms.URLField(label="Activation Link")
+	username = forms.CharField(label="Username of Delegate")
+	password = forms.CharField(label="Password of Delegate")
+
+	def save(self):
+		send_email(subject="Acceptance: Access to Portal & Preliminaries ",
+			receiver=self.cleaned_data["delegate_email"],
+			message=((imp.email_messages["delegate_creation"]["plain"])
+			 % (self.cleaned_data["delegate_name"],
+			 	self.cleaned_data["activation_link"],
+			 	self.cleaned_data["username"],
+			 	self.cleaned_data["password"])),
+			html_message=((imp.email_messages["delegate_creation"]["html"])
+			 % (self.cleaned_data["delegate_name"],
+			 	self.cleaned_data["activation_link"],
+			 	self.cleaned_data["activation_link"],
+			 	self.cleaned_data["username"],
+			 	self.cleaned_data["password"])))
 
 class ConfirmDelegateForm(forms.ModelForm):
 	"""A form with basic delegate information."""
@@ -62,10 +85,11 @@ class ConfirmDelegateForm(forms.ModelForm):
 		self.instance.agreed_terms = datetime.datetime.now()
 		send_email(subject="LIVE Portal: Account Activated",
 			receiver=self.instance.user.email,
-			message=(("Hello %s. Your account is activated. Now, " +
-				"you can work on the preliminary round on portal. Good luck.")
-				% (self.instance.user.first_name)),
-			html_message=(("<p>Hello <strong>%s</strong></p>,<p>Your account" +
-				"is activated. Now, you can work on the preliminary round on" +
-				"portal. Good luck.</p>") % (self.instance.user.first_name)))
+			message=((imp.email_messages["delegate_activation"]["plain"])
+			 % (self.instance.user.first_name)),
+			html_message=((imp.email_messages["delegate_activation"]["html"])
+			 % (self.instance.user.first_name)))
+		if self.instance.phone_number:
+			send_sms("+1"+self.instance.phone_number,
+				imp.sms_messages["delegate_activation"])
 		self.instance.user.save()

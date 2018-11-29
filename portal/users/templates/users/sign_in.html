@@ -20,6 +20,11 @@
                 <p class="mb-0"><strong>Incorrect username or password.</strong> Please try again.</p>
             </div>
             {% endif %}
+            {% if 'confirmed' in request.path %}
+            <div class="alert alert-success mb-0" role="alert">
+                <p class="mb-0"><strong>Your account has been activated.</strong> Please login with the username, and password provided to you.</p>
+            </div>
+            {% endif %}
 			<div class="card">
 				<div class="card-body p-5">
              		<form method="post">
@@ -42,6 +47,9 @@
     							<input type="password" name="{{form.password.html_name}}" required id="{{form.password.id_for_label}}" class="form-control pl-3" />
     						</div>
     					</div>
+                        {% if 'confirmed' in request.path %}
+                        <input type="hidden" name="next" value="{% url 'profile-confirmed' %}" />
+                        {% endif %}
     					<div class="text-center">
                             <p><small>By signing in, you agree to the <a href="{% url 'terms_of_service' %}">Terms of Service</a>.</small></p>
     						<input type="submit" value="Sign In" class="btn btn-primary" />

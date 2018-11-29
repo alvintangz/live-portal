@@ -37,7 +37,6 @@ class CorporateOrganization(models.Model):
 
 	partner_type = models.SmallIntegerField('partner type',
 		blank=True,
-		max_length=60,
 		choices=PARTNER_TYPES,
 		help_text=("Leave blank if organization is not a partner. " +
 			"This is viewable to delegates if organization is a partner. " +

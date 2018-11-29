@@ -3,7 +3,7 @@
 
 {% block title %}New Account{% endblock %}
 {% block contenttitle %}Delegate - New Account{% endblock %}
-{% block contentsubtitle %}Create a new account for delegates here. Will automatially email that person to retreive account.{% endblock %}
+{% block contentsubtitle %}Send an email to delegates about account creation. Just fill in the blanks.{% endblock %}
 
 {% block headfiles %}
 {% endblock %}
@@ -19,10 +19,14 @@
         <div class="alert alert-danger pb-0" role="alert">
             <p><strong>Something went wrong.</strong> Please try again.</p>
         </div>
+        {% elif success %}
+        <div class="alert alert-success pb-0" role="alert">
+            <p><strong>Email successfully sent.</strong></p>
+        </div>
         {% endif %}
 			<div class="card">
 				<div class="card-body p-5">
-             		<form method="post" enctype="multipart/form-data">
+             		<form method="post">
     					{% csrf_token %}
     					{{ form.as_p }}
                         <input type="submit" />

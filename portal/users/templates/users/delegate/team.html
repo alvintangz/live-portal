@@ -18,8 +18,10 @@
 		<div class="card bg-white" style="max-width:500px;">
 			{% if delegate.profile_picture %}
 			<img src="{{ delegate.profile_picture.url }}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
-			{% else %}
+			{% elif delegate.user.activated %}
 			<img src="{% static 'img/default-user.jpg' %}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
+			{% else %}
+			<img src="{% static 'img/default-user-not-active.jpg' %}" alt="{{ delegate.user.get_full_name }} (Account Not Activated)" class="img-fluid" />
 			{% endif %}
 			<div class="card-body">
 				<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">Delegate</span><br/>{{ delegate.user.get_full_name }}</p>

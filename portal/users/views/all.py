@@ -69,19 +69,3 @@ def passwordResetView(request):
 			context["errors"] = True
 
 	return render(request, 'users/password/signed_in_reset.html', context)
-
-@user_passes_test(lambda u: u.is_superuser)
-def delegate_create(request):
-	pass
-	#form = DelegateCreateForm()
-	#context = {'form': form}
-
-	#if request.method == 'POST':
-	#	form = DelegateCreateForm(request.POST, request.FILES)
-	#	if form.is_valid():
-	#		form.save()
-	#		return redirect('/accounts/creation/success')
-	#	else:
-	#		context["errors"] = True
-
-	#return render(request, 'users/creation/delegate.html', context)

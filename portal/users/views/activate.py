@@ -1,85 +1,82 @@
+# django modules
 from django.views.generic import View
-from users.models import User, Delegate
 from django.core.exceptions import ObjectDoesNotExist
-from users.forms.activate import ConfirmDelegateForm
 from django.shortcuts import redirect, render
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import user_passes_test
+# models
+from users.models import Delegate, User
+# forms
+from users.forms.activate import ConfirmDelegateForm, EmailForm
+# helpers
 from portal.functions import hashid_decode
+# constants
 import portal.variables as imp
 
-class ActivateInformationView(View):
+def activateInformationView(request, encoded):
 	invalid_template_name = "users/activate/invalid.html"
 	delegate_template_name = "users/activate/information/delegate.html"
-	partner_template_name = None
+	template_name = invalid_template_name
+	context = dict()
 
-	def get(self, request, encoded):
-		template = self.invalid_template_name
-		context = dict()
+	decoded = hashid_decode(encoded,
+		salt=imp.user_activation_urls["salt"],
+		min_length=imp.user_activation_urls["min_length"])
 
-		decoded = hashid_decode(encoded,
-			salt=imp.user_activation_urls["salt"],
-			min_length=imp.user_activation_urls["min_length"])
+	if decoded:
+		try:
+			temp = User.objects.get(pk=decoded)
+			if not temp.activated:
+				template_name = delegate_template_name
+				context["delegate"] = True
+				context["first_name"] = temp.first_name
+				context["encoded"] = encoded
+		except ObjectDoesNotExist:
+			pass
 
-		if decoded:
-			try:
-				user = User.objects.get(pk=decoded)
-				if not user.activated:
-					template = self.delegate_template_name
-					context["delegate"] = True
-					context["first_name"] = user.first_name
-					context["encoded"] = encoded
-			except ObjectDoesNotExist:
-				pass
+	return render(request, template_name, context)
 
-		return render(request, template, context)
-
-class ActivateConfirmView(View):
+def activateConfirmView(request, encoded):
 	invalid_template_name = "users/activate/invalid.html"
 	delegate_template_name = "users/activate/confirm/delegate.html"
-	partner_template_name = None
+	template_name = invalid_template_name
+	context = dict()
 
-	def get(self, request, encoded):
-		template = self.invalid_template_name
-		context = dict()
+	decoded = hashid_decode(encoded,
+		salt=imp.user_activation_urls["salt"],
+		min_length=imp.user_activation_urls["min_length"])
 
-		decoded = hashid_decode(encoded,
-			salt=imp.user_activation_urls["salt"],
-			min_length=imp.user_activation_urls["min_length"])
-
-		if decoded:
-			try:
-				user = User.objects.get(pk=decoded)
-				delegate = user.delegate
-				if not user.activated:
-					template = self.delegate_template_name
-					context["delegate"] = user
-					context["form"] = ConfirmDelegateForm(instance=delegate)
-			except ObjectDoesNotExist:
-				pass
-
-		return render(request, template, context)
-
-	def post(self, request, encoded):
-		template = self.invalid_template_name
-		context = dict()
-
-		decoded = hashid_decode(encoded,
-			salt=imp.user_activation_urls["salt"],
-			min_length=imp.user_activation_urls["min_length"])
-
-		if decoded:
-			try:
-				user = User.objects.get(pk=decoded)
-				delegate = Delegate.objects.get(user=user)
-				if not user.activated:
-					template = self.delegate_template_name
-					context["delegate"] = delegate
+	if decoded:
+		try:
+			temp = User.objects.get(pk=decoded)
+			delegate = Delegate.objects.get(user=temp)
+			if not temp.activated:
+				template_name = delegate_template_name
+				context["delegate"] = temp
+				context["encoded"] = encoded
+				context["form"] = ConfirmDelegateForm(instance=delegate)
+				if request.method == "POST":
 					context["form"] = ConfirmDelegateForm(request.POST,
 						request.FILES, instance=delegate)
 					if context["form"].is_valid():
 						context["form"].save()
-						return redirect('profile-confirm-success')
+						return redirect('sign-in-confirmed')
 					context["error"] = True
-			except ObjectDoesNotExist:
-				pass
+		except ObjectDoesNotExist:
+			pass
 
-		return render(request, template, context)
+	return render(request, template_name, context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def emailView(request):
+	template_name = "users/creation/delegate.html"
+	context = dict()
+	context["form"] = EmailForm()
+	if request.method == "POST":
+		context["form"] = EmailForm(request.POST)
+		if context["form"].is_valid():
+			context["form"].save()
+			context["success"] = True
+		else:
+			context["errors"] = True
+	return render(request, template_name, context)

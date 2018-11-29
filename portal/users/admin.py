@@ -23,7 +23,14 @@ class DelegateUser(User):
 @admin.register(DelegateUser)
 class DelegateUserAdmin(UserAdmin):
 	"""Add the fields in Delegate on top of User, with specific form."""
-	list_display = ('first_name', 'last_name', 'email', 'team_number', 'activation_link', 'activated')
+	list_display = (
+		'first_name',
+		'last_name',
+		'email',
+		'team_number',
+		'activation_link',
+		'activated'
+	)
 	list_filter = ()
 	inlines = [DelegateInline]
 
@@ -42,6 +49,8 @@ class DelegateUserAdmin(UserAdmin):
 		number."""
 		return User.objects.filter(is_delegate=True
 			).order_by('delegate__team__number')
+
+DelegateUserAdmin.fieldsets += (('activated',{'fields': ('activated',)}),)
 
 # PARTNERS
 

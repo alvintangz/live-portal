@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .helpers import resume_upload_to, profile_picture_upload_to
 from portal.functions import resize_and_convert, hashid_encode
+from portal.functions import send_sms
 import portal.variables as imp
 
 class Team(models.Model):
@@ -44,7 +45,7 @@ class User(AbstractUser):
 		self.is_partner = True
 
 	def activation_link(self):
-		return hashid_encode(self.pk,
+		return imp.urls["portal"] + "/account/activate/" + hashid_encode(self.pk, 
 			salt=imp.user_activation_urls["salt"],
 			min_length=imp.user_activation_urls["min_length"])
 
@@ -92,12 +93,20 @@ class Delegate(models.Model):
 		help_text="Set this as True if you want to make this delegate " + 
 		"invisible to partners. This option is used for testing purposes.")
 
+	def __init__(self, *args, **kwargs):
+		super(Delegate, self).__init__(*args, **kwargs)
+		self.initial_number = self.phone_number
+
 	def save(self):
-		"""Resize profile picture before being saved."""
+		number = self.initial_number
 		super(Delegate, self).save()
 		if self.profile_picture:
 			resize_and_convert(self.profile_picture).save(
 				self.profile_picture.path)
+		if self.phone_number != "" and self.phone_number != number:
+			print("swag")
+			send_sms("+1"+self.phone_number, 
+				imp.sms_messages["added_number"] % self.user.first_name)
 
 	def __str__(self):
 		"""Returns a string that represents the current Delegate.
