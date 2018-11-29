@@ -1,0 +1,123 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Corporate{% endblock %}
+{% block contenttitle %}{{ type_of_plural_title }}{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='corporate' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<ul class="nav nav-pills nav-fill flex-column flex-sm-row">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'partners' %}"><i class="fas fa-building mr-2"></i>Partners</a>
+						</li>
+					<li class="nav-item">
+						<a class="nav-link{% if type_of == 'mentor' %} active{% endif %}" href="{% url 'mentors' %}"><i class="fas fa-users mr-2"></i>Mentors</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link{% if type_of == 'judge' %} active{% endif %}" href="{% url 'judges' %}"><i class="fas fa-gavel mr-2"></i>Judges</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link{% if type_of == 'speaker' %} active{% endif %}" href="{% url 'speakers' %}"><i class="fas fa-bullhorn mr-2"></i>Speakers</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link{% if type_of == 'networker' %} active{% endif %}" href="{% url 'networkers' %}"><i class="fas fa-network-wired mr-2"></i>Networkers</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% for individual in individuals %}
+<div class="row" id="{{ individual.html_id }}">
+	<div class="col-12 mb-4">
+		<div class="card bg-white">
+			<div class="card-body">
+				<div style="width:100%;" class="mx-auto">
+				{% if individual.profile_picture %}
+					<div class="row">
+						<div class="col-md-3">
+							<img src="{{ individual.profile_picture.url }}" alt="{{ individual.full_name }}" class="img-fluid">
+						</div>
+						<div class="col-md-9 mt-3 mt-md-0">
+				{% else %}
+					<div class="row">
+						<div class="col-12">
+				{% endif %}
+							<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">{{ individual.type_of }}</span><br>{{ individual.full_name }}</p>
+							<ul class="list-unstyled mb-0">
+								<li class="h4 text-uppercase">
+									{{ individual.position_org }} at {{ individual.organization }}
+								</li>
+								{% if individual.biography %}
+								<li class="text-muted">
+									{{ individual.biography }}
+								</li>
+								{% endif %}
+								{% if individual.email and individual.linkedin %}
+								<li class="mt-3">
+									<div class="btn-group">
+										<a href="{{ individual.linkedin }}" class="btn btn-secondary" target="_blank"><i class="fab fa-linkedin-in mr-2"></i>Linkedin</a>
+										<a href="mailto:{{ individual.email }}" class="btn btn-primary"><i class="fas fa-at mr-2"></i>Email</a>
+									</div>
+								</li>
+								{% elif individual.email %}
+								<li class="mt-3">
+									<a href="mailto:{{ individual.email }}" class="btn btn-primary"><i class="fas fa-at mr-2"></i>Email</a>
+								</li>
+								{% elif individual.linkedin %}
+								<li class="mt-3">
+									<a href="{{ individual.linkedin }}" class="btn btn-secondary" target="_blank"><i class="fab fa-linkedin-in mr-2"></i>Linkedin</a>
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="alert alert-danger">
+			<p class="mb-0"><strong>The list of {{ type_of_plural }} is not available at the moment.</strong></p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% if is_paginated %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="card">
+			<div class="card-body">
+				<ul class="nav nav-pills">
+					{% for i in paginator.page_range %}
+						<li class="nav-item">
+							{% if page_obj.number == i %}
+								<a class="nav-link active" href="?page={{ i }}">{{ i }}</a>
+							{% else %}
+								<a class="nav-link" href="?page={{ i }}">{{ i }}</a>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<div class="mb--4"></div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

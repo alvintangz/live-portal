@@ -1,7 +1,8 @@
 from django.urls import path, include
-from .views import roundsListedView, roundsUploadView
+from .views.all import roundsListedView, roundsUploadView
 
 urlpatterns = [
-	path('rounds', roundsListedView, name='rounds'),
-	path('round/<int:pk>', roundsSpecificView, name='rounds-upload')
+	path('listed', roundsListedView, name='rounds'),
+	path('upload/<str:encoded>', roundsUploadView, name='rounds-upload'),
+	path('upload/<str:encoded>/success', roundsUploadView, name='rounds-upload-success'),
 ]

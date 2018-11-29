@@ -3,9 +3,18 @@
 
 {% block title %}Terms of Service{% endblock %}
 {% block contenttitle %}Terms of Service{% endblock %}
-{% block contentsubtitle %}By using continuing to use this web application, you agree to the following terms of service.{% endblock %}
+{% block contentsubtitle %}By continuing to use this web application, you agree to the following terms of service.{% endblock %}
 
 {% block headfiles %}
+<style type="text/css">
+#tOSListed > li {
+	margin-bottom:1rem;
+}
+
+#markTOS {
+	display:none;
+}
+</style>
 {% endblock %}
 
 {% block navbar %}
@@ -17,8 +26,7 @@
 		<div class="col-lg-6 col-md-7">
 			<div class="card">
 				<div class="card-body">
-             		<p>Cupcake ipsum dolor sit amet icing candy donut. Brownie donut cupcake I love cookie soufflé cotton candy croissant. Tiramisu cake I love. Dragée toffee donut pudding tart oat cake carrot cake. Candy canes donut fruitcake sugar plum. Biscuit tiramisu danish oat cake carrot cake dessert tiramisu candy. I love topping jelly-o muffin I love croissant I love marshmallow. I love cheesecake gingerbread bear claw I love bonbon. Halvah jujubes lollipop fruitcake I love. Biscuit topping apple pie cake chocolate. Topping caramels tootsie roll wafer macaroon fruitcake sugar plum. Chupa chups chupa chups chocolate.</p>
-             		<p>Soufflé pastry jelly-o liquorice cupcake. Sesame snaps croissant wafer fruitcake tart pudding. Macaroon jelly sweet roll sesame snaps carrot cake. Candy danish jelly cupcake I love powder topping marzipan bear claw. Cake dragée gummies tiramisu topping dragée apple pie danish gingerbread. Chupa chups cupcake cake. Muffin I love sugar plum sesame snaps tiramisu chocolate bar macaroon. Jujubes I love donut I love I love. Chocolate bar icing jelly bear claw topping jelly-o carrot cake. I love dessert cake croissant sweet roll sesame snaps sugar plum icing cookie. Bear claw chocolate bar brownie gummies ice cream chocolate bar. Cookie bear claw tiramisu tootsie roll caramels. Jujubes I love I love.</p>
+					{% include 'policies/terms_of_service.html' %}
             	</div>
 			</div>
 		</div>

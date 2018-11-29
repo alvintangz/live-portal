@@ -1,0 +1,28 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block title %}Recover Account{% endblock %}
+{% block contenttitle %}Resetting Password Complete{% endblock %}
+{% block contentsubtitle %}Password has been reset.{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt--8 pb-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-6 col-md-7">
+			<div class="alert alert-success">
+				<p><strong>Your password has been reset.</strong></p>
+				<a href="{% url 'sign-in' %}" class="btn btn-white text-success">Sign In Now</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

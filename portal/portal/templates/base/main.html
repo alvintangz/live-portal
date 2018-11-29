@@ -4,7 +4,6 @@
 {% block body %}
 
 <div class="main-content bg-primary">
-
 	<!-- Navbar -->
 	<nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-dark">
 		<div class="container px-4 py-2">
@@ -17,7 +16,7 @@
 					<div class="row">
 						<div class="col-6 collapse-brand">
 							<a href="/">
-								<img src="{% static 'branding/logo.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure" />
+								<img src="{% static 'branding/logo-mobile.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure" />
 							</a>
 						</div>
 					</div>
@@ -47,29 +46,5 @@
 	</div>
 	{% block content %}
 	{% endblock %}
-
-<!-- Footer -->
-<footer class="footer py-5 bg-white">
-	<div class="container">
-		<div class="row align-items-center justify-content-xl-between">
-			<div class="col-xl-6">
-				<div class="copyright text-center text-xl-left text-muted">
-					&copy; 2018/2019 <a href="https://www.live-competition.org" class="font-weight-bold ml-1" target="_blank">LIVE Competition</a> | Portal powered by <a href="https://azure.microsoft.com/en-ca/" target="_blank">Microsoft Azure</a>
-				</div>
-			</div>
-		<div class="col-xl-6">
-			<ul class="nav nav-footer justify-content-center justify-content-xl-end">
-				<li class="nav-item">
-					<a href="{% url 'privacy_policy' %}" class="nav-link">Privacy Policy</a>
-				</li>
-				<li class="nav-item">
-					<a href="{% url 'terms_of_service' %}" class="nav-link">Terms of Service</a>
-				</li>
-				<li class="nav-item">
-					<a href="{% url 'credits' %}" class="nav-link">Credits</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-</footer>
+	{% include 'base/footer.html' %}
 {% endblock %}

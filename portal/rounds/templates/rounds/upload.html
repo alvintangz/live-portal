@@ -1,0 +1,148 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Rounds{% endblock %}
+{% block contenttitle %}
+{% if round %}
+Round {{ round.number }}: {{ round.title }}
+{% else %}
+Round Doesn't Exist
+{% endif %}
+{% endblock %}
+
+{% block headfiles %}
+<style type="text/css">
+#form .form-group {
+	margin-bottom: 1rem;
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='rounds' %}
+{% endblock %}
+
+{% block content %}
+{% if round %}
+<div class="row mb-3">
+	<div class="col">
+		<div class="card">
+			<div class="card-body">
+				<ul class="list-unstyled small mb-0 text-muted">
+					<li><strong>Description: </strong>{% if round.description %}{{ round.description }}{% else %} N/A{% endif %}</li>
+					<li><strong>Expected Deadline: </strong>{% if round.show_deadline %}{{ round.get_expected_deadline }}{% else %} N/A{% endif %}</li>
+					<li><strong>More information: </strong>{% if round.details_file %}<a href="{{ round.details_file }}" download>Download Round File</a>{% else %} N/A{% endif %}</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	{% if submissions %}
+	<div class="col-lg-6">
+	{% else %}
+	<div class="col">
+	{% endif %}
+		<div class="card bg-white">
+			<div class="card-header bg-primary">
+				<h2 class="h3 mb-0 text-uppercase text-white">Upload &amp; Submission</h2>
+			</div>
+			{% if form.errors %}
+			<div class="alert alert-danger">
+				<p class="mb-0">There were some errors with your inputs. Please upload again, and also correct the following:</p>
+				{{ form.non_field_errors }}
+				<ul class="mb-0">
+					{% for field in form %}
+						{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+					{% endfor %}
+				</ul>
+			</div>
+			{% endif %}
+			{% if "success" in request.path %}
+			<div class="alert alert-success">
+				<p class="mb-0"><strong>Your submission was successful.</strong> Look in the submission section to see all of your submissions.</p>
+			</div>
+			{% endif %}
+			<div class="card-body">
+			{% if form %}
+			<p class="text-muted small"><strong>Things to note:</strong> Partners have access to your submissions. Each submission counts as a submission for your entire team. Only your latest submission with be taken into account.</p>
+			<form method="post" action="{% url 'rounds-upload' encoded_url %}" enctype="multipart/form-data" id="form">
+			{% csrf_token %}
+			{% for field in form %}
+				<div class="form-group">
+				<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+				{{ field }}
+				<small class="form-text text-muted">{{ field.help_text }}</small>
+				</div>
+			{% endfor %}
+			{% comment %}
+				<div class="form-group">
+					{% if accepted.title %}
+						<label for="{{ accepted.form.file.id_for_label }}">{{ accepted.title }}</label>
+					{% endif %}
+    				<input type="file" id="{{ accepted.form.file.id_for_label }}" class="form-control" name="{{ accepted.form.file.name }}" accept="{% for filetype in accepted.accepted %} 
+                    .{{filetype}},
+                    {% endfor %}">
+                    <small id="emailHelp" class="form-text text-muted">File(s) accepted:{% for filetype in accepted.accepted %} {{ filetype }}{% endfor %}
+                	</small>
+    			</div>
+			{% endcomment %}
+				<input type="submit" value="Submit Files" class="btn btn-outline-primary" />
+			</form>
+			{% else %}
+				<p class="small text-muted mb-0">The round is either closed for submission, or we have not allowed any files to be uploaded.</p>
+			{% endif %}
+			</div>
+		</div>
+	</div>
+	{% if submissions %}
+	<div class="col-lg-6">
+		<div class="card bg-white">
+			<div class="card-header bg-success">
+				<h2 class="h3 mb-0 text-uppercase text-white">Past Submissions</h2>
+			</div>
+			<div class="table-responsive">
+				<table class="table align-items-center table-flush">
+					<thead>
+						<tr>
+							<th scope="col">File</th>
+							<th scope="col">Latest</th>
+							<th scope="col">By</th>
+							<th scope="col">Time submitted</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for submission in submissions %}
+						<tr>
+							<th scope="row">
+							<a href="{{ submission.submitted_file.url }}" download>{{ submission.asc_round_file.get_title_for_delegates }}</a>
+							</th>
+							{% if submission.latest %}
+								<td><i class="fas fa-check-circle text-success"></i></td>
+							{% else %}
+								<td><i class="fas fa-times-circle text-danger"></i></td>
+							{% endif %}
+							<td>{{ submission.get_submitted_by_name }}</td>
+							<td>{{ submission.get_formatted_submitted_at }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+</div>
+{% else %}
+<div class="row">
+	<div class="col">
+		<div class="alert alert-danger">
+			<p class="mb-0"><strong>The round you were looking for doesn't exist, or was closed.</strong></p>
+		</div>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

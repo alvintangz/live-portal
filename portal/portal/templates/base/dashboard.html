@@ -3,25 +3,21 @@
 
 {% block body %}
 {% if user.is_delegate or user.is_partner %}
-<!-- Sidenav -->
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 	<div class="container-fluid">
-		<!-- Toggler -->
       	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
         	<span class="navbar-toggler-icon"></span>
       	</button>
-      	<!-- Brand -->
       	<a class="navbar-brand pb-0" href="/">
-        	<img src="{% static 'branding/logo.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure" class="navbar-brand-img">
+        	<img src="{% static 'branding/logo.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure" class="img-fluid d-none d-md-block">
+          <img src="{% static 'branding/logo-mobile.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure" class="navbar-brand-img d-block d-md-none">
       	</a>
-      	<!-- Collapse -->
       	<div class="collapse navbar-collapse" id="sidenav-collapse-main">
-        	<!-- Collapse header -->
         	<div class="navbar-collapse-header d-md-none">
           		<div class="row">
             		<div class="col-6 collapse-brand">
               			<a href="/">
-                			<img src="{% static 'branding/logo.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure">
+                			<img src="{% static 'branding/logo-mobile.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure">
               			</a>
             		</div>
             		<div class="col-6 collapse-close">
@@ -37,14 +33,9 @@
       	</div>
     </div>
 </nav>
-
-<!-- Main content -->
 <div class="main-content">
-	<!-- Header -->
 	<div class="header bg-primary pb-8 pt-5 pt-md-5">
-		<!-- Page title -->
-		<h2 class="text-center text-uppercase text-white mb-4">{% block contenttitle %}{% endblock %}</h2>
-
+		<h2 class="text-center text-uppercase text-white mb-4" style="cursor:default">{% block contenttitle %}{% endblock %}</h2>
 		<div class="separator separator-bottom separator-skew zindex-100">
         	<svg x="0" y="0" viewBox="0 0 1800 100" preserveAspectRatio="none" version="1.1" xmlns="http://www.w3.org/2000/svg">
           		<polygon class="fill-white" points="1800 0 1800 100 0 100"></polygon>
@@ -55,29 +46,7 @@
 		<!-- Page content -->
 		{% block content %}
 		{% endblock %}
-		<!-- Footer -->
-		<footer class="footer bg-white">
-			<div class="row align-items-center justify-content-xl-between">
-				<div class="col-xl-6">
-					<div class="copyright text-center text-xl-left text-muted">
-						&copy; 2018/2019 <a href="https://www.live-competition.org" class="font-weight-bold ml-1" target="_blank">LIVE Competition</a> | Portal powered by <a href="https://azure.microsoft.com/en-ca/" target="_blank">Microsoft Azure</a>
-					</div>
-				</div>
-				<div class="col-xl-6">
-					<ul class="nav nav-footer justify-content-center justify-content-xl-end">
-						<li class="nav-item">
-							<a href="{% url 'privacy_policy' %}" class="nav-link">Privacy Policy</a>
-						</li>
-						<li class="nav-item">
-							<a href="{% url 'terms_of_service' %}" class="nav-link">Terms of Service</a>
-						</li>
-						<li class="nav-item">
-							<a href="{% url 'credits' %}" class="nav-link">Credits</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</footer>
+		{% include 'base/footer.html' %}
 	</div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

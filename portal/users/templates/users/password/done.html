@@ -1,0 +1,32 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block title %}Recover Account{% endblock %}
+{% block contenttitle %}Recover Account{% endblock %}
+{% block contentsubtitle %}If an account exists with the email you have entered, instructions on recovering your account have been sent.{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt--8 pb-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-6 col-md-7">
+        	<div class="alert alert-success">
+				<p class="mb-0">You should receive instructions on how to recover your account shortly.</p>
+        	</div>
+        	<div class="card">
+        		<div class="card-body">
+        			<p class="mb-0">If you have not receive an email, please make sure you have entered the correct email address associated with an existing account, or check your spam folder. If any problems presist, feel free to contact LIVE at <a href="mailto:contact@live-competition.org">contact@live-competition.org</a></p>
+        		</div>
+        	</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

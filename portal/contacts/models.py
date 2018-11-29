@@ -37,7 +37,9 @@ class Contact(models.Model):
 
 	description = models.TextField('description',
 		max_length=100,
-		help_text="i.e. Responsible for overseeing all logistical operations on the day of. To be seen by both delegates and partners.")
+		help_text=("i.e. Responsible for overseeing all logistical " +
+			"operations on the day of. " +
+			"To be seen by both delegates and partners."))
 
 	email_address = models.EmailField('email address')
 

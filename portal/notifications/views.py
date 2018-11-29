@@ -1,25 +1,40 @@
 from django.views.generic import ListView
-from users.views import viewByUser
+from django.shortcuts import redirect
+from users.functions import viewByUser
 from .models import PortalWidget
 
-# MAIN (aka What's New, Dashbaord), view with all the widgets
-
-# Uses viewByUser to provide a view based off which type of user is using the application
 def mainView(request):
-	return viewByUser(request, DelegateMainView.as_view()(request), PartnerMainView.as_view()(request))
+	"""A view for the main page."""
+	if request.user.is_authenticated:
+		if request.user.is_superuser:
+			return redirect('/executive/')
+		else:
+			# What's New, view with all the widgets
+			return viewByUser(request, DelegateMainView.as_view()(request),
+				PartnerMainView.as_view()(request))
+	else:
+		return redirect('sign-in')
 
 class DelegateMainView(ListView):
+	"""A view for delegates for what's new."""
 	model = PortalWidget
-	template_name = "notifications/main.html"
+	template_name = "notifications/whats_new.html"
 
 	def get_queryset(self):
-		# Only get queryset if shown to delegates is True and order by if pinned, then by when widget was created
-		return PortalWidget.objects.filter(show_delegate=True).order_by('-pinned', '-pk')
+		"""Return a queryset of widgets where showing to delegates is True
+		and order if pinned, then when created.
+		"""
+		return PortalWidget.objects.filter(show_delegate=True
+			).order_by('-pinned', '-pk')
 
 class PartnerMainView(ListView):
+	"""A view for partners for what's new."""
 	model = PortalWidget
-	template_name = "notifications/main.html"
+	template_name = "notifications/whats_new.html"
 	
 	def get_queryset(self):
-		# Only get queryset if shown to partners is True and order by if pinned, then by when widget was created
-		return PortalWidget.objects.filter(show_partner=True).order_by('-pinned', '-pk')
+		"""Return a queryset of widgets where showing to partners is True
+		and order if pinned, then when created.
+		"""
+		return PortalWidget.objects.filter(show_partner=True
+			).order_by('-pinned', '-pk')

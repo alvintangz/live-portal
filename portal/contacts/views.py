@@ -1,10 +1,12 @@
 from django.views.generic import ListView
 from contacts.models import Contact
 from users.models import Delegate, Partner
-from users.views import viewByUser
+from users.functions import viewByUser
 
 def contactUsView(request):
-	return viewByUser(request, DelegateContactUsView.as_view()(request), PartnerContactUsView.as_view()(request))
+	return viewByUser(request, 
+		DelegateContactUsView.as_view()(request),
+		PartnerContactUsView.as_view()(request))
 
 class DelegateContactUsView(ListView):
 	model = Contact

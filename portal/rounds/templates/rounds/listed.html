@@ -1,0 +1,63 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Rounds{% endblock %}
+{% block contenttitle %}Rounds{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='rounds' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+{% for round in object_list %}
+	<div class="col-12 mb-3">
+		<div class="card bg-white">
+			<div class="card-header">
+				{% if round.active or user.partner %}
+				<h2 class="h3 mb-0 text-uppercase">Round {{round.number}}: {{round.title}}</h2>	
+				{% else %}
+				<h2 class="h3 mb-0 text-muted text-uppercase">Round {{round.number}}: {{round.title}}</h2>	
+				{% endif %}
+			</div>
+			<div class="card-body">
+				{% if round.description %}
+				{% if round.active %}
+				<p>{{round.description}}</p>	
+				{% else %}
+				<p class="text-muted">{{round.description}}</p>
+				{% endif %}
+				{% endif %}
+				{% if round.show_deadline or user.partner %}
+				<p class="small">Expected to be due at {{round.get_expected_deadline}}</p>
+				{% endif %}
+				<div class="btn-group">
+				{% if round.details_file %}
+				<a href="{{round.details_file.url}}" download class="btn btn-dark">Download Details</a>
+				{% endif %}
+				{% if round.active %}
+				<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary">Submit Solutions</a>
+				{% else %}
+				<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary">View Submissions</a>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="col">
+		<div class="card bg-white">
+			<div class="card-body">
+				<p class="m-0"><strong>There are no rounds available at the moment.</strong> Check back soon!</p>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

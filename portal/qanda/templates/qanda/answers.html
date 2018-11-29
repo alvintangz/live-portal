@@ -1,0 +1,87 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Questions and Answers{% endblock %}
+{% block contenttitle %}{% if 'all' in request.path %}Answers to Your Questions{% else %}Answers to Frequently Asked Questions{% endif %}{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='qanda' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<p class="mb-0 text-muted">View questions that other delegates have raised, and ask questions that other delegates might find helpful in this section.</p>
+				<hr class="my-3" />
+				<ul class="nav nav-pills nav-fill flex-column flex-sm-row">
+					<li class="nav-item">
+						<a class="nav-link {% if 'all' in request.path %}active{% endif %}" href="{% url 'qanda-answers-all' %}"><i class="fas fa-comments mr-2"></i>Answers to Your Questions</a>
+						</li>
+					<li class="nav-item">
+						<a class="nav-link {% if 'faq' in request.path %}active{% endif %}" href="{% url 'qanda-answers-faq' %}"><i class="fas fa-exclamation-circle mr-2"></i>Answers to Frequently Asked Questions</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'qanda-ask' %}"><i class="fas fa-hand-paper mr-2"></i>Ask a Question</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% for answer in answers %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="card bg-white">
+			<div class="card-header">
+				<h3 class="text-uppercase">{{ answer.question.question }}</h3>
+				<p class="mb-0 small text-muted">{{ answer.viewable_meta }}</p>
+			</div>
+			<div class="card-body">
+				<p class="mb-0">{{ answer.answer }}</p>
+			</div>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="alert alert-danger">
+			{% if 'all' in request.path %}
+			<p class="mb-0"><strong>No questions have been answered yet.</strong> Feel free to <a href="{% url 'qanda-ask' %}" class="text-white">ask a question</a>.</p>
+			{% else %}
+			<p class="mb-0"><strong>No questions have been answered yet, or none of the current questions are deemed as one that could be frequently asked.</strong> Feel free to <a href="{% url 'qanda-ask' %}" class="text-white">ask a question</a>.</p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% if is_paginated %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="card">
+			<div class="card-body">
+				<ul class="nav nav-pills">
+					{% for i in paginator.page_range %}
+						<li class="nav-item">
+							{% if page_obj.number == i %}
+								<a class="nav-link active" href="?page={{ i }}">{{ i }}</a>
+							{% else %}
+								<a class="nav-link" href="?page={{ i }}">{{ i }}</a>
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<div class="mb--4"></div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

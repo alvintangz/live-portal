@@ -1,0 +1,129 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Corporate{% endblock %}
+{% block contenttitle %}Partners{% endblock %}
+
+{% block headfiles %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/brands.css" integrity="sha384-QT2Z8ljl3UupqMtQNmPyhSPO/d5qbrzWmFxJqmY7tqoTuT2YrQLEqzvVOP2cT5XW" crossorigin="anonymous">
+<style type="text/css">
+ul.individuals {
+  display: inline;
+}
+
+ul.individuals li {
+  display: inline;
+}
+
+ul.individuals li:after {
+  content: ", ";
+}
+
+ul.individuals li:last-child:after {
+    content: "";
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='corporate' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<ul class="nav nav-pills nav-fill flex-column flex-sm-row">
+					<li class="nav-item">
+						<a class="nav-link active" href="{% url 'partners' %}"><i class="fas fa-building mr-2"></i>Partners</a>
+						</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'mentors' %}"><i class="fas fa-users mr-2"></i>Mentors</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'judges' %}"><i class="fas fa-gavel mr-2"></i>Judges</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'speakers' %}"><i class="fas fa-bullhorn mr-2"></i>Speakers</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'networkers' %}"><i class="fas fa-network-wired mr-2"></i>Networkers</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+{% for partner in partners %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="card bg-white">
+			<div class="card-body">
+				<div style="width:100%;" class="mx-auto">
+				{% if partner.logo %}
+					<div class="row">
+						<div class="col-md-3">
+							<img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid">
+						</div>
+						<div class="col-md-9 mt-3 mt-md-0">
+				{% else %}
+					<div class="row">
+						<div class="col-12">
+				{% endif %}
+							<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">{{ partner.partner_type }} Partner</span><br>{{ partner.name }}</p>
+							{% if partner.description %}
+							<p class="text-muted mb-0">{{ partner.description }}</p>
+							{% endif %}
+							{% if partner.individuals.is_mentor.all %}
+							<p class="h3 mb-0 text-uppercase"><a href="{% url 'mentors' %}" class="text-dark">Mentors</a> <span class="text-muted">From This Partner</span></p>
+							<ul class="list-unstyled individuals">
+							{% for individual in partner.individuals.is_mentor.all %}
+								<li><a href="{% url 'mentors' %}?page={{ individual.get_page }}#{{ individual.html_id }}" class="text-dark">{{ individual.full_name }}</a></li>
+							{% endfor %}
+							</ul>
+							{% endif %}
+							{% if partner.individuals.is_judge.all %}
+							<p class="h3 mb-0 text-uppercase"><a href="{% url 'judges' %}" class="text-dark">Judges</a> <span class="text-muted">From This Partner</span></p>
+							<ul class="list-unstyled individuals">
+							{% for individual in partner.individuals.is_judge.all %}
+								<li><a href="{% url 'judges' %}?page={{ individual.get_page }}#{{ individual.html_id }}" class="text-dark">{{ individual.full_name }}</a></li>
+							{% endfor %}
+							</ul>
+							{% endif %}
+							{% if partner.individuals.is_speaker.all %}
+							<p class="h3 mb-0 text-uppercase"><a href="{% url 'speakers' %}" class="text-dark">Speakers</a> <span class="text-muted">From This Partner</span></p>
+							<ul class="list-unstyled individuals">
+							{% for individual in partner.individuals.is_speaker.all %}
+								<li><a href="{% url 'speakers' %}?page={{ individual.get_page }}#{{ individual.html_id }}" class="text-dark">{{ individual.full_name }}</a></li>
+							{% endfor %}
+							</ul>
+							{% endif %}
+							{% if partner.individuals.is_networker.all %}
+							<p class="h3 mb-0 text-uppercase"><a href="{% url 'networkers' %}" class="text-dark">Networkers</a> <span class="text-muted">From This Partner</span></p>
+							<ul class="list-unstyled individuals">
+							{% for individual in partner.individuals.is_networker.all %}
+								<li><a href="{% url 'networkers' %}?page={{ individual.get_page }}#{{ individual.html_id }}" class="text-dark">{{ individual.full_name }}</a></li>
+							{% endfor %}
+							</ul>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="alert alert-danger">
+			<p class="mb-0"><strong>The list of partners is not available at the moment.</strong></p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+<div class="mb--4"></div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

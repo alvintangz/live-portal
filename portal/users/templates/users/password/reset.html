@@ -1,0 +1,100 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block title %}Recover Account{% endblock %}
+{% block contenttitle %}Reset Password{% endblock %}
+{% block contentsubtitle %}{% if validlink %}Reset your password below.{% else %}Password reset link invalid.{% endif %}{% endblock %}
+
+{% block headfiles %}
+<style type="text/css">
+#password_help ul {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+#password_help ul li {
+    padding-bottom: 0.5rem;
+}
+
+#password_help ul li:nth-child(4) {
+    padding:0;
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+{% if validlink %}
+<div class="container mt--8 pb-5">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-8 order-2 order-lg-1">
+            {% if form.errors %}
+            <div class="alert alert-danger mb-0">
+                <p class="mb-0"><strong>Resetting your password was unsuccessful.</strong> Possible reasons could be:</p>
+                <ul class="mb-0">
+                    <li>You typed in your current password incorrectly.</li>
+                    <li>The new password you entered and its repeated password are not the same.</li>
+                    <li>You have not followed the criteria for setting a new password stated on the <span class="d-lg-none">top</span><span class="d-none d-lg-inline">right</span>.</li>
+                </ul>
+            </div>
+            {% endif %}
+            <div class="card bg-white">
+                <div class="card-body">
+                    <p class="small text-muted">
+                        <span class="text-danger">*</span> signifies that the field is mandatory.
+                    </p>
+                    <form method="post" id="form">
+                        {% csrf_token %}
+                            <div class="form-group">
+                                <label for="{{ form.new_password1.id_for_label }}">New Password <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                    </div>
+                                    <input type="password" name="{{form.new_password1.html_name}}" autofocus id="{{form.new_password1.id_for_label}}" class="form-control pl-3" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.new_password2.id_for_label }}">Repeat Password <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-redo-alt"></i></span>
+                                    </div>
+                                    <input type="password" name="{{form.new_password2.html_name}}" required id="{{form.new_password2.id_for_label}}" class="form-control pl-3" />
+                                </div>
+                            </div>
+                        <input type="submit" value="Submit Changes" class="btn btn-primary" />
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 order-1 order-lg-2">
+            <div class="card bg-white">
+                <div class="card-header">
+                    <p class="h3 text-uppercase mb-0">Password Criteria</p>
+                </div>
+                <div class="card-body">
+                    <small class="text-muted" id="password_help">{{ form.new_password1.help_text }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="container mt--8 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-7">
+            <div class="alert alert-danger">
+                <p><strong>The password reset link was invalid, possibly because it has already been used.</strong></p>
+                <p class="mb-0">Please request an account reset <a href="{% url 'forgot-password' %}" class="text-white">here</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

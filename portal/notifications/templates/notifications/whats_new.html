@@ -1,0 +1,69 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}What's New{% endblock %}
+{% block contenttitle %}What's New{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='whats_new' %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+	{% if user.is_delegate and not user.delegate.profile_picture %}
+	<div class="col-12">
+		<div class="alert alert-warning">
+			<p class="m-0">Please upload a profile picture as your picture is public to all partners. <a href="{% url 'profile' %}" class="text-white">Click to edit profile.</a></p>
+		</div>
+	</div>
+	{% endif %}
+{% for widget in object_list %}
+	{% if widget.image_widget or widget.text_widget %}
+	<div class="col-xl-4 col-lg-6 col-sm-12 mb-4">
+		{# Image widget #}
+		<div class="card bg-white">
+		{% if widget.show_title %}
+		<div class="card-header text-uppercase">
+			<h2 class="h3 mb-0">{{ widget.title }}</h2>
+		</div>
+		{% endif %}
+		{% if widget.image_widget %}
+			{% if widget.external_link %}
+			<a href="{{ widget.external_link }}" class="d-block">
+			{% endif %}
+			<img src="{{ widget.image_widget.image.url }}" class="img-fluid" />
+			{% if widget.external_link %}
+			</a>
+			{% endif %}
+		{% elif widget.text_widget %}
+			<div class="card-body" style="overflow-y:auto; height:300px">
+				{% if widget.external_link %}
+				<a href="{{ widget.external_link }}" class="text-dark">
+				{% endif %}
+				<p>{{ widget.text_widget.text }}</p>
+				{% if widget.external_link %}
+				</a>
+				{% endif %}
+			</div>
+		{% endif %}
+		</div>
+	</div>
+	{% endif %}
+{% empty %}
+	<div class="col mb-4">
+		<div class="card bg-white">
+			<div class="card-body">
+				<p class="mb-0"><strong>We have no new news for you to view at the moment.</strong> Check back later!</p>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>
+<div class="mb--4"></div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

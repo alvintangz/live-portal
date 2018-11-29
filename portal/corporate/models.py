@@ -1,18 +1,31 @@
 from django.db import models
+from .constants.corporate_individual_types import CORPORTATE_INDIVIDUAL_TYPES
+from users.constants.partner_types import PARTNER_TYPES_TO_DELEGATES
+from portal.functions import resize_and_convert
+from django.db.models.query import QuerySet
+import math
+from .managers import (
+	CorporateIndividualManager,
+	MentorManager,
+	JudgeManager,
+	SpeakerManager,
+	NetworkerManager
+)
 
 class CorporateOrganization(models.Model):
 
 	name = models.CharField('name',
-		max_length=150)
+		max_length=40)
 
 	description = models.TextField('description',
-		null=True,
-		blank=True)
+		blank=True,
+		help_text="Optional.")
 
 	logo = models.ImageField('logo',
 		null=True,
 		blank=True,
-		help_text="<strong>It is highly recommended that a logo should be uploaded if they are a partner.</strong>")
+		help_text=("<strong>It is highly recommended that a logo should be " +
+			"uploaded if they are a partner.</strong>"))
 
 	partner = models.BooleanField('is a partner',
 		default=False,
@@ -20,47 +33,108 @@ class CorporateOrganization(models.Model):
 
 	partner_type = models.CharField('partner type',
 		blank=True,
-		max_length=50,
-		help_text="Leave blank if organization is not a partner. This is viewable to delegates if organization is a partner. <br/>i.e. Title Partner")
+		max_length=60,
+		choices=PARTNER_TYPES_TO_DELEGATES,
+		help_text=("Leave blank if organization is not a partner. " +
+			"This is viewable to delegates if organization is a partner. " +
+			"As well, this will determine the ordering when partners listed." +
+			"<br/>i.e. Title Partner"))
 
 	class Meta:
 		verbose_name = "corporate organization"
+		ordering = ['partner_type']
 
 	def __str__(self):
 		return self.name
 
 class CorporateIndividual(models.Model):
 
+	type_of = models.CharField('type of individual',
+		choices=CORPORTATE_INDIVIDUAL_TYPES,
+		max_length=10)
+
 	organization = models.ForeignKey(CorporateOrganization,
-		on_delete=models.SET_NULL,
-		null=True)
+		on_delete=models.CASCADE,
+		related_name="individuals")
+
+	position_org = models.CharField('position in their organization',
+		max_length=100)
 
 	full_name = models.CharField('full name',
-		max_length=150)
+		max_length=70)
 
 	profile_picture = models.ImageField('picture',
-		help_text="Please upload a 50x50 square ratio image.",
 		null=True,
-		blank=True)
+		blank=True,
+		help_text=("For best results, upload a 500px by 500px RGB picture. " +
+			"It will be resized and formatted automatically to that anyway."))
 
 	biography = models.TextField('biography',
-		help_text="Recommended to keep it short",
-		blank=True)
+		blank=True,
+		help_text="Recommended to keep this short.")
+
+	email = models.EmailField('Email',
+		blank=True,
+		help_text="Optional.")
+
+	linkedin = models.URLField('linkedin',
+		blank=True,
+		help_text="Optional.")
+
+	order = models.PositiveSmallIntegerField('order for listing',
+		help_text=("Order an individual for when they are listed. " +
+			"i.e. If Bob has 1 for order of listing and Alice has 2 for order" +
+			" of listing, then Bob will be shown before Alice when listed."))
+
+	objects = CorporateIndividualManager()
 
 	class Meta:
-		abstract = True
+		ordering = ['order']
+
+	def get_page(self, pagination=10):
+		counter = 1
+		for each in CorporateIndividual.objects.filter(type_of=self.type_of):
+			if each == self:
+				return str(math.trunc(counter / pagination) + 1)
+			counter += 1
+		return str(1)
+
+	def html_id(self):
+		return "%spk%s" % (
+			self.organization.name.lower().replace(" ", ""),
+			str(self.id))
+
+	def save(self):
+		super(CorporateIndividual, self).save()
+		if self.profile_picture:
+			resize_and_convert(self.profile_picture).save(
+				self.profile_picture.path)
 
 	def __str__(self):
-		return self.full_name + " of " + self.organization.name
+		return "%s of %s" % (
+			self.full_name,
+			self.organization.name)
 
 class Mentor(CorporateIndividual):
-	pass
+	objects = MentorManager()
+
+	class Meta:
+		proxy = True
 
 class Judge(CorporateIndividual):
-	pass
+	objects = JudgeManager()
+
+	class Meta:
+		proxy = True
 
 class Speaker(CorporateIndividual):
-	pass
+	objects = SpeakerManager()
+
+	class Meta:
+		proxy = True
 
 class Networker(CorporateIndividual):
-	pass
+	objects = NetworkerManager()
+
+	class Meta:
+		proxy = True

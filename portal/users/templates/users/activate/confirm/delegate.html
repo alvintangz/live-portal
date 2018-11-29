@@ -1,0 +1,108 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block title %}Activate Account{% endblock %}
+{% block contenttitle %}Activate Account{% endblock %}
+{% block contentsubtitle %}Confirm the information we have on record of you, and then proceed with enabling your account.{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt--8 pb-5">
+<div class="row justify-content-md-center">
+    <div class="col-xl-9 col-lg-8 order-2 order-lg-1">
+        {% if error %}
+            <div class="alert alert-danger mb-0">
+                <p class="m-0"><strong>An error has occurred with at least one of your entries.</strong><br/>Please fill in your details again with corrections, and proceed.</p>
+            </div>
+        {% endif %}
+        <div class="card bg-white">
+            <div class="card-body">
+                <p class="text-muted small">Your profile is public to all partners of LIVE for recruitement purposes. As such, you should make sure your profile is updated with relevant information.<br/><span class="text-danger">*</span> signifies that the field is mandatory.</p>
+                <form method="post" enctype="multipart/form-data" id="form">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <label for="{{form.resume.id_for_label}}">Profile Picture</label>
+                            <input type="file" id="{{form.profile_picture.id_for_label}}" class="form-control" name="{{form.profile_picture.name}}" accept="image/*">
+                            <small class="form-text text-muted">Not required but <strong>recommended</strong>. PNG or JPEG only.<br/><strong>Recommended that you resize your photo to 500px x 500px before upload, as we will automatically resize your picture to those dimensions.</strong></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.first_name.id_for_label }}" class="font-weight-bold">First Name <span class="text-danger">*</span></label>
+                            <input type="text" name="{{ form.first_name.html_name }}" id="{{ form.first_name.id_for_label }}" class="form-control" value="{{ form.first_name.value }}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.last_name.id_for_label }}" class="font-weight-bold">Last Name <span class="text-danger">*</span></label>
+                            <input type="text" name="{{ form.last_name.html_name }}" id="{{ form.last_name.id_for_label }}" class="form-control" value="{{ form.last_name.value }}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" value="{{ user.email }}" readonly />
+                            <small class="form-text text-muted">Cannot be changed, contact the IT Solutions Manager of LIVE if you have any concerns.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.linkedin.id_for_label }}">Linkedin Profile</label>
+                            <input type="url" name="{{ form.linkedin.html_name }}" id="{{ form.linkedin.id_for_label }}" class="form-control" value="{{ form.linkedin.value}}" placeholder="i.e. https://www.linkedin.com/in/justintrudeau/" />
+                            <small class="form-text text-muted">Not required but recommended. Ensure that the URL you enter is a valid linkedin link such as <strong>https://www.linkedin.com/in/PROFILE_URL</strong>.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.year_of_study.id_for_label }}" class="font-weight-bold">Year of Study <span class="text-danger">*</span></label>
+                            {{ form.year_of_study }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.school.id_for_label }}" class="font-weight-bold">School <span class="text-danger">*</span></label>
+                            {{ form.school }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.program.id_for_label }}" class="font-weight-bold">Program <span class="text-danger">*</span></label>
+                            <input type="text" name="{{ form.program.html_name }}" id="{{ form.program.id_for_label }}" class="form-control" value="{{ form.program.value }}" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.seeking_status.id_for_label }}" class="font-weight-bold">Seeking Status <span class="text-danger">*</span></label>
+                            {{ form.seeking_status }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.seeking_status.id_for_label }}">Phone Number</label>
+                            <input type="tel" name="{{ form.phone_number.html_name }}" id="{{ form.phone_number.id_for_label }}" class="form-control" value="{{ form.phone_number.value }}" maxlength="10" />
+                            <small class="form-text text-muted">You will receive text notifications.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.resume.id_for_label }}" class="font-weight-bold">Resume <span class="text-danger">*</span></label>
+                            <input type="file" id="{{ form.resume.id_for_label }}" class="form-control" name="{{ form.resume.name }}" accept=".pdf">
+                            <small class="form-text text-muted">PDF only. | <a href="{{ form.resume.value.url }}" download class="text-primary">Download Current Resume</a></small>
+                        </div>
+                    <input type="submit" value="Create Account" class="btn btn-1 btn-outline-primary" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-4 order-1 order-lg-2" style="max-width:500px;">
+        <div class="card bg-white">
+            {% if user.delegate.profile_picture %}
+            <img src="{{user.delegate.profile_picture.url}}" alt="{{user.get_full_name}}" class="img-fluid" />
+            {% else %}
+            <img src="{% static 'img/default-user.jpg' %}" alt="{{user.get_full_name}}" class="img-fluid" />
+            {% endif %}
+            <div class="card-body">
+                <p class="h2 text-uppercase text-secondary mt-0 mb-3 mb-md-0" style="line-height: 0.6;word-wrap: break-word;"><span class="h4 text-uppercase text-primary">Delegate</span><br/><span>{{ request.user.get_full_name }}</span></p>
+                <hr class="my-2" />
+                <ul class="list-unstyled my-1 mb-0 text-muted small" style="line-height: normal;">
+                    <li>{{ request.user.delegate.year_of_study }}</li>
+                    <li>{{ request.user.delegate.program }}</li>
+                    <li><strong>{{ request.user.delegate.school }}</strong></li>
+                </ul>
+            </div>
+        </div>
+        <div class="alert alert-warning mt-3">
+            <p class="mb-0 small">The card above is what our partners will see. It is <strong>highly</strong> recommended that you upload a professional picture of yourself.</p>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

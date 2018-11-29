@@ -1,0 +1,9 @@
+The LIVE Portal
+
+{{ message }}
+
+{{ sent_by }}
+University of Toronto Scarborough
+https://live-competition.org
+
+This email was sent automatically from the LIVE Competition Portal. If you think that you have been sent this email by mistake, please respond back to this email address.

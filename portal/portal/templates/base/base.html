@@ -3,9 +3,10 @@
 <html lang="en-CA">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <title>LIVE Competition Portal - {% block title %}{% endblock %}</title>
     <meta name="description" content="The LIVE Competition Portal is a platform for LIVE, in which this competition in itself is a platform to showcase elite talent amongst partners and delegates.">
-    <!-- Branding: Icons -->
+    {# Branding (Icons) #}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'branding/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'branding/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'branding/favicon-16x16' %}">
@@ -14,11 +15,14 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-config" content="{% static 'branding/browserconfig.xml' %}">
     <meta name="theme-color" content="#ffffff">
-    <!-- Fonts -->
+    {# Fonts: Futura Nova, Proxima Nova, Nunito #}
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">
     <link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
-    <!-- Custom CSS -->
+    {# CSS: Argon Dashboard #}
     <link type="text/css" href="{% static 'css/argon.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/brands.css" integrity="sha384-QT2Z8ljl3UupqMtQNmPyhSPO/d5qbrzWmFxJqmY7tqoTuT2YrQLEqzvVOP2cT5XW" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
     {% block headfiles %}
     {% endblock %}
 </head>

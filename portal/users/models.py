@@ -2,20 +2,16 @@ from .constants.universities import CANADIAN_UNIS
 from .constants.student_types import STUDENT_TYPES
 from .constants.seeking_statuses import SEEKING_STATUSES
 from .constants.partner_types import PARTNER_TYPES
-import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from .helpers import resume_upload_to, profile_picture_upload_to
+from portal.functions import resize_and_convert, hashid_encode
+import portal.variables as imp
 
 class Team(models.Model):
-
-	uuid = models.UUIDField(
-		'unique identifier',
-		default=uuid.uuid4,
-		editable=False,
+	
+	number = models.IntegerField('team number',
 		unique=True)
-
-	number = models.IntegerField(
-		'team number')
 
 	def __str__(self):
 		return 'Team {}'.format(self.number)
@@ -23,37 +19,43 @@ class Team(models.Model):
 class User(AbstractUser):
 
 	is_delegate = models.BooleanField('delegate status', default=False)
-	
+
 	is_partner = models.BooleanField('partner status', default=False)
 
-	uuid = models.UUIDField(
-		'unique identifier',
-		default=uuid.uuid4,
-		editable=False,
-		unique=True)
+	first_name = models.CharField('first name', max_length=30, blank=False)
 
-	activated = models.BooleanField(
-		'user has activated account',
+	last_name = models.CharField('last name', max_length=30, blank=False)
+
+	email = models.EmailField('email address', blank=False)
+
+	activated = models.BooleanField('activated account',
 		default=False)
 
+	agreed_terms = models.DateTimeField('agreed to all terms on',
+		blank=True,
+		null=True)
+
 	def set_delegate(self):
+		"""Sets user as a delegate."""
 		self.is_delegate = True
 
 	def set_partner(self):
+		"""Sets user as a partner."""
 		self.is_partner = True
 
-	def set_email(self, email):
-		self.set_email = email
+	def activation_link(self):
+		return hashid_encode(self.pk,
+			salt=imp.user_activation_urls["salt"],
+			min_length=imp.user_activation_urls["min_length"])
 
 class Delegate(models.Model):
 
-	user = models.OneToOneField(
-		User,
-		on_delete=models.SET_NULL,
-		null=True,
+	user = models.OneToOneField(User,
+		on_delete=models.CASCADE,
 		related_name='delegate')
 
 	profile_picture = models.ImageField('profile picture',
+		upload_to=profile_picture_upload_to,
 		blank=True)
 
 	year_of_study = models.CharField('year in school', max_length=40,
@@ -70,10 +72,12 @@ class Delegate(models.Model):
 		max_length=100,
 		blank=True)
 
-	resume = models.FileField('resume')
+	resume = models.FileField('resume',
+		upload_to=resume_upload_to)
 
 	phone_number = models.CharField('phone number',
-		max_length=10)
+		max_length=10,
+		blank=True)
 
 	team = models.ForeignKey(Team,
 		on_delete=models.SET_NULL,
@@ -83,51 +87,50 @@ class Delegate(models.Model):
 		max_length=80,
 		choices=SEEKING_STATUSES)
 
-	last_updated = models.DateTimeField('last updated profile',
-		blank=True,
-		null=True)
-
 	is_invisible = models.BooleanField('invisible to partners',
 		default=False,
-		help_text="Set this as True if you want to make this delegate invisible to partners. This option is used for testing purposes.")
+		help_text="Set this as True if you want to make this delegate " + 
+		"invisible to partners. This option is used for testing purposes.")
+
+	def save(self):
+		"""Resize profile picture before being saved."""
+		super(Delegate, self).save()
+		if self.profile_picture:
+			resize_and_convert(self.profile_picture).save(
+				self.profile_picture.path)
 
 	def __str__(self):
-		'''
-		Returns a string that represents the current Delegate.
+		"""Returns a string that represents the current Delegate.
 		e.g. Delegate: Alvin Tang (Team 5)
-		'''
+		"""
 		if self.team is None:
 			team_status = "Not in a team"
 		else: 
 			team_status = 'Team {}'.format(self.team.number)
 
-		return 'Delegate: {} {} ({})'.format(self.user.first_name, self.user.last_name, team_status)
+		return 'Delegate: {} {} ({})'.format(self.user.first_name,
+			self.user.last_name, team_status)
 
 class Partner(models.Model):
 
-	user = models.OneToOneField(
-		User,
-		on_delete=models.SET_NULL,
-		null=True,
+	user = models.OneToOneField(User,
+		on_delete=models.CASCADE,
 		related_name='partner')
 
-	company_name = models.CharField(
-		'company name',
+	company_name = models.CharField('company name',
 		max_length=130)
 
-	partner_package = models.CharField(
-		'package',
+	partner_package = models.CharField('package',
 		max_length=60,
 		choices=PARTNER_TYPES)
 
 	def __str__(self):
-		'''
-		Returns a string that represents the current Partner object.
+		"""Returns a string that represents the current Partner object.
 		e.g. Partner: Microsoft (Gold Package)
-		'''
+		"""
 		if self.partner_package is None:
 			package = "package not defined"
 		else:
-			package = '{} Package'.format(self.partner_package)
+			package = '%s Package' % (self.partner_package)
 
-		return 'Partner: {} ({})'.format(self.company_name, package)
+		return 'Partner: %s (%s)' % (self.company_name, package)

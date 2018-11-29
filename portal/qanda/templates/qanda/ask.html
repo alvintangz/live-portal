@@ -1,0 +1,86 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% url 'qanda-answers-all' as all_view %}
+{% url 'qanda-answers-faq' as faq_view %}
+
+{% block title %}Questions and Answers{% endblock %}
+{% block contenttitle %}Ask a Question{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='qanda' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<p class="mb-0 text-muted">View questions that other delegates have raised, and ask questions that other delegates might find helpful in this section.</p>
+				<hr class="my-3" />
+				<ul class="nav nav-pills nav-fill flex-column flex-sm-row">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'qanda-answers-all' %}"><i class="fas fa-comments mr-2"></i>Answers to Your Questions</a>
+						</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'qanda-answers-faq' %}"><i class="fas fa-exclamation-circle mr-2"></i>Answers to Frequently Asked Questions</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="{% url 'qanda-ask' %}"><i class="fas fa-hand-paper mr-2"></i>Ask a Question</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		{% if "success" in request.path %}
+		<div class="alert alert-success mb-0">
+			<p class="mb-0"><strong>Your question has been submitted.</strong> Please wait patiently for your question to be answered. When your question has been answered,
+				you will receive an email. If your question has not been answered after 5 business days, feel free to email us at <a href="mailto:contact@live-competition.org" class="text-white">contact@live-competition.org</a>.</p>
+		</div>
+		{% endif %}
+		{% if form.errors %}
+		<div class="alert alert-danger mb-0">
+			<p class="mb-0">There were some errors with your inputs. Please try again, while also correcting the following:</p>
+			{{ form.non_field_errors }}
+			<ul class="mb-0">
+				{% for field in form %}
+					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+		{% endif %}
+		<div class="card bg-white">
+			<div class="card-header text-uppercase">
+				<h3>Ask a Question</h3>
+			</div>
+			<div class="card-body">
+				<form action="{% url 'qanda-ask' %}" method="post">
+					{% csrf_token %}
+					<p>Ask questions that other delegates might find helpful. <strong>Do not ask questions that only affect you individually.</strong> Instead, you can email us at <a href="mailto:contact@live-competition.org">contact@live-competition.org</a>.<br/><span class="text-muted small"><span class="text-danger">*</span> signifies that the field is mandatory.</span></p>
+					<div class="form-group">
+						<label for="{{ form.question.id_for_label }}" class="font-weight-bold">Question <span class="text-danger">*</span></label>
+						<input type="text" name="{{ form.question.html_name }}" id="{{ form.question.id_for_label }}" maxlength="200" required class="form-control" autofocus>
+						<small class="form-text text-muted">{{ form.question.help_text }}</small>
+					</div>
+					<div class="form-group">
+						<div class="custom-control custom-checkbox">
+						<input type="checkbox" name="{{ form.by_anonymous.html_name }}" id="{{ form.by_anonymous.id_for_label }}" class="custom-control-input">
+						<label for="{{ form.by_anonymous.id_for_label }}" class="custom-control-label">Stay Anonymous in Posting</label>
+						</div>
+						<small class="form-text text-muted">{{ form.by_anonymous.help_text }}</small>
+					</div>
+					<input type="submit" value="Submit Question" class="btn btn-1 btn-outline-primary">
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

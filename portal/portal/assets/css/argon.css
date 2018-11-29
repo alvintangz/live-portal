@@ -14830,10 +14830,9 @@ textarea[resize="horizontal"] {
 
 .nav-pills .nav-link {
   padding: 0.75rem 1rem;
-  color: #00b7ff;
+  color: #0097d2;
   font-weight: 500;
   font-size: 0.875rem;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   background-color: #fff;
   transition: all 0.15s ease;
 }
@@ -15008,8 +15007,7 @@ textarea[resize="horizontal"] {
   margin-right: 0;
 }
 
-.navbar-vertical .navbar-brand-img,
-.navbar-vertical .navbar-brand > img {
+.navbar-vertical .navbar-brand-img {
   max-width: 100%;
   max-height: 2rem;
 }
@@ -15715,7 +15713,6 @@ textarea[resize="horizontal"] {
 @media (max-width: 767.98px) {
   .navbar-nav .nav-link {
     padding: .625rem 0;
-    color: #00b7ff !important;
   }
   .navbar-nav .dropdown-menu {
     box-shadow: none;
@@ -17180,4 +17177,41 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .scrollbar-inner .scroll-element.scroll-x {
   height: 3px;
   bottom: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .text-lead {
+  cursor: default;
+}
+
+::-moz-selection {
+  color: #fff;
+  background: #fb6107;
+}
+
+::selection {
+  color: #fff;
+  background: #fb6107;
+}
+
+::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e9ecef;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #adb5bd;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #8898aa;
+}
+
+.img-fluid {
+  flex-shrink: 0;
 }
