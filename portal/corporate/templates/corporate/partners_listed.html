@@ -71,7 +71,7 @@ ul.individuals li:last-child:after {
 					<div class="row">
 						<div class="col-12">
 				{% endif %}
-							<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">{{ partner.partner_type }} Partner</span><br>{{ partner.name }}</p>
+							<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">{{ partner.get_partner_type }} Partner</span><br>{{ partner.name }}</p>
 							{% if partner.description %}
 							<p class="text-muted mb-0">{{ partner.description }}</p>
 							{% endif %}

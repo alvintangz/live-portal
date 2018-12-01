@@ -1,6 +1,6 @@
+# django modules
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
-from django.http import HttpResponseForbidden, HttpResponseNotFound
 
 @login_required
 def viewByUser(request, delegateView=None, partnerView=None, redi='sign-in'):

@@ -50,7 +50,7 @@
                             {% if request.user.delegate.profile_picture %}
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" name="profile_picture-clear" id="profile_picture-clear_id" class="custom-control-input">
-                                <label for="profile_picture-clear_id" class="custom-control-label">Remove Current Profile Pictrue</label>
+                                <label for="profile_picture-clear_id" class="custom-control-label">Remove Current Profile Picture</label>
                             </div>
                             {% endif %}
                         </div>
@@ -96,7 +96,7 @@
     					<div class="form-group">
                     		<label for="{{ form.resume.id_for_label }}" class="font-weight-bold">Resume <span class="text-danger">*</span></label>
                     		<input type="file" id="{{ form.resume.id_for_label }}" class="form-control" name="{{ form.resume.name }}" accept=".pdf">
-                    		<small class="form-text text-muted">PDF only. | <a href="{{ form.resume.value.url }}" download class="text-primary">Download Current Resume</a></small>
+                    		<small class="form-text text-muted">10MB Limit. PDF only. | <a href="{{ form.resume.value.url }}" download class="text-primary">Download Current Resume</a></small>
     					</div>
 					<input type="submit" value="Submit Changes" class="btn btn-1 btn-outline-primary" />
 				</form>
@@ -111,7 +111,7 @@
 			<img src="{% static 'img/default-user.jpg' %}" alt="{{user.get_full_name}}" class="img-fluid" />
 			{% endif %}
     		<div class="card-body">
-				<p class="h2 text-uppercase text-secondary mt-0 mb-3 mb-md-0" style="line-height: 0.6;word-wrap: break-word;"><span class="h4 text-uppercase text-primary">Delegate</span><br/><span>{{ request.user.get_full_name }}</span></p>
+				<p class="h2 text-uppercase text-secondary mt-0 mb-3 mb-md-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">Delegate</span><br/><span>{{ request.user.get_full_name }}</span></p>
 				<hr class="my-2" />
 				<ul class="list-unstyled my-1 mb-0 text-muted small" style="line-height: normal;">
 					<li>{{ request.user.delegate.year_of_study }}</li>

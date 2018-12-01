@@ -1,0 +1,30 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block title %}403: Forbidden{% endblock %}
+{% block contenttitle %}403: Forbidden{% endblock %}
+{% block contentsubtitle %}Sorry, you don't have the correct permissions!{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt--8 pb-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-6 col-md-7">
+			<img src="{% static 'img/403.jpg' %}" alt="403 Forbidden" class="img-fluid">
+			<div class="card">
+				<div class="card-body">
+					<p class="mb-0 small text-muted">Photo by NeONBRAND on <a href="https://unsplash.com/photos/-Cmz06-0btw">Unsplash</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

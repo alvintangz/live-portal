@@ -2,7 +2,9 @@
 
 # The universities where most delegates come from
 COMMON_UNIVERSITIES = [
-	('University of Toronto','University of Toronto'),
+	('University of Toronto St. George','University of Toronto St. George'),
+	('University of Toronto Scarborough','University of Toronto Scarborough'),
+	('University of Toronto Mississauga','University of Toronto Mississauga'),
 	('Ryerson University','Ryerson University'),
 	('York University','York University'),
 	('University of Western Ontario','University of Western Ontario'),

@@ -14,11 +14,12 @@ SECRET_KEY = '#_6j@i@j*=sb6y5+6g25@x@su8)-ju*q9@32i=@z&9!^6t9whz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 # Application definition
 
 INSTALLED_APPS = [
+	'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -106,7 +107,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -121,6 +122,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     'portal/assets/',
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "assets/")
 
 AUTH_USER_MODEL = 'users.User'
 

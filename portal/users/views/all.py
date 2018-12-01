@@ -13,11 +13,14 @@ from django.urls import reverse_lazy
 
 def loginView(request):
 	"""A view for logging in."""
-	return auth_views.LoginView.as_view(template_name='users/sign_in.html')(request)
+	return auth_views.LoginView.as_view(
+		template_name='users/sign_in.html',
+		redirect_authenticated_user=True)(request)
 
 def logoutView(request):
 	"""A view for logging out."""
-	return auth_views.LogoutView.as_view(template_name='users/sign_out.html')(request)
+	return auth_views.LogoutView.as_view(
+		template_name='users/sign_out.html')(request)
 
 def passwordForgottenView(request):
 	"""A view for forgetting passwords."""

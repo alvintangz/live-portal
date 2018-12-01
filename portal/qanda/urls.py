@@ -11,7 +11,7 @@ from .views import (
 urlpatterns = [
 	# Auto redirect to all answers page
 	path('',
-		RedirectView.as_view(pattern_name='qanda-answers-all'),
+		RedirectView.as_view(pattern_name='qanda-ask'),
 		name='qanda'),
 	path('answers/all', AllAnswersListView.as_view(), name='qanda-answers-all'),
 	path('answers/faq', FAQAnswersListView.as_view(), name='qanda-answers-faq'),

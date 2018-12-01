@@ -3,7 +3,7 @@ import uuid
 
 def submission_upload_to(instance, filename):
 	path = "rounds/submissions/"
-	file = "%s_%s" % (uuid.uuid1(), filename)
+	file = "%s_%s" % (uuid.uuid4(), filename)
 	return os.path.join(path, file)
 
 # from portal.functions import hashid_encode

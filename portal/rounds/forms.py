@@ -1,8 +1,16 @@
+# django modules
 from django import forms
 from django.core.validators import FileExtensionValidator
+from django.template.defaultfilters import filesizeformat
+from django.conf import settings
+# models
 from .models import Round, Submission, AcceptedRoundFile
+# constants
 from rounds.constants.filetypes import FILETYPES
+# helpers
 import datetime
+
+MAX_UPLOAD_SIZE = 10485760
 
 class RoundUploadForm(forms.ModelForm):
 	class Meta:
@@ -44,9 +52,19 @@ class RoundUploadForm(forms.ModelForm):
 
 		for field_name, field_value in self.cleaned_data.items():
 			if bool(field_value) is True:
+				if field_value.size > MAX_UPLOAD_SIZE:
+					self.add_error(field_name, 
+						('Please keep filesize under %s. Current filesize is %s') 
+						% (filesizeformat(MAX_UPLOAD_SIZE), 
+						filesizeformat(field_value.size)))
+					#raise forms.ValidationError(
+					#	('Please keep filesize under %s. Current filesize %s') 
+					#		% (filesizeformat(MAX_UPLOAD_SIZE), 
+					#		filesizeformat(field_value.size)))
+					return False
 				return valid
-		
-		return not valid
+
+		return False
 
 	def save(self, commit=True, *args, **kwargs):
 		team = kwargs.pop('team', None)

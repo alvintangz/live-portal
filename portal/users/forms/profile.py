@@ -1,7 +1,14 @@
+# django modules
 from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator
+from django.template.defaultfilters import filesizeformat
 from django import forms
+# models
 from users.models import Delegate
+# helpers
 import re
+
+MAX_UPLOAD_SIZE = 1
 
 class DelegateProfileUpdateForm(forms.ModelForm):
 	"""A form with basic delegate information."""
@@ -33,12 +40,14 @@ class DelegateProfileUpdateForm(forms.ModelForm):
 		if not valid:
 			return valid
 
+		# ADD FILE FORM VALIDATION
+
 		# If linkedin profile is not blank
 		if self.cleaned_data['linkedin'] != "":
 			# Regex from: https://bit.ly/2zY11AG
 			regex = "^https:\\/\\/[a-z]{2,3}\\.linkedin\\.com\\/.*$"
 			if not re.match(regex, self.cleaned_data['linkedin']):
-				return not valid
+				return False
 
 		# If phone number is not blank
 		if self.cleaned_data['phone_number'] != "":
@@ -47,7 +56,7 @@ class DelegateProfileUpdateForm(forms.ModelForm):
 				if not len(str(num)) == 10:
 					return not valid
 			except ValueError:
-				return not valid
+				return False
 
 		# Just return valid
 		return valid

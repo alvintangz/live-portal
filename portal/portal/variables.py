@@ -80,3 +80,10 @@ user_activation_urls = {
 	"salt": 'bamblakat ayeee',
 	"min_length": 12,
 }
+
+django_messages = {
+	"not_activated": ("Your account exists, but has was not activated. " +
+		"Please activate your account first, before logging in."),
+	"restricted": ("You are entering a restricted part of the portal which is "
+		+ "only meant for another type of user to see."),
+}

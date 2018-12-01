@@ -31,21 +31,15 @@
 		</div>
 		{% endif %}
 		{% if widget.image_widget %}
-			{% if widget.external_link %}
-			<a href="{{ widget.external_link }}" class="d-block">
-			{% endif %}
-			<img src="{{ widget.image_widget.image.url }}" class="img-fluid" />
-			{% if widget.external_link %}
-			</a>
-			{% endif %}
+		<img src="{{ widget.image_widget.image.url }}" class="img-fluid" />
+		{% if widget.external_link %}
+		<a href="{{ widget.external_link }}" class="btn btn-primary">Learn More</a>
+		{% endif %}
 		{% elif widget.text_widget %}
 			<div class="card-body" style="overflow-y:auto; height:300px">
-				{% if widget.external_link %}
-				<a href="{{ widget.external_link }}" class="text-dark">
-				{% endif %}
 				<p>{{ widget.text_widget.text }}</p>
 				{% if widget.external_link %}
-				</a>
+				<a href="{{ widget.external_link }}" class="btn btn-primary">Learn More</a>
 				{% endif %}
 			</div>
 		{% endif %}
@@ -54,10 +48,8 @@
 	{% endif %}
 {% empty %}
 	<div class="col mb-4">
-		<div class="card bg-white">
-			<div class="card-body">
-				<p class="mb-0"><strong>We have no new news for you to view at the moment.</strong> Check back later!</p>
-			</div>
+		<div class="alert alert-danger">
+			<p class="mb-0"><strong>We have no new news for you to view at the moment.</strong> Check back later!</p>
 		</div>
 	</div>
 {% endfor %}

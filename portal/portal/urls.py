@@ -7,10 +7,10 @@ from django.conf.urls.static import static
 from django.conf.urls import handler403, handler404
 # views
 from contacts import views
-from .views import page_not_found, forbidden
 from notifications.views import mainView
 
 urlpatterns = [
+	path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
 	path('', mainView, name='index'),
 	path('account/', include('users.urls')),
 	path('corporate/', include('corporate.urls')),
@@ -28,3 +28,7 @@ urlpatterns = [
 		name='privacy_policy'),
 	path('executive/', admin.site.urls, name='admin'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if not settings.DEBUG:
+	handler404 = 'portal.views.page_not_found_view'
+	handler500 = 'portal.views.forbidden_view'

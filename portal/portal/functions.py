@@ -5,6 +5,7 @@ from django.template.loader import get_template
 # helpers
 from hashids import Hashids
 from twilio.rest import Client
+from twilio.base.exceptions import TwilioRestException
 from PIL import Image
 # constants
 import portal.variables as imp
@@ -35,10 +36,13 @@ def send_sms(to, body):
 	account_sid = imp.twilio["sid"]
 	auth_token  = imp.twilio["token"]
 	client = Client(account_sid, auth_token)
-	message = client.messages.create(
-		to=to,
-		from_=imp.twilio["number"],
-		body=body)
+	try:
+		message = client.messages.create(
+			to=to,
+			from_=imp.twilio["number"],
+			body=body)
+	except TwilioRestException:
+		pass
 
 def default_strftime(datetime):
 	return datetime.strftime("%I:%M %p on %A, %B %d, %Y")
