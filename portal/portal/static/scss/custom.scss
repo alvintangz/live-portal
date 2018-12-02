@@ -1,0 +1,38 @@
+// Custom CSS on top
+
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6,.text-lead {
+	cursor:default;
+}
+
+::-moz-selection {
+	color:color("white");
+	background:color("orange");
+}
+
+::selection {
+	color:color("white");
+	background:color("orange");
+}
+
+::-webkit-scrollbar {
+    width: 0.75rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background:gray("200");
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb { 
+    background:gray("500");
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background:gray("600");
+}
+
+.img-fluid {
+	flex-shrink: 0;
+}

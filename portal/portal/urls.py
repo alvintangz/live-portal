@@ -10,7 +10,6 @@ from contacts import views
 from notifications.views import mainView
 
 urlpatterns = [
-	path('jet/', include('jet.urls', 'jet')),  # Django JET URLS
 	path('', mainView, name='index'),
 	path('account/', include('users.urls')),
 	path('corporate/', include('corporate.urls')),
@@ -30,5 +29,5 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
-	handler404 = 'portal.views.page_not_found_view'
-	handler500 = 'portal.views.forbidden_view'
+	handler500 = 'portal.views.forbidden'
+	handler404 = 'portal.views.page_not_found'

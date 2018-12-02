@@ -12,26 +12,25 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#_6j@i@j*=sb6y5+6g25@x@su8)-ju*q9@32i=@z&9!^6t9whz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
-	'jet',
+	'users.apps.UsersConfig',
+    'notifications.apps.NotificationsConfig',
+    'rounds.apps.RoundsConfig',
+    'corporate.apps.CorporateConfig',
+    'contacts.apps.ContactsConfig',
+    'qanda.apps.QandaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users.apps.UsersConfig',
-    'notifications.apps.NotificationsConfig',
-    'rounds.apps.RoundsConfig',
-    'corporate.apps.CorporateConfig',
-    'contacts.apps.ContactsConfig',
-    'qanda.apps.QandaConfig',
 ]
 # Contacts, Users, Notifications, Rounds, Accepted done by Dec 1
 
@@ -112,18 +111,14 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
-STATIC_URL = '/assets/'
-
+STATIC_URL = '/static/'
 LOGIN_URL = 'sign-in'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = ''
+LOGOUT_REDIRECT_URL = 'sign-out'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    'portal/assets/',
-]
+STATICFILES_DIRS = ['portal/static/']
 
-STATIC_ROOT = os.path.join(BASE_DIR, "assets/")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 AUTH_USER_MODEL = 'users.User'
 
