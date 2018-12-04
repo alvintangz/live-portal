@@ -50,7 +50,7 @@ class DelegateUserAdmin(UserAdmin):
 		return User.objects.filter(is_delegate=True
 			).order_by('delegate__team__number')
 
-DelegateUserAdmin.fieldsets += (('activated',{'fields': ('activated',)}),)
+DelegateUserAdmin.fieldsets += (('Activated',{'fields': ('activated','agreed_terms')}),)
 
 # PARTNERS
 

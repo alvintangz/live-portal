@@ -8,13 +8,12 @@ from .models import PortalWidget
 
 def mainView(request):
 	"""A view for the main page."""
-	if request.user.is_authenticated:
-		if request.user.is_superuser:
-			return redirect('/executive/')
-		else:
-			# What's New, view with all the widgets
-			return viewByUser(request, DelegateMainView.as_view()(request),
-				PartnerMainView.as_view()(request))
+	if request.user.is_superuser:
+		return redirect('/executive/')
+	elif hasattr(request.user, 'delegate') or hasattr(request.user, 'partner'):
+		# What's New, view with all the widgets
+		return viewByUser(request, DelegateMainView.as_view()(request),
+			PartnerMainView.as_view()(request))
 	else:
 		return redirect('sign-in')
 

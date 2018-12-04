@@ -1,0 +1,30 @@
+{% extends 'base/main.html' %}
+{% load static %}
+
+{% block title %}404: Page Not Found{% endblock %}
+{% block contenttitle %}404: Page Not Found{% endblock %}
+{% block contentsubtitle %}You're lost! You might have read the map upside down, or we might have given you the wrong directions.{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt--8 pb-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-6 col-md-7">
+			<img src="{% static 'img/404.jpg' %}" alt="404 Page Not Found" class="img-fluid">
+			<div class="card">
+				<div class="card-body">
+					<p class="mb-0 small text-muted">Photo by Regis F on <a href="https://unsplash.com/photos/Urd-8c7N_pQ">Unsplash</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

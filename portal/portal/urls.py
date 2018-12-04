@@ -29,5 +29,5 @@ urlpatterns = [
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
-	handler500 = 'portal.views.forbidden'
+	handler403 = 'portal.views.forbidden'
 	handler404 = 'portal.views.page_not_found'

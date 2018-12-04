@@ -14,8 +14,7 @@ from django.urls import reverse_lazy
 def loginView(request):
 	"""A view for logging in."""
 	return auth_views.LoginView.as_view(
-		template_name='users/sign_in.html',
-		redirect_authenticated_user=True)(request)
+		template_name='users/sign_in.html')(request)
 
 def logoutView(request):
 	"""A view for logging out."""

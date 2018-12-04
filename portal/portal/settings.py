@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#_6j@i@j*=sb6y5+6g25@x@su8)-ju*q9@32i=@z&9!^6t9whz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -42,6 +42,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'portal.urls'
@@ -113,8 +114,7 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 LOGIN_URL = 'sign-in'
-LOGIN_REDIRECT_URL = ''
-LOGOUT_REDIRECT_URL = 'sign-out'
+LOGIN_REDIRECT_URL = 'index'
 
 STATICFILES_DIRS = ['portal/static/']
 
