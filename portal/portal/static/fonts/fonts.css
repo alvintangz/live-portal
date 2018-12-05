@@ -46,8 +46,8 @@
 
 @font-face {
     font-family: 'FuturaPT';
-    src: url('FuturaPTBold.otf') format('opentype');
     src: url('FuturaPT-Bold.ttf') format('truetype');
+    src: url('FuturaPTBold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }

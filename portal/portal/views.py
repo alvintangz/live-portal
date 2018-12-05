@@ -5,3 +5,7 @@ def page_not_found(request, *args, **kwargs):
 
 def forbidden(request, *args, **kwargs):
 	return render(request, template_name="error/403.html", status=403)
+
+def acme(request):
+	return render(request, 
+		template_name="acme/ikxxZ-5MtFGmZbTZbnePfgj-J7SWiS1Usp86JmxvSQw")

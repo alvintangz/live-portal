@@ -2,6 +2,7 @@
 from django.core.mail import EmailMultiAlternatives
 from django.utils.safestring import mark_safe
 from django.template.loader import get_template
+from django.core.files.storage import default_storage
 # helpers
 from hashids import Hashids
 from twilio.rest import Client
@@ -25,12 +26,14 @@ def hashid_decode(value, salt=imp.encoded_urls["salt"], min_length=imp.encoded_u
 	else:
 		return hashids.decode(value)[0]
 
-def resize_and_convert(image, width=500, height=500):
-	image = Image.open(image)
+def resize_and_convert(imagel, width=500, height=500):
+	image = Image.open(imagel)
 	image = image.resize((width, height), Image.ANTIALIAS)
 	# Convert to RGB with no transparency
 	image = image.convert("RGB")
-	return image
+	storage_path = default_storage.open(imagel.path, "wb")
+	image.save(storage_path, 'jpg')
+	storage_path.close()
 
 def send_sms(to, body):
 	account_sid = imp.twilio["sid"]

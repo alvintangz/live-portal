@@ -8,6 +8,7 @@ from django.conf.urls import handler403, handler404
 # views
 from contacts import views
 from notifications.views import mainView
+from .views import acme
 
 urlpatterns = [
 	path('', mainView, name='index'),
@@ -26,6 +27,7 @@ urlpatterns = [
 		TemplateView.as_view(template_name="static/privacy_policy.html"),
 		name='privacy_policy'),
 	path('executive/', admin.site.urls, name='admin'),
+	path('.well-known/acme-challenge/ikxxZ-5MtFGmZbTZbnePfgj-J7SWiS1Usp86JmxvSQw', acme, name="acme"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:

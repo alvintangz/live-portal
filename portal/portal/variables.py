@@ -44,13 +44,13 @@ email_messages = {
 		"plain": ("Hello %s. Your LIVE Portal account is now activated. " +
 			"You can access the portal at " + urls["portal"] + ". It is " +
 			"recommended that you update your password to one that you can " +
-			"remember. As well, you can now view the rounds, especially the " +
-			"preliminary round. Good luck."),
+			"remember. As well, you can now upload you and your team's solution" +
+			" to the prelimenary round. Good luck."),
 		"html": ("<p>Hello <strong>%s</strong>,</p><p>Your LIVE Portal account "
 			+ " is now activated. You can access the portal at " + 
 			urls["portal"] + ". It is recommended that you update your " +
-			"password to one that you can remember. As well, you can now view " +
-			"the rounds, especially the preliminary round. Good luck.</p>")
+			"password to one that you can remember. As well, you can now upload " +
+			"you and your team's solution to the prelimenary round. Good luck.</p>")
 	},
 	"delegate_creation": {
 		"plain": ("Hello %s. First off, we would like to welcome you to an " + 

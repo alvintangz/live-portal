@@ -101,8 +101,7 @@ class Delegate(models.Model):
 		number = self.initial_number
 		super(Delegate, self).save()
 		if self.profile_picture:
-			resize_and_convert(self.profile_picture).save(
-				self.profile_picture.path)
+			resize_and_convert(self.profile_picture)
 		if self.phone_number != "" and self.phone_number != number:
 			send_sms("+1"+self.phone_number, 
 				imp.sms_messages["added_number"] % self.user.first_name)
