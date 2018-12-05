@@ -13,7 +13,7 @@ SECRET_KEY = '#_6j@i@j*=sb6y5+6g25@x@su8)-ju*q9@32i=@z&9!^6t9whz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['portal.live-competition.org']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -68,11 +68,18 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'live-portal',
+        'USER': 'alvintang@live-portal',
+        'PASSWORD': 'arELee59x9',
+        'HOST': 'live-portal.database.windows.net',
+        'PORT': '1433',
 
+        'OPTIONS': {
+            'driver': 'ODBC Driver 13 for SQL Server',
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -142,3 +149,8 @@ AZURE_ACCOUNT_NAME = "liveportal2019"
 AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
 MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+# PRODUCTION SETTINGS
+ADMINS = [('Alvin', 'alvin.tang@mail.utoronto.ca'),]
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
