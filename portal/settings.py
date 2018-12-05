@@ -68,11 +68,18 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+        'ENGINE': 'sql_server.pyodbc',
+        'NAME': 'live-portal',
+        'USER': 'alvintang@live-portal',
+        'PASSWORD': 'arELee59x9',
+        'HOST': 'live-portal.database.windows.net',
+        'PORT': '1433',
 
+        'OPTIONS': {
+            'driver': 'ODBC Driver 13 for SQL Server',
+        },
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
