@@ -1,4 +1,4 @@
-# IMPORTANT VARIABLES - DO NOT SHARE
+import os
 
 urls = {
 	"portal": "https://portal.live-competition.org",
@@ -13,19 +13,19 @@ encoded_urls = {
 email = {
 	"backend": 'django.core.mail.backends.smtp.EmailBackend',
 	#"backend": 'django.core.mail.backends.console.EmailBackend',
-	"host": 'smtp.sendgrid.net',
-	"port": 587,
+	"host": os.environ.get('LP_EMAIL_HOST', ''),
+	"port": os.environ.get('LP_EMAIL_PORT', ''),
 	"tls": True,
 	"user": 'apikey',
-	"password": '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',
+	"password": os.environ.get('LP_EMAIL_PASSWORD', ''),
 	"from": 'contact@live-competition.org',
 	"from_more": 'LIVE Competition <contact@live-competition.org>',
 }
 
 twilio = {
-	"sid": 'AC1f3ababace34b895c68707c32ac74315',
-	"token": '714e479cde7ff140367e7a857082845b',
-	"number": '+16479515718',
+	"sid": os.environ.get('LP_TWILIO_SID', ''),
+	"token": os.environ.get('LP_TWILIO_TOKEN', ''),
+	"number": os.environ.get('LP_TWILIO_NUMBER', ''),
 }
 
 sms_messages = {

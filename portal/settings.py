@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#_6j@i@j*=sb6y5+6g25@x@su8)-ju*q9@32i=@z&9!^6t9whz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-if not settings.DEBUG:
+if not DEBUG:
 	INSTALLED_APPS += ['storages',]
 
 MIDDLEWARE = [
@@ -68,7 +68,7 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if settings.DEBUG:
+if DEBUG:
 	DATABASES = {
     	'default': {
         	'ENGINE': 'django.db.backends.sqlite3',
@@ -79,11 +79,11 @@ else:
 	DATABASES = {
     	'default': {
         	'ENGINE': 'sql_server.pyodbc',
-        	'NAME': 'live-portal',
-        	'USER': 'alvintang@live-portal',
-        	'PASSWORD': 'arELee59x9',
-        	'HOST': 'live-portal.database.windows.net',
-        	'PORT': '1433',
+        	'NAME': os.environ.get('LP_DB_NAME', ''),
+        	'USER': os.environ.get('LP_DB_USER', ''),
+        	'PASSWORD': os.environ.get('LP_DB_PASSWORD', ''),
+        	'HOST': os.environ.get('LP_DB_HOST', ''),
+        	'PORT': os.environ.get('LP_DB_PORT', ''),
         	'OPTIONS': {
             	'driver': 'ODBC Driver 13 for SQL Server',
         	},
@@ -124,7 +124,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['portal/static/']
 
-if not settings.DEBUG:
+if not DEBUG:
 	DEFAULT_FILE_STORAGE = 'portal.custom_azure.AzureMediaStorage'
 	STATICFILES_STORAGE = 'portal.custom_azure.AzureStaticStorage'
 	STATIC_LOCATION = "static"
@@ -156,7 +156,7 @@ EMAIL_USE_TLS = imp.email["tls"]
 DEFAULT_FROM_EMAIL = imp.email["from"]
 
 # Other production settings
-if not settings.DEBUG:
+if not DEBUG:
 	ADMINS = [('Alvin', 'alvin.tang@mail.utoronto.ca'),]
 	CSRF_COOKIE_SECURE = False
 	SESSION_COOKIE_SECURE = False
