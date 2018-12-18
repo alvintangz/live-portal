@@ -1,4 +1,4 @@
-<img src="../master/portal/portal/assets/branding/logo.png" alt="LIVE Portal" width="220px"/>
+<img src="/portal/static/branding/logo.png" alt="LIVE Portal" width="220px"/>
 
 ## Description of the Portal
 A web application used by both delegates and partners during LIVE Competition in 2019. This application is sponsored and powered by Microsoft Azure.
