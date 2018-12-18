@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#_6j@i@j*=sb6y5+6g25@x@su8)-ju*q9@32i=@z&9!^6t9whz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -30,8 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'storages',
 ]
+
+if not settings.DEBUG:
+	INSTALLED_APPS += ['storages',]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -66,20 +68,27 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'sql_server.pyodbc',
-        'NAME': 'live-portal',
-        'USER': 'alvintang@live-portal',
-        'PASSWORD': 'arELee59x9',
-        'HOST': 'live-portal.database.windows.net',
-        'PORT': '1433',
-
-        'OPTIONS': {
-            'driver': 'ODBC Driver 13 for SQL Server',
-        },
-    },
-}
+if settings.DEBUG:
+	DATABASES = {
+    	'default': {
+        	'ENGINE': 'django.db.backends.sqlite3',
+        	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    	}
+	}
+else:
+	DATABASES = {
+    	'default': {
+        	'ENGINE': 'sql_server.pyodbc',
+        	'NAME': 'live-portal',
+        	'USER': 'alvintang@live-portal',
+        	'PASSWORD': 'arELee59x9',
+        	'HOST': 'live-portal.database.windows.net',
+        	'PORT': '1433',
+        	'OPTIONS': {
+            	'driver': 'ODBC Driver 13 for SQL Server',
+        	},
+    	},
+	}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -104,21 +113,28 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'America/Toronto'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['portal/static/']
 
-# LOGIN
+if not settings.DEBUG:
+	DEFAULT_FILE_STORAGE = 'portal.custom_azure.AzureMediaStorage'
+	STATICFILES_STORAGE = 'portal.custom_azure.AzureStaticStorage'
+	STATIC_LOCATION = "static"
+	MEDIA_LOCATION = "media"
+	AZURE_ACCOUNT_NAME = "liveportal2019"
+	AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+	STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+	MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+# User authentication
 LOGIN_URL = 'sign-in'
 LOGIN_REDIRECT_URL = 'index'
 AUTH_USER_MODEL = 'users.User'
@@ -126,13 +142,11 @@ AUTH_USER_MODEL = 'users.User'
 # Sessions time limit
 SESSION_COOKIE_AGE = 86400
 
-# MEDIA - Uploaded Files
+# Media - Files uploaded by user
 MEDIA_URL = "/media/"
 MEDIA_ROOT = "media/"
 
-# FILE SIZE WHEN UPLOADING
-
-# EMAIL
+# Email
 EMAIL_BACKEND = imp.email["backend"]
 EMAIL_HOST = imp.email["host"]
 EMAIL_PORT = imp.email["port"]
@@ -141,16 +155,8 @@ EMAIL_HOST_PASSWORD = imp.email["password"]
 EMAIL_USE_TLS = imp.email["tls"]
 DEFAULT_FROM_EMAIL = imp.email["from"]
 
-DEFAULT_FILE_STORAGE = 'portal.custom_azure.AzureMediaStorage'
-STATICFILES_STORAGE = 'portal.custom_azure.AzureStaticStorage'
-STATIC_LOCATION = "static"
-MEDIA_LOCATION = "media"
-AZURE_ACCOUNT_NAME = "liveportal2019"
-AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-
-# PRODUCTION SETTINGS
-ADMINS = [('Alvin', 'alvin.tang@mail.utoronto.ca'),]
-CSRF_COOKIE_SECURE = False
-SESSION_COOKIE_SECURE = False
+# Other production settings
+if not settings.DEBUG:
+	ADMINS = [('Alvin', 'alvin.tang@mail.utoronto.ca'),]
+	CSRF_COOKIE_SECURE = False
+	SESSION_COOKIE_SECURE = False
