@@ -116,8 +116,7 @@ class CorporateIndividual(models.Model):
 	def save(self):
 		super(CorporateIndividual, self).save()
 		if self.profile_picture:
-			resize_and_convert(self.profile_picture).save(
-				self.profile_picture.path)
+			resize_and_convert(self.profile_picture)
 
 	def __str__(self):
 		return "%s of %s" % (

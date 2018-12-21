@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#_6j@i@j*=sb6y5+6g25@x@su8)-ju*q9@32i=@z&9!^6t9whz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-if not DEBUG:
+if DEBUG:
 	INSTALLED_APPS += ['storages',]
 
 MIDDLEWARE = [
@@ -124,7 +124,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['portal/static/']
 
-if not DEBUG:
+if DEBUG:
 	DEFAULT_FILE_STORAGE = 'portal.custom_azure.AzureMediaStorage'
 	STATICFILES_STORAGE = 'portal.custom_azure.AzureStaticStorage'
 	STATIC_LOCATION = "static"

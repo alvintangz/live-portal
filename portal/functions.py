@@ -2,12 +2,17 @@
 from django.core.mail import EmailMultiAlternatives
 from django.utils.safestring import mark_safe
 from django.template.loader import get_template
-from django.core.files.storage import default_storage as storage
+from portal.custom_azure import AzureMediaStorage
+from django.core.files import File
+from django.conf import settings
 # helpers
 from hashids import Hashids
 from twilio.rest import Client
 from twilio.base.exceptions import TwilioRestException
 from PIL import Image
+import io
+import os
+from azure.storage.blob.blockblobservice import BlockBlobService
 # constants
 import portal.variables as imp
 
@@ -26,23 +31,25 @@ def hashid_decode(value, salt=imp.encoded_urls["salt"], min_length=imp.encoded_u
 	else:
 		return hashids.decode(value)[0]
 
-def resize_and_convert(image, width=500, height=500):
-	rc = storage.open(image.name, "w")
-	image.resize((width, height), Image.ANTIALIAS)
-	# Convert to RGB with no transparency
-	image.convert("RGB")
-	image.save(rc, 'jpg')
-	rc.close()
-	return image
-
-	image = Image.open(imagel)
-	image = image.resize((width, height), Image.ANTIALIAS)
-	# Convert to RGB with no transparency
-	image = image.convert("RGB")
-	storage_path = default_storage.open(imagel.path, "wb")
-	image.save(storage_path, 'jpg')
-	storage_path.close()
-
+def resize_and_convert(image, width=500, height=500, container="media"):
+	if settings.DEBUG:
+		img = Image.open(image)
+		img = img.resize((width, height), Image.ANTIALIAS)
+		img = img.convert("RGB")
+		img.save(image, format="JPEG")
+	else:
+		temp = io.BytesIO()
+		img = Image.open(image)
+		img = img.resize((width, height), Image.ANTIALIAS)
+		img = img.convert("RGB")
+		img.save(temp, format="JPEG")
+		bbs = BlockBlobService(account_name='liveportal2019', 
+			account_key=os.environ.get('LP_AZURE_STORAGE_KEY', ''))
+		bbs.create_blob_from_bytes(
+			container, 
+			image.name,
+			temp.getvalue())
+	
 def send_sms(to, body):
 	account_sid = imp.twilio["sid"]
 	auth_token  = imp.twilio["token"]

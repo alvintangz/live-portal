@@ -57,7 +57,8 @@ class Delegate(models.Model):
 
 	profile_picture = models.ImageField('profile picture',
 		upload_to=profile_picture_upload_to,
-		blank=True)
+		blank=True,
+		max_length=500)
 
 	year_of_study = models.CharField('year in school', max_length=40,
 		choices=STUDENT_TYPES)

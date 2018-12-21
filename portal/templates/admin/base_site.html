@@ -4,11 +4,9 @@
 {% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
 
 {% block branding %}
-<div style="background-color:white; padding:1rem">
-<a class="navbar-brand pb-0" href="/">
-	<img src="{% static 'branding/logo.png' %}" alt="LIVE Competition Portal 2019, powered by Microsoft Azure"style="max-height:3rem">
+<a href="/">
+	<h1>LIVE Portal - Admin</h1>
 </a>
-</div>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

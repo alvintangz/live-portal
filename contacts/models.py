@@ -52,5 +52,4 @@ class Contact(models.Model):
 		"""Resize profile picture before being saved."""
 		super(Contact, self).save()
 		if self.profile_picture:
-			resize_and_convert(self.profile_picture).save(
-				self.profile_picture.path)
+			resize_and_convert(self.profile_picture)

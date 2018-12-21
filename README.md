@@ -30,6 +30,7 @@ Delegates will be able to:
 - azure-storage-blob - v1.4.0 (in requirements.txt)
 - pyodbc - v4.0.24 (in requirements.txt)
 - django-pyodbc-azure - v2.1.0.0 (in requirements.txt)
+- django-import-export - v1.1.0 (in requirements.txt)
 
 ## The Build (on Windows)
 The production environment is built on a Docker image. These are instructions on development:
