@@ -163,3 +163,6 @@ if not DEBUG:
 	ADMINS = [('Alvin', 'alvin.tang@mail.utoronto.ca'),]
 	CSRF_COOKIE_SECURE = False
 	SESSION_COOKIE_SECURE = False
+
+# Import Export Transactions
+IMPORT_EXPORT_USE_TRANSACTIONS = True

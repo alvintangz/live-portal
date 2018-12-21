@@ -1,3 +1,4 @@
+from import_export.admin import ImportExportModelAdmin
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
@@ -21,7 +22,7 @@ class DelegateUser(User):
 		proxy = True
 
 @admin.register(DelegateUser)
-class DelegateUserAdmin(UserAdmin):
+class DelegateUserAdmin(UserAdmin, ImportExportModelAdmin):
 	"""Add the fields in Delegate on top of User, with specific form."""
 	list_display = (
 		'first_name',

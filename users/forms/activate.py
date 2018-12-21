@@ -14,7 +14,7 @@ class EmailForm(forms.Form):
 	password = forms.CharField(label="Password of Delegate")
 
 	def save(self):
-		send_email(subject="Acceptance: Access to Portal & Preliminaries ",
+		send_email(subject="Access to Portal & Preliminary Submission ",
 			receiver=self.cleaned_data["delegate_email"],
 			message=((imp.email_messages["delegate_creation"]["plain"])
 			 % (self.cleaned_data["delegate_name"],

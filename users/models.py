@@ -61,25 +61,30 @@ class Delegate(models.Model):
 		max_length=500)
 
 	year_of_study = models.CharField('year in school', max_length=40,
-		choices=STUDENT_TYPES)
+		choices=STUDENT_TYPES,
+		null=True)
 
 	school = models.CharField('currently attending',
 		max_length=150,
 		choices=CANADIAN_UNIS,
-		help_text='If the school is not listed, please contact the admin')
+		help_text='If the school is not listed, please contact the admin',
+		null=True)
 
-	program = models.CharField('program', max_length=150)
+	program = models.CharField('program', max_length=150, null=True)
 
 	linkedin = models.URLField('link to linkedin profile',
 		max_length=100,
-		blank=True)
+		blank=True,
+		null=True)
 
 	resume = models.FileField('resume',
-		upload_to=resume_upload_to)
+		upload_to=resume_upload_to,
+		null=True)
 
 	phone_number = models.CharField('phone number',
 		max_length=10,
-		blank=True)
+		blank=True,
+		null=True)
 
 	team = models.ForeignKey(Team,
 		on_delete=models.SET_NULL,
@@ -87,7 +92,8 @@ class Delegate(models.Model):
 
 	seeking_status = models.CharField('seeking status',
 		max_length=80,
-		choices=SEEKING_STATUSES)
+		choices=SEEKING_STATUSES,
+		null=True)
 
 	is_invisible = models.BooleanField('invisible to partners',
 		default=False,
