@@ -30,9 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
 ]
 
-if DEBUG:
+if not DEBUG:
 	INSTALLED_APPS += ['storages',]
 
 MIDDLEWARE = [
@@ -124,7 +125,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['portal/static/']
 
-if DEBUG:
+if not DEBUG:
 	DEFAULT_FILE_STORAGE = 'portal.custom_azure.AzureMediaStorage'
 	STATICFILES_STORAGE = 'portal.custom_azure.AzureStaticStorage'
 	STATIC_LOCATION = "static"
@@ -133,6 +134,8 @@ if DEBUG:
 	AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 	STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
 	MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+else:
+    STATIC_ROOT = '/static/'
 
 # User authentication
 LOGIN_URL = 'sign-in'
