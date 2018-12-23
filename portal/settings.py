@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'import_export',
 ]
 
-if not DEBUG:
+if True:
 	INSTALLED_APPS += ['storages',]
 
 MIDDLEWARE = [
@@ -69,24 +69,18 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if DEBUG:
+if True:
 	DATABASES = {
     	'default': {
-        	'ENGINE': 'django.db.backends.sqlite3',
-        	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    	}
-	}
-else:
-	DATABASES = {
-    	'default': {
-        	'ENGINE': 'sql_server.pyodbc',
-        	'NAME': os.environ.get('LP_DB_NAME', ''),
-        	'USER': os.environ.get('LP_DB_USER', ''),
-        	'PASSWORD': os.environ.get('LP_DB_PASSWORD', ''),
-        	'HOST': os.environ.get('LP_DB_HOST', ''),
-        	'PORT': os.environ.get('LP_DB_PORT', ''),
-        	'OPTIONS': {
-            	'driver': 'ODBC Driver 17 for SQL Server',
+		'ENGINE': 'sql_server.pyodbc',
+                'NAME': 'live-portal',
+                'USER': 'alvintang@live-portal',
+                'PASSWORD': 'arELee59x9',
+                'HOST': os.environ.get('LP_DB_HOST', ''),
+                'PORT': '1433',
+               	'OPTIONS': {
+	            	'driver': 'ODBC Driver 17 for SQL Server',
+			'connection_timeout': 5,
         	},
     	},
 	}
@@ -125,7 +119,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['portal/static/']
 
-if not DEBUG:
+if True:
 	DEFAULT_FILE_STORAGE = 'portal.custom_azure.AzureMediaStorage'
 	STATICFILES_STORAGE = 'portal.custom_azure.AzureStaticStorage'
 	STATIC_LOCATION = "static"
@@ -134,8 +128,6 @@ if not DEBUG:
 	AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 	STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
 	MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-else:
-    STATIC_ROOT = 'static/'
 
 # User authentication
 LOGIN_URL = 'sign-in'
@@ -159,7 +151,7 @@ EMAIL_USE_TLS = imp.email["tls"]
 DEFAULT_FROM_EMAIL = imp.email["from"]
 
 # Other production settings
-if not DEBUG:
+if True:
 	ADMINS = [('Alvin', 'alvin.tang@mail.utoronto.ca'),]
 	CSRF_COOKIE_SECURE = False
 	SESSION_COOKIE_SECURE = False
