@@ -135,7 +135,7 @@ if not DEBUG:
 	STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
 	MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 else:
-    STATIC_ROOT = '/static/'
+    STATIC_ROOT = 'static/'
 
 # User authentication
 LOGIN_URL = 'sign-in'

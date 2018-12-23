@@ -33,6 +33,13 @@ class DelegateProfileUpdateForm(forms.ModelForm):
 		self.fields["year_of_study"].widget.attrs["class"] = "form-control"
 		self.fields["seeking_status"].widget.attrs["class"] = "form-control"
 
+		# Required by delegate user
+		self.fields["school"].required = True
+		self.fields["year_of_study"].required = True
+		self.fields["program"].required = True
+		self.fields["resume"].required = True
+		self.fields["seeking_status"].required = True
+
 	def is_valid(self):
 		valid = super(DelegateProfileUpdateForm, self).is_valid()
 
@@ -47,6 +54,8 @@ class DelegateProfileUpdateForm(forms.ModelForm):
 			# Regex from: https://bit.ly/2zY11AG
 			regex = "^https:\\/\\/[a-z]{2,3}\\.linkedin\\.com\\/.*$"
 			if not re.match(regex, self.cleaned_data['linkedin']):
+				self.add_error('linkedin', ('The URL for your Linkedin Profile '+
+				'did not follow the format: https://www.linkedin.com/in/PROFILE_URL'))
 				return False
 
 		# If phone number is not blank

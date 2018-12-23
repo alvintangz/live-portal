@@ -15,7 +15,6 @@ from .views.all import (
 from .views.activate import (
 	activateInformationView,
 	activateConfirmView,
-	emailView,
 )
 
 urlpatterns = [
@@ -45,7 +44,4 @@ urlpatterns = [
 	path('activate/<str:encoded>',
 		activateInformationView,
 		name="activate-information"),
-	path('admin/email',
-		emailView,
-		name="email-delegates-activation")
 ]
