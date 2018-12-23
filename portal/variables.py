@@ -53,25 +53,20 @@ email_messages = {
 			"you and your team's solution to the prelimenary round. Good luck.</p>")
 	},
 	"delegate_creation": {
-		"plain": ("Hello %s. First off, we would like to welcome you to an " + 
-			"exclusive platform which showcases elite talent amongst " +
-			"partners and delegates. Now, it’s time to start competing! We " +
-			"have posted the preliminary round on the LIVE Competition " +
-			"Portal, powered by Microsoft Azure, which will be your online " +
-			"gateway to view and submit rounds, as well as access tools that " +
-			"may be useful for you. To access the portal, please active your " +
-			"account, and complete your profile at %s, with the username %s " +
-			"and password %s"),
-		"html": ("<p>Hello <strong>%s</strong>,</p><p>First off, we would " + 
-			"like to welcome you to an exclusive platform which showcases " +
-			"elite talent amongst partners and delegates.</p><p>Now, it’s " +
-			"time to start competing! We have posted the <strong>preliminary " +
-			"round</strong> on the LIVE Competition Portal, powered by " +
-			"Microsoft Azure, which will be your online gateway to view and " +
+		"plain": ("Hello %s. LIVE Competition Portal, powered by Microsoft " +
+			"Azure, is your online gateway to view and submit rounds, as well " +
+			"as access tools that may be useful for you. To access Portal, "
+			+ "please active your account, and complete your profile at %s, " +
+			"with the username %s and password %s. Afterwards, please view " +
+			"the preliminary round and submit your team's solution on portal."),
+		"html": ("<p>Hello <strong>%s</strong>,</p><p>LIVE Competition Portal, "+
+			"powered by Microsoft Azure, is your online gateway to view and " +
 			"submit rounds, as well as access tools that may be useful for " +
-			"you.</p><p>To access the portal, please active your account, and " +
+			"you.</p><p>To access Portal, please active your account, and " +
 			"complete your profile at <a href='%s'>%s</a>, with the username " +
-			"<strong>%s</strong> and password <strong>%s</strong>."),
+			"<strong>%s</strong> and password <strong>%s</strong>.</p>" +
+			"<p>Afterwards, please view the preliminary round and submit your " +
+			"team's solution on Portal."),
 	},
 }
 
