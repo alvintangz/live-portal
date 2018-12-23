@@ -31,7 +31,7 @@ Round Doesn't Exist
 				<ul class="list-unstyled small mb-0 text-muted">
 					<li><strong>Description: </strong>{% if round.description %}{{ round.description }}{% else %} N/A{% endif %}</li>
 					<li><strong>Expected Deadline: </strong>{% if round.show_deadline %}{{ round.get_expected_deadline }}{% else %} N/A{% endif %}</li>
-					<li><strong>More information: </strong>{% if round.details_file %}<a href="{{ round.details_file }}" download>Download Round File</a>{% else %} N/A{% endif %}</li>
+					<li><strong>More information: </strong>{% if round.details_file %}<a href="{{ round.details_file.url }}" download>Download Round File</a>{% else %} N/A{% endif %}</li>
 				</ul>
 			</div>
 		</div>
