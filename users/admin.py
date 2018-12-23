@@ -75,6 +75,8 @@ class DelegateUserAdmin(CustomUserAdmin):
         (('ACCOUNT META'), {'fields': ('last_login', 'activated', 'agreed_terms')}),
     )
 
+	readonly_fields = ('agreed_terms', )
+
 	def team_number(self, x):
 		"""Returns the team number of the user."""
 		return x.delegate.team.number

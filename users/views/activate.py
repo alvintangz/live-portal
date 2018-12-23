@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import user_passes_test
 # models
 from users.models import Delegate, User
 # forms
-from users.forms.activate import ConfirmDelegateForm, EmailForm
+from users.forms.activate import ConfirmDelegateForm
 # helpers
 from portal.functions import hashid_decode
 # constants

@@ -15,7 +15,6 @@ from .views.all import (
 from .views.activate import (
 	activateInformationView,
 	activateConfirmView,
-	emailView,
 )
 
 urlpatterns = [
