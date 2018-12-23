@@ -17,6 +17,8 @@ class DelegateProfileUpdateForm(forms.ModelForm):
 	linkedin = forms.URLField(required=False)
 	profile_picture = forms.FileField(required=False, validators=[
 		FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png'])])
+	resume = forms.FileField(validators=[FileExtensionValidator(
+		allowed_extensions=['pdf'])])
 
 	class Meta:
 		model = Delegate
@@ -36,8 +38,6 @@ class DelegateProfileUpdateForm(forms.ModelForm):
 		self.fields["year_of_study"].required = True
 		self.fields["program"].required = True
 		self.fields["resume"].required = True
-		self.fields["resume"].validators = [FileExtensionValidator(
-			allowed_extensions=['pdf'])]
 		self.fields["seeking_status"].required = True
 
 	def is_valid(self):
@@ -54,6 +54,8 @@ class DelegateProfileUpdateForm(forms.ModelForm):
 			# Regex from: https://bit.ly/2zY11AG
 			regex = "^https:\\/\\/[a-z]{2,3}\\.linkedin\\.com\\/.*$"
 			if not re.match(regex, self.cleaned_data['linkedin']):
+				self.add_error('linkedin', ('The URL for your Linkedin Profile '+
+				'did not follow the format: https://www.linkedin.com/in/PROFILE_URL'))
 				return False
 
 		# If phone number is not blank
