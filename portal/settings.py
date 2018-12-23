@@ -86,7 +86,7 @@ else:
         	'HOST': os.environ.get('LP_DB_HOST', ''),
         	'PORT': os.environ.get('LP_DB_PORT', ''),
         	'OPTIONS': {
-            	'driver': 'ODBC Driver 13 for SQL Server',
+            	'driver': 'ODBC Driver 17 for SQL Server',
         	},
     	},
 	}

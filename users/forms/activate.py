@@ -51,6 +51,13 @@ class ConfirmDelegateForm(forms.ModelForm):
 		self.fields["year_of_study"].widget.attrs["class"] = "form-control"
 		self.fields["seeking_status"].widget.attrs["class"] = "form-control"
 
+		# Required by delegate user
+		self.fields["school"].required = True
+		self.fields["year_of_study"].required = True
+		self.fields["program"].required = True
+		self.fields["resume"].required = True
+		self.fields["seeking_status"].required = True
+
 	def is_valid(self):
 		valid = super(ConfirmDelegateForm, self).is_valid()
 
