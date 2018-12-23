@@ -66,17 +66,3 @@ def activateConfirmView(request, encoded):
 			pass
 
 	return render(request, template_name, context)
-
-@user_passes_test(lambda u: u.is_superuser)
-def emailView(request):
-	template_name = "users/creation/delegate.html"
-	context = dict()
-	context["form"] = EmailForm()
-	if request.method == "POST":
-		context["form"] = EmailForm(request.POST)
-		if context["form"].is_valid():
-			context["form"].save()
-			context["success"] = True
-		else:
-			context["errors"] = True
-	return render(request, template_name, context)

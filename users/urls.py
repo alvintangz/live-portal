@@ -45,7 +45,4 @@ urlpatterns = [
 	path('activate/<str:encoded>',
 		activateInformationView,
 		name="activate-information"),
-	path('admin/email',
-		emailView,
-		name="email-delegates-activation")
 ]
