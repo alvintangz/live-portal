@@ -1,0 +1,31 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block form_top %}
+<script>
+    function eAUS() {
+      document.getElementById('id_username').value = document.getElementById('id_email').value;
+
+    }
+
+    function generatePass() {
+      var length = 8;
+      var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      var retVal = "";
+      for (var i = 0, n = chars.length; i < length; ++i) {
+        retVal += chars.charAt(Math.floor(Math.random() * n));
+      }
+      return retVal;
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){ 
+      var gen = generatePass();
+      document.getElementById('showpas').innerHTML = gen;
+      document.getElementById('id_password1').value = gen;
+      document.getElementById('id_password2').value = gen;
+    }, false);
+
+  </script>
+  <p>To create a delegate, enter a delegate's first name, last name, email, and team number. The username is automatically written as the email that was inputted, and the password was automatically generated: <span id="showpas" style="font-weight:bold"></span>.</p>
+  <p><em>Note: An email will automatically be sent to the delegate with the specified email in order to activate their account, after saving this, unless otherwise specified.</em></p>
+{% endblock %}
