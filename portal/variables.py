@@ -11,8 +11,8 @@ encoded_urls = {
 }
 
 email = {
-	#"backend": 'django.core.mail.backends.smtp.EmailBackend',
-	"backend": 'django.core.mail.backends.console.EmailBackend',
+	"backend": 'django.core.mail.backends.smtp.EmailBackend',
+	#"backend": 'django.core.mail.backends.console.EmailBackend',
 	"host": os.environ.get('LP_EMAIL_HOST', ''),
 	"port": os.environ.get('LP_EMAIL_PORT', ''),
 	"tls": True,
