@@ -33,9 +33,6 @@ INSTALLED_APPS = [
     'import_export',
 ]
 
-if not DEBUG:
-	INSTALLED_APPS += ['storages',]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -69,27 +66,12 @@ WSGI_APPLICATION = 'portal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-if DEBUG:
-	DATABASES = {
-    	'default': {
-        	'ENGINE': 'django.db.backends.sqlite3',
-        	'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    	}
-	}
-else:
-	DATABASES = {
-    	'default': {
-        	'ENGINE': 'sql_server.pyodbc',
-        	'NAME': os.environ.get('LP_DB_NAME', ''),
-        	'USER': os.environ.get('LP_DB_USER', ''),
-        	'PASSWORD': os.environ.get('LP_DB_PASSWORD', ''),
-        	'HOST': os.environ.get('LP_DB_HOST', ''),
-        	'PORT': os.environ.get('LP_DB_PORT', ''),
-        	'OPTIONS': {
-            	'driver': 'ODBC Driver 17 for SQL Server',
-        	},
-    	},
-	}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -125,17 +107,7 @@ USE_TZ = False
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ['portal/static/']
 
-if not DEBUG:
-	DEFAULT_FILE_STORAGE = 'portal.custom_azure.AzureMediaStorage'
-	STATICFILES_STORAGE = 'portal.custom_azure.AzureStaticStorage'
-	STATIC_LOCATION = "static"
-	MEDIA_LOCATION = "media"
-	AZURE_ACCOUNT_NAME = "liveportal2019"
-	AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-	STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-	MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
-else:
-    STATIC_ROOT = 'static/'
+STATIC_ROOT = 'static/'
 
 # User authentication
 LOGIN_URL = 'sign-in'
@@ -157,12 +129,6 @@ EMAIL_HOST_USER = imp.email["user"]
 EMAIL_HOST_PASSWORD = imp.email["password"]
 EMAIL_USE_TLS = imp.email["tls"]
 DEFAULT_FROM_EMAIL = imp.email["from"]
-
-# Other production settings
-if not DEBUG:
-	ADMINS = [('Alvin', 'alvin.tang@mail.utoronto.ca'),]
-	CSRF_COOKIE_SECURE = False
-	SESSION_COOKIE_SECURE = False
 
 # Import Export Transactions
 IMPORT_EXPORT_USE_TRANSACTIONS = True
