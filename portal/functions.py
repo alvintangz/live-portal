@@ -36,7 +36,7 @@ def resize_and_convert(image, width=500, height=500, container="media"):
 		img = Image.open(image)
 		img = img.resize((width, height), Image.ANTIALIAS)
 		img = img.convert("RGB")
-		img.save(image, format="JPEG")
+		img.save(image.path, format="JPEG")
 	else:
 		temp = io.BytesIO()
 		img = Image.open(image)

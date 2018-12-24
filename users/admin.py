@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
 from .models import Team, User, Delegate, Partner
+from .forms.creation import AdminDelegateCreationForm
 
 # Unregister Group that was automatically registered
 admin.site.unregister(Group)
@@ -12,9 +13,44 @@ admin.site.register(Team)
 
 # DELEGATES
 
+class CustomUserAdmin(UserAdmin):
+	add_form_template = "admin/custom/add_delegate_form.html"
+	add_form = AdminDelegateCreationForm
+	add_fieldsets = (
+		(None, {
+			'classes': ('wide',),
+			'fields': ('first_name', 
+			'last_name', 
+			'email', 
+			'username', 
+			'password1', 
+			'password2',
+			'autoemail',),
+		}),
+	)
+
 class DelegateInline(admin.StackedInline):
 	"""Inline group for delegate model."""
+	template = "admin/custom/stacked.html"
 	model = Delegate
+	verbose_name = "Profile Information"
+	verbose_name_plural = "Profile Information"
+	fieldsets = (
+		(None, {
+            'fields': ('team', 'is_invisible')
+        }),
+		('Fields for Delegates to fill in', {
+            'classes': ('collapse',),
+            'fields': ('profile_picture',
+				'school',
+				'year_of_study',
+				'program',
+				'linkedin',
+				'resume',
+				'phone_number',
+				'seeking_status'),
+        }),
+	)
 
 class DelegateUser(User):
 	"""Proxy for User, acting as a model of User."""
@@ -22,7 +58,7 @@ class DelegateUser(User):
 		proxy = True
 
 @admin.register(DelegateUser)
-class DelegateUserAdmin(UserAdmin, ImportExportModelAdmin):
+class DelegateUserAdmin(CustomUserAdmin):
 	"""Add the fields in Delegate on top of User, with specific form."""
 	list_display = (
 		'first_name',
@@ -34,6 +70,13 @@ class DelegateUserAdmin(UserAdmin, ImportExportModelAdmin):
 	)
 	list_filter = ()
 	inlines = [DelegateInline]
+	fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (('PERSONAL INFO'), {'fields': ('first_name', 'last_name', 'email')}),
+        (('ACCOUNT META'), {'fields': ('last_login', 'activated', 'agreed_terms')}),
+    )
+
+	readonly_fields = ('agreed_terms', )
 
 	def team_number(self, x):
 		"""Returns the team number of the user."""
@@ -50,8 +93,6 @@ class DelegateUserAdmin(UserAdmin, ImportExportModelAdmin):
 		number."""
 		return User.objects.filter(is_delegate=True
 			).order_by('delegate__team__number')
-
-DelegateUserAdmin.fieldsets += (('Activated',{'fields': ('activated','agreed_terms')}),)
 
 # PARTNERS
 

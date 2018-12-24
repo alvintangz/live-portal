@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import user_passes_test
 # models
 from users.models import Delegate, User
 # forms
-from users.forms.activate import ConfirmDelegateForm, EmailForm
+from users.forms.activate import ConfirmDelegateForm
 # helpers
 from portal.functions import hashid_decode
 # constants
@@ -65,18 +65,4 @@ def activateConfirmView(request, encoded):
 		except ObjectDoesNotExist:
 			pass
 
-	return render(request, template_name, context)
-
-@user_passes_test(lambda u: u.is_superuser)
-def emailView(request):
-	template_name = "users/creation/delegate.html"
-	context = dict()
-	context["form"] = EmailForm()
-	if request.method == "POST":
-		context["form"] = EmailForm(request.POST)
-		if context["form"].is_valid():
-			context["form"].save()
-			context["success"] = True
-		else:
-			context["errors"] = True
 	return render(request, template_name, context)
