@@ -96,7 +96,7 @@
     					<div class="form-group">
                     		<label for="{{ form.resume.id_for_label }}" class="font-weight-bold">Resume <span class="text-danger">*</span></label>
                     		<input type="file" id="{{ form.resume.id_for_label }}" class="form-control" name="{{ form.resume.name }}" accept=".pdf">
-                    		<small class="form-text text-muted">10MB Limit. PDF only. | <a href="{{ form.resume.value.url }}" download class="text-primary">Download Current Resume</a></small>
+                    		<small class="form-text text-muted">10MB Limit. PDF only. {% if form.resume.value %}| <a href="{{ form.resume.value.url }}" download class="text-primary">Download Current Resume</a>{% endif %}</small>
     					</div>
 					<input type="submit" value="Submit Changes" class="btn btn-1 btn-outline-primary" />
 				</form>

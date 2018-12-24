@@ -103,7 +103,9 @@ class CorporateIndividual(models.Model):
 	def get_page(self, pagination=10):
 		counter = 1
 		for each in CorporateIndividual.objects.filter(type_of=self.type_of):
-			if each == self:
+			if each == self and counter % pagination == 0:
+				return str(math.trunc(counter / pagination))
+			elif each == self:
 				return str(math.trunc(counter / pagination) + 1)
 			counter += 1
 		return str(1)

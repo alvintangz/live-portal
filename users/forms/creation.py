@@ -11,7 +11,8 @@ class AdminDelegateCreationForm(UserCreationForm):
     autoemail = forms.BooleanField(
         label="Automatically send email",
         initial=True,
-        help_text="Automatically email the delegate to activate account."
+        help_text="Automatically email the delegate to activate account.",
+        required=False
     )
 
     def __init__(self, *args, **kw):

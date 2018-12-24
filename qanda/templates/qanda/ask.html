@@ -22,13 +22,13 @@
 				<p class="mb-0 text-muted">View questions that other delegates have raised, and ask questions that other delegates might find helpful in this section.</p>
 				<hr class="my-3" />
 				<ul class="nav nav-pills nav-fill flex-column flex-sm-row">
-					<li class="nav-item">
+					<li class="nav-item border border-primary">
 						<a class="nav-link" href="{% url 'qanda-answers-all' %}"><i class="fas fa-comments mr-2"></i>Answers to Your Questions</a>
 						</li>
-					<li class="nav-item">
+					<li class="nav-item border border-primary">
 						<a class="nav-link" href="{% url 'qanda-answers-faq' %}"><i class="fas fa-exclamation-circle mr-2"></i>Answers to Frequently Asked Questions</a>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item border border-primary">
 						<a class="nav-link active" href="{% url 'qanda-ask' %}"><i class="fas fa-hand-paper mr-2"></i>Ask a Question</a>
 					</li>
 				</ul>
@@ -57,12 +57,12 @@
 		{% endif %}
 		<div class="card bg-white">
 			<div class="card-header text-uppercase">
-				<h3>Ask a Question</h3>
+				<h3 class="mb-0">Ask a Question</h3>
 			</div>
 			<div class="card-body">
 				<form action="{% url 'qanda-ask' %}" method="post">
 					{% csrf_token %}
-					<p>Ask questions that other delegates might find helpful. <strong>Do not ask questions that only affect you individually.</strong> Instead, you can email us at <a href="mailto:contact@live-competition.org">contact@live-competition.org</a>.<br/><span class="text-muted small"><span class="text-danger">*</span> signifies that the field is mandatory.</span></p>
+					<p><strong>Here, you can ask questions that other delegates might find helpful. Before, asking please check if your question has not been answered on the <a href="{% url 'qanda-answers-all' %}">answers page</a>.</strong><br/>If you have any individual questions, you can email us at <a href="mailto:contact@live-competition.org">contact@live-competition.org</a> instead.<br/><span class="text-muted small"><span class="text-danger">*</span> signifies that the field is mandatory.</span></p>
 					<div class="form-group">
 						<label for="{{ form.question.id_for_label }}" class="font-weight-bold">Question <span class="text-danger">*</span></label>
 						<input type="text" name="{{ form.question.html_name }}" id="{{ form.question.id_for_label }}" maxlength="200" required class="form-control" autofocus>

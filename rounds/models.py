@@ -116,12 +116,14 @@ class Submission(models.Model):
 	# Associated Team
 	asc_team = models.ForeignKey(Team,
 		on_delete=models.SET_NULL,
-		null=True)
+		null=True,
+		verbose_name='Team')
 
 	# Associated Round File
 	asc_round_file = models.ForeignKey(AcceptedRoundFile,
 		on_delete=models.SET_NULL,
-		null=True)
+		null=True,
+		verbose_name='Round file')
 
 	# Keep track of the team member (their primary key) who submitted it
 	submitted_by = models.IntegerField('submitted by (id of user)')
@@ -135,9 +137,11 @@ class Submission(models.Model):
 
 	def get_submitted_by_name(self):
 		return User.objects.get(pk=self.submitted_by).first_name
+	get_submitted_by_name.short_description = "Submitted by"
 
 	def get_formatted_submitted_at(self):
 		return default_shortstrftime(self.submitted_at)
+	get_formatted_submitted_at.short_description = "Time of submission"
 
 	def __str__(self):
 		return "Round " + str(self.asc_round_file.asc_round.number) + " submission by team " + str(self.asc_team.number)

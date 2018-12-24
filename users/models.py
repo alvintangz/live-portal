@@ -80,8 +80,7 @@ class Delegate(models.Model):
 
 	linkedin = models.URLField('link to linkedin profile',
 		max_length=100,
-		blank=True,
-		null=True)
+		blank=True)
 
 	resume = models.FileField('resume',
 		upload_to=resume_upload_to,
@@ -90,8 +89,7 @@ class Delegate(models.Model):
 
 	phone_number = models.CharField('phone number',
 		max_length=10,
-		blank=True,
-		null=True)
+		blank=True)
 
 	seeking_status = models.CharField('seeking status',
 		max_length=80,
