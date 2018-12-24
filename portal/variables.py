@@ -64,9 +64,9 @@ email_messages = {
 			"submit rounds, as well as access tools that may be useful for " +
 			"you.</p><p>To access Portal, please active your account, and " +
 			"complete your profile at <a href='%s'>%s</a>, with the username " +
-			"<strong>%s</strong> and password <strong>%s</strong>.</p>" +
+			"<strong>%s</strong> and password <strong>%s</strong>. For the best experience, please activate your account on a personal computer.</p>" +
 			"<p>Afterwards, please view the preliminary round and submit your " +
-			"team's solution on Portal."),
+			"team's solution on Portal.</p>"),
 	},
 }
 
