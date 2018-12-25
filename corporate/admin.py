@@ -1,13 +1,19 @@
 # django modules
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 # models
 from .models import (
 	CorporateOrganization,
 	CorporateIndividual,
 )
+from .resources import (
+	CorporateOrganizationResource,
+	CorporateIndividualResource,
+)
 
 @admin.register(CorporateOrganization)
-class CorporateOrganizationAdmin(admin.ModelAdmin):
+class CorporateOrganizationAdmin(ImportExportModelAdmin):
+	resource_class = CorporateOrganizationResource
 	list_display = ('name', 'partner')
 	ordering = ['partner', 'name']
 	fieldsets = (
@@ -24,6 +30,7 @@ class CorporateOrganizationAdmin(admin.ModelAdmin):
 	)
 
 @admin.register(CorporateIndividual)
-class CorporateIndividualAdmin(admin.ModelAdmin):
+class CorporateIndividualAdmin(ImportExportModelAdmin):
+	resource_class = CorporateIndividualResource
 	list_display = ('full_name', 'organization', 'type_of', 'order')
 	list_filter = ('type_of', 'organization')
