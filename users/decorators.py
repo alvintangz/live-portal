@@ -17,7 +17,6 @@ def delegate_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
 		return actual_decorator(function)
 	return actual_decorator
 
-
 def partner_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
 	login_url=None):
 	"""Decorator to be used to check if logged in user is a partner, and
@@ -25,6 +24,20 @@ def partner_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
 	# Code similar to login_required in django.contrib.auth.decorators
 	actual_decorator = user_passes_test(
 		lambda u: (u.is_authenticated and u.is_partner and u.activated),
+		login_url=login_url,
+		redirect_field_name=redirect_field_name
+	)
+	if function:
+		return actual_decorator(function)
+	return actual_decorator
+
+def judge_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME,
+	login_url=None):
+	"""Decorator to be used to check if logged in user is a partner, and
+	logged in. Otherwise, redirect user if they are not."""
+	# Code similar to login_required in django.contrib.auth.decorators
+	actual_decorator = user_passes_test(
+		lambda u: (u.is_authenticated and u.is_judge and u.activated),
 		login_url=login_url,
 		redirect_field_name=redirect_field_name
 	)

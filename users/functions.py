@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 
 @login_required
-def viewByUser(request, delegateView=None, partnerView=None, redi='sign-in'):
+def viewByUser(request, delegateView=None, partnerView=None, judgeView=None, redi='sign-in'):
 	"""Return a view based off which type of user is logged in."""
 	
 	http_response = redirect(redi)
@@ -21,5 +21,11 @@ def viewByUser(request, delegateView=None, partnerView=None, redi='sign-in'):
 					http_response = redirect(redi)
 				else:
 					http_response = partnerView
+		elif hasattr(request.user, 'judge'):
+			if request.user.is_judge:
+				if judgeView is None:
+					http_response = redirect(redi)
+				else:
+					http_response = judgeView
 
 	return http_response
