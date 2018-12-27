@@ -81,6 +81,7 @@ class RoundUploadForm(forms.ModelForm):
 						new_submission = Submission.objects.create(
 							asc_team=team,
 							asc_round_file=accepted,
+							asc_round=accepted.asc_round,
 							submitted_by=user_id,
 							submitted_file=field_value,
 							submitted_at=datetime.datetime.now(),

@@ -125,6 +125,12 @@ class Submission(models.Model):
 		null=True,
 		verbose_name='Round file')
 
+	# Associated Round
+	asc_round = models.ForeignKey(Round,
+		on_delete=models.SET_NULL,
+		null=True,
+		verbose_name="Round")
+
 	# Keep track of the team member (their primary key) who submitted it
 	submitted_by = models.IntegerField('submitted by (id of user)')
 
