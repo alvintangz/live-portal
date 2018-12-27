@@ -15,6 +15,7 @@ urlpatterns = [
 	path('corporate/', include('corporate.urls')),
 	path('rounds/', include('rounds.urls')),
 	path('questions/', include('qanda.urls')),
+	path('itenirary/', include('itenirary.urls')),
 	path('live-team', views.contactUsView, name='contact'),
 	path('credits',
 		TemplateView.as_view(template_name="static/credits.html"),

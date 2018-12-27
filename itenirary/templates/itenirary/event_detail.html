@@ -1,0 +1,170 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Itenirary{% endblock %}
+{% block contenttitle %}{% if event_details %}{{ event_details.get_formatted_time }} - {{ event_details.title }}{% else %}Event does not exist{% endif %}{% endblock %}
+
+{% block headfiles %}
+<style type="text/css">
+#map {
+    height: 260px;
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='itenirary' %}
+{% endblock %}
+
+{% block content %}
+{% if event_details %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<div class="clearfix">
+				<div class="float-sm-left">
+					<p class="mb-sm-0 text-muted">{{ event_details.day.get_formatted_date }}</p>
+				</div>
+				<div class="float-sm-right">
+					<a href="{% url 'day-detail' event_details.day.number %}" class="ml-sm-5"><i class="fas fa-arrow-circle-left mr-2"></i>Go Back</a>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row mb-4">
+    <div class="col">
+        <div id="map" style="border:1px solid #dee2e6"></div>
+    </div>
+</div>
+<div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        {% if event_details.get_status == 0 %}
+                        <li><strong>Status:</strong> Happening in <span id="countdown"></span></li>
+                        {% elif event_details.get_status == 1 %}
+                        <li><strong>Status:</strong> Ongoing</li>
+                        {% elif event_details.get_status == 2 %}
+                        <li><strong>Status:</strong> Passed</li>
+                        {% else %}
+                        <li><strong>Status:</strong> N/A</li>
+                        {% endif %}
+                        {% if event_details.description %}
+                        <li><strong>Description:</strong> {{ event_details.description }}</li>
+                        {% else %}
+                        <li><strong>Description:</strong> N/A</li>
+                        {% endif %}
+                        <hr class="my-3" />
+                        <li><strong>Venue:</strong>
+                        <ul class="list-unstyled mb-0">
+                            <li>{{ event_details.venue_name }}</li>
+                            <li class="mb-0">{{ event_details.venue_address }}</li>
+                        </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if event_details %}
+<script>
+// Style from: https://snazzymaps.com/style/24358/blue
+var mapStyle = [
+    {
+        "featureType": "all",
+        "elementType": "all",
+        "stylers": [
+            {
+                "hue": "#008eff"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "saturation": "0"
+            },
+            {
+                "lightness": "0"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "saturation": "-60"
+            },
+            {
+                "lightness": "-20"
+            }
+        ]
+    }
+]
+var map;
+var venue = {lat: {{ event_details.venue_lat }}, lng: {{ event_details.venue_long }}};
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: venue,
+        zoom: 16,
+        zoomControl: true,
+        mapTypeControl: false,
+        scaleControl: true,
+        streetViewControl: true,
+        rotateControl: false,
+        fullscreenControl: false,
+        styles: mapStyle
+    });
+    var marker = new google.maps.Marker({
+        position: venue,
+        map: map
+    });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBfMK_UTjP80xNNIUNCTiZqd3JsbhFP06A&callback=initMap" async defer></script>
+{% if event_details.get_status == 0 %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/countdown/2.6.0/countdown.min.js"></script>
+<script>
+    (function() {
+        var downTo = new Date({{ event_details.day.date.year }}, {{ event_details.day.date.month }} - 1, {{ event_details.day.date.day }}, {{ event_details.time.hour }}, {{ event_details.time.minute }})
+        var today = new Date();
+        var cdObj = countdown(downTo, today, ~countdown.MILLISECONDS & ~countdown.SECONDS);
+        document.getElementById("countdown").innerHTML = cdObj.toString();
+    })();
+</script>
+{% endif %}
+{% endif %}
+{% endblock %}

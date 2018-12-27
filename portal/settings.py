@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'corporate.apps.CorporateConfig',
     'contacts.apps.ContactsConfig',
     'qanda.apps.QandaConfig',
+    'itenirary.apps.IteniraryConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,3 +133,14 @@ DEFAULT_FROM_EMAIL = imp.email["from"]
 
 # Import Export Transactions
 IMPORT_EXPORT_USE_TRANSACTIONS = True
+
+# Time
+# Regards to: https://stackoverflow.com/questions/48514222/django-admin-datetimefield-showing-24hr-format-time/48521723
+TIME_INPUT_FORMATS = [
+    '%I:%M:%S %p',  # 6:22:44 PM
+    '%I:%M %p',  # 6:22 PM
+    '%I %p',  # 6 PM
+    '%H:%M:%S',     # '14:30:59'
+    '%H:%M:%S.%f',  # '14:30:59.000200'
+    '%H:%M',        # '14:30'
+]

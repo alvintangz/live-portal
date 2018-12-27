@@ -15,7 +15,7 @@ from .resources import (
 class CorporateOrganizationAdmin(ImportExportModelAdmin):
 	resource_class = CorporateOrganizationResource
 	list_display = ('name', 'partner')
-	ordering = ['partner', 'name']
+	ordering = ['-partner', 'name']
 	fieldsets = (
 		(None, {
             'fields': ('name',)

@@ -1,0 +1,61 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Itenirary{% endblock %}
+{% block contenttitle %}Day {{ day_details.number }}: {{ day_details.title }}{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='itenirary' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<div class="clearfix">
+				<div class="float-sm-left">
+					<p class="mb-sm-0 text-muted">{{ day_details.get_formatted_date }}</p>
+				</div>
+				<div class="float-sm-right">
+					<a href="{% url 'day-listed' %}" class="ml-sm-5"><i class="fas fa-arrow-circle-left mr-2"></i>Go Back</a>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% for event in event_list %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="card">
+			<div class="card-body">
+				{% if event.get_status == 0 %}
+				<h2 class="h3 text-uppercase">{{ event.get_formatted_time }} - {{ event.title }}</h2>
+				{% elif event.get_status == 1 %}
+				<h2 class="h3 text-uppercase text-secondary">{{ event.get_formatted_time }} - {{ event.title }}</h2>
+				{% else %}
+				<h2 class="h3 text-uppercase text-muted">{{ event.get_formatted_time }} - {{ event.title }}</h2>
+				{% endif %}
+				<p>{{ event.venue_name }}</p>
+				<a href="{% url 'event-detail' event.pk %}" class="btn btn-outline-primary">View Details</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="alert alert-danger">
+			<p class="mb-0"><strong>There are no events for this day.</strong></p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+<div class="mb--4"></div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

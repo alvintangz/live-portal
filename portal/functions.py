@@ -68,6 +68,12 @@ def default_strftime(datetime):
 def default_shortstrftime(datetime):
 	return datetime.strftime("%I:%M %p on %b %d, %Y")
 
+def default_strfonlydate(date):
+	return date.strftime("%A, %B %m, %Y")
+
+def default_strfonlytime(time):
+	return time.strftime("%I:%M %p")
+
 def send_email(subject, message, receiver, html_message=None, sender=imp.email["from_more"]):
 	if html_message is None:
 		html_message = message

@@ -1,0 +1,45 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Itenirary{% endblock %}
+{% block contenttitle %}Itenirary - All Days{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='itenirary' %}
+{% endblock %}
+
+{% block content %}
+{% for day in days %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="card bg-white">
+			<div class="card-body">
+				{% if day.get_status == 0 %}
+				<h2 class="h3 text-uppercase">Day {{ day.number }}: {{ day.title }}</h2>
+				{% elif day.get_status == 1 %}
+				<h2 class="h3 text-uppercase text-secondary">Day {{ day.number }}: {{ day.title }}</h2>
+				{% else %}
+				<h2 class="h3 text-uppercase text-muted">Day {{ day.number }}: {{ day.title }}</h2>
+				{% endif %}
+                <p class="small text-muted">{{ day.get_formatted_date }}</p>
+                <a href="{% url 'day-detail' day.number %}" class="btn btn-outline-primary">View Events for This Day</a>
+			</div>
+		</div>
+	</div>
+</div>
+{% empty %}
+<div class="row">
+	<div class="col-12 mb-4">
+		<div class="alert alert-danger">
+			<p class="mb-0"><strong>There is nothing listed in the itenirary at the moment.</strong> Check back later.</p>
+		</div>
+	</div>
+</div>
+{% endfor %}
+<div class="mb--4"></div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

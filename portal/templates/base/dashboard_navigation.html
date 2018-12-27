@@ -18,13 +18,11 @@
 			<i class="fas fa-file-signature"></i>Rounds
 		</a>
 	</li>
-	{% comment %}
 	<li class="nav-item{% if active_tab == 'itenirary' %} active{% endif %}">
-		<a class="nav-link{% if active_tab == 'itenirary' %} text-secondary{% endif %}" href="#">
+		<a class="nav-link{% if active_tab == 'itenirary' %} text-secondary{% endif %}" href="{% url 'itenirary' %}">
 			<i class="fas fa-calendar-alt"></i>Itenirary
 		</a>
 	</li>
-	{% endcomment %}
 	<li class="nav-item{% if active_tab == 'qanda' %} active{% endif %}">
 		<a class="nav-link{% if active_tab == 'qanda' %} text-secondary{% endif %}" href="{% url 'qanda' %}">
 			<i class="fas fa-comments"></i>Questions & Answers

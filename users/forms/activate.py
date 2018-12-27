@@ -67,7 +67,7 @@ class ConfirmDelegateForm(forms.ModelForm):
 		self.instance.user.first_name = self.cleaned_data["first_name"]
 		self.instance.user.last_name = self.cleaned_data["last_name"]
 		self.instance.user.activated = True
-		self.instance.agreed_terms = datetime.datetime.now()
+		self.instance.user.agreed_terms = datetime.datetime.now()
 		send_email(subject="LIVE Portal: Account Activated",
 			receiver=self.instance.user.email,
 			message=((imp.email_messages["delegate_activation"]["plain"])
