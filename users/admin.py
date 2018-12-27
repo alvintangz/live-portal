@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin
-from .models import Team, User, Delegate, Partner
+from .models import Team, User, Delegate, Partner, Judge
 from .forms.creation import AdminDelegateCreationForm
 
 # Unregister Group that was automatically registered
@@ -85,6 +85,7 @@ class DelegateUserAdmin(CustomUserAdmin):
 		"""When saving a model, ensure that it is saved as a delegate."""
 		obj.is_delegate = True
 		obj.is_partner = False
+		obj.is_judge = False
 		super().save_model(request, obj, form, change)
 
 	def get_queryset(self, request):
@@ -123,11 +124,42 @@ class PartnerUserAdmin(UserAdmin):
 		"""When saving a model, ensure that it is saved as a partner."""
 		obj.is_delegate = False
 		obj.is_partner = True
+		obj.is_judge = False
 		super().save_model(request, obj, form, change)
 
 	def get_queryset(self, request):
 		"""Returns a queryset where the user is a partner."""
 		return User.objects.filter(is_partner=True)
+
+# JUDGES
+
+class JudgeInline(admin.StackedInline):
+	"""Inline group for judge model."""
+	model = Judge
+
+class JudgeUser(User):
+	"""Proxy for User, acting as a model of Judge"""
+	class Meta:
+		proxy = True
+
+@admin.register(JudgeUser)
+class JudgeUserAdmin(UserAdmin):
+	"""Add the fields in Judge on top of User, with specific form."""
+	list_display = ('username',)
+	list_filter = ()
+	inlines = [JudgeInline]
+
+	def save_model(self, request, obj, form, change):
+		"""When saving a model, ensure that it is saved as a judge."""
+		obj.is_delegate = False
+		obj.is_partner = False
+		obj.is_judge = True
+		obj.activated = True
+		super().save_model(request, obj, form, change)
+
+	def get_queryset(self, request):
+		"""Returns a queryset where the user is a judge."""
+		return User.objects.filter(is_judge=True)
 
 # OTHER USERS
 
