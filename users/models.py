@@ -23,11 +23,13 @@ class User(AbstractUser):
 
 	is_partner = models.BooleanField('partner status', default=False)
 
+	is_judge = models.BooleanField('judge status', default=False)
+
 	first_name = models.CharField('first name', max_length=30, blank=False)
 
 	last_name = models.CharField('last name', max_length=30, blank=False)
 
-	email = models.EmailField('email address', blank=False)
+	email = models.EmailField('email address', blank=True)
 
 	activated = models.BooleanField('activated account',
 		default=False)
@@ -149,3 +151,14 @@ class Partner(models.Model):
 			package = '%s Package' % (self.partner_package)
 
 		return 'Partner: %s (%s)' % (self.company_name, package)
+
+class Judge(models.Model):
+	
+	user = models.OneToOneField(User,
+		on_delete=models.CASCADE,
+		related_name='judge')
+
+	room = models.CharField("room",
+		max_length=60,
+		blank=True,
+		help_text="Optional. Room in which this judge is in.")

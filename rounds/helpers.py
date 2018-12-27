@@ -6,6 +6,11 @@ def submission_upload_to(instance, filename):
 	file = "%s_%s" % (uuid.uuid4(), filename)
 	return os.path.join(path, file)
 
+def rubric_upload_to(instance, filename):
+	path = "rounds/rubrics/"
+	file = "%s_%s" % (uuid.uuid4(), filename)
+	return os.path.join(path, file)
+
 # from portal.functions import hashid_encode
 # import os
 
