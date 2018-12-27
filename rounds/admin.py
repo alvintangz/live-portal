@@ -30,4 +30,4 @@ class SubmissionAdmin(admin.ModelAdmin):
 		'get_submitted_by_name'
 	)
 	ordering = ('-latest','-submitted_at')
-	list_filter = ('latest', 'asc_round_file', 'asc_team')
+	list_filter = ('latest', 'asc_round', 'asc_team')
