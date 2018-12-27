@@ -41,6 +41,11 @@ class Round(models.Model):
 		default=False,
 		help_text="If True, then the deadline will be shared publicly.")
 
+	survey_link = models.URLField("survey link",
+		blank=True,
+		help_text=("Optional. Add a link to a survey to be shown when visible" +
+			" but not active (to delegates)."))
+
 	def get_expected_deadline(self):
 		return default_shortstrftime(self.expected_deadline)
 
@@ -117,19 +122,19 @@ class Submission(models.Model):
 	asc_team = models.ForeignKey(Team,
 		on_delete=models.SET_NULL,
 		null=True,
-		verbose_name='Team')
+		verbose_name='team')
 
 	# Associated Round File
 	asc_round_file = models.ForeignKey(AcceptedRoundFile,
 		on_delete=models.SET_NULL,
 		null=True,
-		verbose_name='Round file')
+		verbose_name='round file')
 
 	# Associated Round
 	asc_round = models.ForeignKey(Round,
 		on_delete=models.SET_NULL,
 		null=True,
-		verbose_name="Round")
+		verbose_name="round")
 
 	# Keep track of the team member (their primary key) who submitted it
 	submitted_by = models.IntegerField('submitted by (id of user)')

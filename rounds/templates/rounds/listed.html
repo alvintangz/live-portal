@@ -18,7 +18,7 @@
 		<div class="card bg-white">
 			<div class="card-header">
 				{% if round.active or user.partner %}
-				<h2 class="h3 mb-0 text-uppercase">Round {{round.number}}: {{round.title}}</h2>	
+				<h2 class="h3 mb-0 text-uppercase text-secondary">Round {{round.number}}: {{round.title}}</h2>	
 				{% else %}
 				<h2 class="h3 mb-0 text-muted text-uppercase">Round {{round.number}}: {{round.title}}</h2>	
 				{% endif %}
@@ -36,12 +36,15 @@
 				{% endif %}
 				<div class="btn-group">
 				{% if round.details_file %}
-				<a href="{{round.details_file.url}}" download class="btn btn-dark">Download Details</a>
+				<a href="{{round.details_file.url}}" download class="btn btn-dark"><i class="fas fa-file-download m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Download Details</span></a>
 				{% endif %}
 				{% if round.active %}
-				<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary">Submit Solutions</a>
+				<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary"><i class="fas fa-file-upload m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Submit Solutions</span></a>
 				{% else %}
-				<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary">View Submissions</a>
+				{% if round.survey_link %}
+				<a href="{{ round.survey_link }}" class="btn btn-warning" target="_blank"><i class="fas fa-poll-h m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Complete Survey</span></a>
+				{% endif %}
+				<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary"><i class="fas fa-user-lock m-0 mr-sm-2"></i><span class="d-none d-sm-inline">View Submissions</span></a>
 				{% endif %}
 				</div>
 			</div>
