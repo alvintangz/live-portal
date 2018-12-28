@@ -20,13 +20,13 @@ class Rubric(models.Model):
 		null=True,
 		verbose_name="round")
 
-	release = models.BooleanField("release rubric",
-		default=False)
-
 	rubric_document = models.FileField("rubric as a document",
 		upload_to=rubric_upload_to,
         blank=True,
 		help_text="Optional.")
+
+	release = models.BooleanField("release rubric",
+		default=False)
 
 	def __str__(self):
 		return f"Rubric: Round {self.round.number}"
@@ -74,10 +74,14 @@ class Assessment(models.Model):
 
 	rough_notes = models.TextField("rough notes",
 		help_text=("Add any rough notes here. Will NOT be counted in the " +
-			"team's score."))
+			"team's score."),
+		blank=True)
 
 	last_updated = models.DateTimeField("last updated",
 		auto_now=True)
+
+	def __str__(self):
+		return f"{self.judge.user.get_full_name()} - {self.rubric} - {self.team}"
 
 class AssessmentMark(models.Model):
 	"""
@@ -94,10 +98,8 @@ class AssessmentMark(models.Model):
 	mark = models.PositiveSmallIntegerField("assessment mark",
 		help_text="The assessment mark cannot be greater than the rubric mark.")
 	
-	def save(self):
+	def clean(self):
 		# Ensure mark is lower or equal to rubric_mark before saving
-		if self.mark > rubric_mark.max_mark:
+		if self.mark > self.rubric_mark.max_mark:
 			raise ValidationError("The assessment mark cannot be greater " +
                 "than the rubric mark.")
-		else:
-			super(AssessmentMark, self).save()

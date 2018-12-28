@@ -78,10 +78,10 @@ class Answer(models.Model):
 			"to the question for the first time, an email will automatically " +
 			"be sent to the person who raised the question."))
 
-	faq = models.BooleanField('is a frequently asked question',
+	faq = models.BooleanField('is frequently asked',
 		default=False,
-		help_text=("If set True, the answer and its associated question " +
-			"will be appended to special FAQ section."))
+		help_text=("If True, the answer and its associated question " +
+			"will be appended to a special FAQ section."))
 
 	updated = models.DateTimeField('last updated',
 		editable=False)

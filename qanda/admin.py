@@ -4,10 +4,10 @@ from .models import (
 	Answer
 )
 
+class AnswerInline(admin.StackedInline):
+	model = Answer
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
 	list_display = ('shorten_question', 'by_name', 'formatted_created')
-
-@admin.register(Answer)
-class AnswerAdmin(admin.ModelAdmin):
-	list_display = ('asc_question', 'shorten_answer', 'faq', 'formatted_updated')
+	inlines = (AnswerInline,)

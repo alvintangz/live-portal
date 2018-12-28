@@ -1,9 +1,13 @@
 from django.contrib import admin
 from .models import Day, Event
 
+class EventInline(admin.StackedInline):
+    model = Event
+    extra = 0
+
 @admin.register(Day)
 class DayAdmin(admin.ModelAdmin):
-    pass
+    inlines = (EventInline,)
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):

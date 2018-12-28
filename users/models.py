@@ -158,7 +158,13 @@ class Judge(models.Model):
 		on_delete=models.CASCADE,
 		related_name='judge')
 
+	number = models.PositiveSmallIntegerField("number",
+		unique=True)
+
 	room = models.CharField("room",
 		max_length=60,
 		blank=True,
 		help_text="Optional. Room in which this judge is in.")
+
+	def __str__(self):
+		return f"Judge {str(self.number)}"
