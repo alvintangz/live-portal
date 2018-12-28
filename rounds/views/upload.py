@@ -1,4 +1,5 @@
-from rounds.models import Round, AcceptedRoundFile, Submission
+from rounds.models.rounds import Round, AcceptedRoundFile
+from rounds.models.submissions import Submission
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from portal.functions import hashid_decode

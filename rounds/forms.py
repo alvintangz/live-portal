@@ -4,7 +4,8 @@ from django.core.validators import FileExtensionValidator
 from django.template.defaultfilters import filesizeformat
 from django.conf import settings
 # models
-from .models import Round, Submission, AcceptedRoundFile
+from rounds.models.rounds import Round, AcceptedRoundFile
+from rounds.models.submissions import Submission
 # constants
 from rounds.constants.filetypes import FILETYPES
 # helpers

@@ -1,5 +1,5 @@
 from django.views.generic import ListView
-from rounds.models import Round
+from rounds.models.rounds import Round
 
 # Generalized view for both delegates and partners
 class ListedRoundsView(ListView):

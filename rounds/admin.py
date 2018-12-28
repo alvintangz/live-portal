@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Round, AcceptedRoundFile, Submission
+from rounds.models.rounds import Round, AcceptedRoundFile
+from rounds.models.submissions import Submission
 
 # ROUNDS
 
@@ -27,7 +28,8 @@ class SubmissionAdmin(admin.ModelAdmin):
 		'asc_round_file',
 		'asc_team', 
 		'latest', 
-		'get_submitted_by_name'
+		'get_submitted_by_name',
+		'get_view_html',
 	)
 	ordering = ('-latest','-submitted_at')
 	list_filter = ('latest', 'asc_round', 'asc_team')
