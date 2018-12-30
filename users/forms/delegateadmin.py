@@ -1,12 +1,12 @@
 # django modules
-from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField
 from django.contrib.auth.models import User
 from django import forms
 # helpers
 import portal.variables as imp
 from portal.functions import send_email
 
-class AdminDelegateCreationForm(UserCreationForm):
+class AdminDelegateUserCreationForm(UserCreationForm):
 
     autoemail = forms.BooleanField(
         label="Automatically send email",
@@ -17,6 +17,7 @@ class AdminDelegateCreationForm(UserCreationForm):
 
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
+        self.fields['email'].required = True
         self.fields["email"].widget.attrs["onkeyup"] = "eAUS()"
 
     def save(self, commit=True):
@@ -40,3 +41,8 @@ class AdminDelegateCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ('username', 'first_name' , 'last_name', 'email',)
+
+class AdminDelegateUserChangeForm(UserChangeForm):
+    def __init__(self, *args, **kw):
+        super().__init__(*args, **kw)
+        self.fields['email'].required = True

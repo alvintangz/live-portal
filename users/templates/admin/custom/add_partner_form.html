@@ -1,0 +1,26 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block form_top %}
+<script>
+  function generatePass() {
+    var length = 8;
+    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    var retVal = "";
+    for (var i = 0, n = chars.length; i < length; ++i) {
+      retVal += chars.charAt(Math.floor(Math.random() * n));
+    }
+    return retVal;
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){ 
+    var gen = generatePass();
+    document.getElementById('showpas').innerHTML = gen;
+    document.getElementById('id_password1').value = gen;
+    document.getElementById('id_password2').value = gen;
+  }, false);
+
+</script>
+  <p>To create a partner, enter details of the main contact for the partner, the username for the partner, their organization's name, and their package.<br/>Automatically generated password: <span id="showpas" style="font-weight:bold"></span></p>
+  <p><em>Note: An email <strong>won't</strong> automatically be sent, so please mark down the password and username, and send it to the organization in a secure email.</em></p>
+{% endblock %}

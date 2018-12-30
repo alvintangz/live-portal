@@ -8,6 +8,7 @@ from .helpers import resume_upload_to, profile_picture_upload_to
 from portal.functions import resize_and_convert, hashid_encode
 from portal.functions import send_sms
 import portal.variables as imp
+from corporate.models import CorporateIndividual
 
 class Team(models.Model):
 	
@@ -134,12 +135,17 @@ class Partner(models.Model):
 		on_delete=models.CASCADE,
 		related_name='partner')
 
-	company_name = models.CharField('company name',
-		max_length=130)
+	# ASIDE: Can be removed, and replaced with a ForeignKey to a corporate
+	# organization for next implementation
+	company_name = models.CharField('organization name',
+		max_length=130,
+		help_text="Will be displayed to the partner.")
 
+	# ASIDE: Look at ASIDE above.
 	partner_package = models.CharField('package',
 		max_length=60,
-		choices=PARTNER_TYPES)
+		choices=PARTNER_TYPES,
+		help_text="Will be displayed to the partner.")
 
 	def __str__(self):
 		"""Returns a string that represents the current Partner object.

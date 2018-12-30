@@ -6,6 +6,7 @@ from users.models import Team, User
 from .rounds import Round, AcceptedRoundFile
 # helpers
 from rounds.helpers import submission_upload_to
+from portal.functions import default_shortstrftime
 
 class Submission(models.Model):
 	"""
