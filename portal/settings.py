@@ -134,6 +134,9 @@ DEFAULT_FROM_EMAIL = imp.email["from"]
 # Import Export Transactions
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
+# Manager Email - The email that manages the administrator panel
+MANAGER_EMAIL = "contact@live-competition.org"
+
 # Time
 # Regards to: https://stackoverflow.com/questions/48514222/django-admin-datetimefield-showing-24hr-format-time/48521723
 TIME_INPUT_FORMATS = [

@@ -13,19 +13,21 @@
 
 {% block content %}
 <div class="row justify-content-md-center">
-{% for contact in object_list %}
+{% for contact in contacts %}
 	<div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
 		<div class="card bg-white" style="max-width:500px;">
 			<img src="{{contact.profile_picture.url}}" alt="{{contact.full_name}}" class="img-fluid" />
 			<div class="card-body">
-					<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">{{contact.get_position_title}}</span><br/>{{contact.full_name}}</p>
-					<hr class="my-2" />
-					<div class="btn-group pt-2">
-					<a href="{{ contact.linkedin }}" class="btn btn-secondary" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-					{% if user.is_partner %}
-					<a href="{{contact.resume.url}}" class="btn btn-dark" download><i class="fas fa-file"></i></a>
-					<a href="mailto:{{ contact.email_address }}" class="btn btn-primary"><i class="fas fa-at"></i></a>
-					{% endif %}
+				<p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">{{contact.get_position_title}}</span><br/>{{contact.full_name}}</p>
+				<hr class="my-2" />
+				<div class="btn-group pt-2">
+				{% if user.is_partner or user.is_judge %}
+					<a href="{{contact.resume.url}}" class="btn btn-dark" download data-toggle="tooltip" data-placement="top" title="Resume"><i class="fas fa-file"></i></a>
+					<a href="{{ contact.linkedin }}" class="btn btn-secondary" target="_blank" data-toggle="tooltip" data-placement="top" title="Linkedin Profile"><i class="fab fa-linkedin-in"></i></a>
+					<a href="mailto:{{ contact.email_address }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Email"><i class="fas fa-at"></i></a>
+				{% elif user.is_delegate %}
+					<a href="{{ contact.linkedin }}" class="btn btn-secondary" target="_blank"><i class="fab fa-linkedin-in m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Linkedin</span></a>
+				{% endif %}
 				</div>
 			</div>
 		</div>

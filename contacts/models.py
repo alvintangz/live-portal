@@ -16,6 +16,10 @@ class Contact(models.Model):
 	show_partners = models.BooleanField('viewable to partners',
 		default=True,
 		help_text="Recommended. Displays in a section about the LIVE team.")
+	
+	show_judges = models.BooleanField('viewable to judges',
+		default=True,
+		help_text="Recommended. Displays in a section about the LIVE team.")
 
 	full_name = models.CharField('full name',
 		max_length=150)
@@ -38,6 +42,8 @@ class Contact(models.Model):
 
 	class Meta:
 		ordering = ['position_title']
+		verbose_name = "LIVE Executive"
+		verbose_name_plural = "LIVE Executives"
 
 	def get_position_title(self):
 		for number, position in LIVE_POSITIONS:

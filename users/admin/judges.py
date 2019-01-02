@@ -51,9 +51,11 @@ class JudgeUserAdmin(UserAdmin):
         (('ACCOUNT META'), {'fields': ('last_login',)}),
     )
 	readonly_fields = ()
+	# BOTH
+	inlines = [JudgeInline]
+	# LISTING
 	list_display = ('username',)
 	list_filter = ()
-	inlines = [JudgeInline]
 
 	def save_model(self, request, obj, form, change):
 		"""

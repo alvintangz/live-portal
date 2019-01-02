@@ -8,7 +8,8 @@ class ContactAdmin(admin.ModelAdmin):
 		'position_title',
 		'full_name',
 		'show_delegates',
-		'show_partners'
+		'show_partners',
+		'show_judges',
 	)
 
 	ordering = ['position_title']

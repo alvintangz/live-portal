@@ -1,5 +1,7 @@
 from users.forms.profile import DelegateProfileUpdateForm
 from django.shortcuts import render, redirect
+from django.views.generic import TemplateView
+from users.models import Judge
 
 def delegateProfileView(request):
 	"""View where delegates edit their profiles."""

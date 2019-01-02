@@ -1,8 +1,7 @@
 # django modules
 from django.views.generic.list import ListView
-from django.utils.decorators import method_decorator
 # helpers
-from users.decorators import delegate_required
+from users.auth.mixins import DelegateRequiredMixin
 # models
 from .models import (
 	CorporateOrganization,
@@ -12,8 +11,7 @@ from .models import (
 	Networker
 )
 
-@method_decorator(delegate_required, name='dispatch')
-class PartnersListView(ListView):
+class PartnersListView(DelegateRequiredMixin, ListView):
 	template_name = "corporate/partners_listed.html"
 	context_object_name = "partners"
 
@@ -21,8 +19,7 @@ class PartnersListView(ListView):
 		return CorporateOrganization.objects.filter(partner=True).order_by(
 			'partner_type')
 
-@method_decorator(delegate_required, name='dispatch')
-class CorporateIndividualsListView(ListView):
+class CorporateIndividualsListView(DelegateRequiredMixin, ListView):
 	template_name = "corporate/individuals_listed.html"
 	context_object_name = "individuals"
 	paginate_by = 10

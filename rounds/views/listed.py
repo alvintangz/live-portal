@@ -1,4 +1,5 @@
 from django.views.generic import ListView
+from django.utils.decorators import method_decorator
 from rounds.models.rounds import Round
 
 # Generalized view for both delegates and partners

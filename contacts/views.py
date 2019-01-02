@@ -2,25 +2,21 @@
 from django.views.generic import ListView
 # models
 from contacts.models import Contact
-from users.models import Delegate, Partner
 # helpers
-from users.functions import viewByUser
+from users.auth.mixins import TypesRequiredMixin
 
-def contactUsView(request):
-	return viewByUser(request, 
-		DelegateContactUsView.as_view()(request),
-		PartnerContactUsView.as_view()(request))
-
-class DelegateContactUsView(ListView):
+class LIVETeamListView(TypesRequiredMixin, ListView):
 	model = Contact
 	template_name = "contacts/contact_us.html"
+	context_object_name = "contacts"
+	delegate_allowed = True
+	partner_allowed = True
+	judge_allowed = True
 
 	def get_queryset(self):
-		return Contact.objects.filter(show_delegates=True)
-
-class PartnerContactUsView(ListView):
-	model = Contact
-	template_name = "contacts/contact_us.html"
-	
-	def get_queryset(self):
-		return Contact.objects.filter(show_partners=True)
+		if self.is_partner():
+			return Contact.objects.filter(show_partners=True)
+		elif self.is_judge():
+			return Contact.objects.filter(show_judges=True)
+		elif self.is_delegate():
+			return Contact.objects.filter(show_delegates=True)

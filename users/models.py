@@ -1,14 +1,16 @@
+# constants
 from .constants.universities import CANADIAN_UNIS
 from .constants.student_types import STUDENT_TYPES
 from .constants.seeking_statuses import SEEKING_STATUSES
 from .constants.partner_types import PARTNER_TYPES
+import portal.variables as imp
+# django modules
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+# helpers
 from .helpers import resume_upload_to, profile_picture_upload_to
 from portal.functions import resize_and_convert, hashid_encode
 from portal.functions import send_sms
-import portal.variables as imp
-from corporate.models import CorporateIndividual
 
 class Team(models.Model):
 	
@@ -38,14 +40,6 @@ class User(AbstractUser):
 	agreed_terms = models.DateTimeField('agreed to all terms on',
 		blank=True,
 		null=True)
-
-	def set_delegate(self):
-		"""Sets user as a delegate."""
-		self.is_delegate = True
-
-	def set_partner(self):
-		"""Sets user as a partner."""
-		self.is_partner = True
 
 	def activation_link(self):
 		return imp.urls["portal"] + "/account/activate/" + hashid_encode(self.pk, 

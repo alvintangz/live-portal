@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-{% if user.is_delegate or user.is_partner %}
+{% if user.is_delegate or user.is_partner or user.is_judge %}
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
 	<div class="container-fluid">
       	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +58,9 @@
 		</div>
 		<hr class="my-3" />
 		<h1>Sorry!</h1>
-		<p>As a user who is neither a delegate nor a partner, you are unable to see this view. A solution to solve this may involve logging in using a delegate or partner dummy account to see this view if you are an administrator.</p>
+		<p>As a user who is not a delegate, a partner, or a judge, you are unable to see this view. A solution to solve this may involve logging in using a delegate or partner dummy account to see this view if you are an administrator.</p>
 		<p>If you are looking for the administrator section, <a href="/admin/">click here</a>.</p>
-		<small>Message written by Alvin Tang on 2018-11-08.</small>
+		<small>Message written by Alvin Tang on 2018-12-30.</small>
 	</div>
 {% endif %}
 {% endblock %}

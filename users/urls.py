@@ -1,16 +1,18 @@
 # django modules
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
+from django.contrib.auth.views import (
+	LoginView,
+	LogoutView,
+	PasswordResetView,
+	PasswordResetDoneView,
+	PasswordResetConfirmView,
+	PasswordResetCompleteView,
+)
 # views
 from .views.all import (
-	loginView,
-	logoutView,
 	profileView,
 	teamView,
 	passwordResetView,
-	passwordForgottenView,
-	passwordForgottenDoneView,
-	passwordForgottenConfirmView,
-	passwordForgottenCompleteView,
 )
 from .views.activate import (
 	activateInformationView,
@@ -18,9 +20,18 @@ from .views.activate import (
 )
 
 urlpatterns = [
-	path('sign-in', loginView, name='sign-in'),
-	path('sign-in/confirmed', loginView, name='sign-in-confirmed'),
-	path('sign-out', logoutView, name='sign-out'),
+	# SIGN IN
+	path('sign-in',
+		LoginView.as_view(template_name='users/sign_in.html'),
+		name='sign-in'),
+	path('sign-in/confirmed',
+		LoginView.as_view(template_name='users/sign_in.html'),
+		name='sign-in-confirmed'),
+	# SIGN OUT
+	path('sign-out',
+		LogoutView.as_view(template_name='users/sign_out.html'),
+		name='sign-out'),
+	# PROFILE VIEWING
 	path('profile', profileView, name='profile'),
 	path('profile/success', profileView, name='profile-success'),
 	path('profile/confirmed', profileView, name='profile-confirmed'),
@@ -30,12 +41,24 @@ urlpatterns = [
 	path('password/reset/success', passwordResetView,
 		name='reset-password-success'),
 	# RECOVER PASSWORD
-	path('recover', passwordForgottenView, name='forgot-password'),
-	path('recover/done', passwordForgottenDoneView,
+	path('recover',
+		PasswordResetView.as_view(
+			template_name='users/password/recover.html',
+			subject_template_name = 'users/password/reset_email_subject.txt',
+			email_template_name = 'users/password/reset_email_body.html',
+			success_url = reverse_lazy('forgot-password-done')),
+		name='forgot-password'),
+	path('recover/done',
+		PasswordResetDoneView.as_view(template_name='users/password/done.html'),
 		name='forgot-password-done'),
-	path('recover/reset/<uidb64>/<token>', passwordForgottenConfirmView,
+	path('recover/reset/<uidb64>/<token>',
+		PasswordResetConfirmView.as_view(
+			template_name='users/password/reset.html',
+			success_url = reverse_lazy('forgot-password-complete')),
 		name='forgot-password-confirm'),
-	path('recover/success', passwordForgottenCompleteView,
+	path('recover/success',
+		PasswordResetCompleteView.as_view(
+			template_name='users/password/complete.html'),
 		name='forgot-password-complete'),
 	# CONFIRM
 	path('activate/confirm/<str:encoded>',

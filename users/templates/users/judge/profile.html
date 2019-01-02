@@ -1,0 +1,37 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+{% block contenttitle %}View Profile{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='profile' %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+	<div class="col-12">
+		<div class="card bg-white">
+    		<div class="card-body">
+                <p class="text-muted small">Your profile is read only.</p>
+                <ul class="list-unstyled mb-0">
+                    <li><strong>Full name:</strong> {{ request.user.get_full_name }}</li>
+                    <li><strong>Username:</strong> {{ request.user.username }}</li>
+                    <li><strong>Judge number:</strong> {{ request.user.judge.number }}</li>
+                    {% if request.user.judge.room %}
+                    <li><strong>Room:</strong> {{ request.user.judge.room }}</li>
+                    {% else %}
+                    <li><strong>Room:</strong> Not listed</li>
+                    {% endif %}
+                </ul>
+    		</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

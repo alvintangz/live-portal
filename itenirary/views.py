@@ -3,11 +3,15 @@ from django.views.generic import DetailView, ListView
 from django.http import Http404
 # models
 from .models import Event, Day
+# helpers
+from users.auth.mixins import TypesRequiredMixin
 
-class DayListView(ListView):
+class DayListView(TypesRequiredMixin, ListView):
     model = Day
     template_name = "itenirary/day_listed.html"
     context_object_name = "days"
+    delegate_allowed = True
+    judge_allowed = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -15,12 +19,14 @@ class DayListView(ListView):
             self.context_object_name].filter(release=True).order_by('number')
         return context
 
-class DayDetailView(DetailView):
+class DayDetailView(TypesRequiredMixin, DetailView):
     model = Day
     template_name = "itenirary/day_detail.html"
     context_object_name = "day_details"
     slug_url_kwarg = 'number'
     slug_field = 'number'
+    delegate_allowed = True
+    judge_allowed = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -31,10 +37,12 @@ class DayDetailView(DetailView):
         context['days'] = Day.objects.filter(release=True).order_by('number')
         return context
 
-class EventDetailView(DetailView):
+class EventDetailView(TypesRequiredMixin, DetailView):
     model = Event
     template_name = "itenirary/event_detail.html"
     context_object_name = "event_details"
+    delegate_allowed = True
+    judge_allowed = True
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
