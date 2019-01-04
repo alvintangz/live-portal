@@ -1,0 +1,95 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Delegates{% endblock %}
+{% block contenttitle %}Delegates{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='delegates' %}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col-xl-9 col-lg-8 order-2 order-lg-1">
+        <div class="card bg-white mb-4">
+            <div class="card-header">
+                <h3 class="text-uppercase mb-0">About Them</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    {% if delegate.resume %}
+                    <li><strong><a href="{{ delegate.resume.url }}" class="text-warning">Download Resume</a></strong></li>
+                    {% endif %}    
+                    <li><strong>Program:</strong> {{ delegate.program }}</li>
+                    <li><strong>Year of Study:</strong> {{ delegate.year_of_study }}</li>
+                    <li><strong>University/School:</strong> {{ delegate.school }}</li>
+                    <li><strong>Seeking Status (or seeking for):</strong> {{ delegate.seeking_status }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card bg-white mb-4">
+            <div class="card-header">
+                <h3 class="text-uppercase mb-0">Contact Them</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    {% if delegate.linkedin %}
+                    <li><strong>Linkedin Profile:</strong> {{ delegate.linkedin }}</li>
+                    {% endif %}
+                    <li><strong>Email:</strong> {{ delegate.user.email }}</li>
+                    {% if delegate.phone_number %}
+                    <li><strong>Mobile Number:</strong> {{ delegate.phone_number }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="text-uppercase mb-0">Their Team</h3>
+            </div>
+            <div class="card-body">
+                Noen
+            </div>
+        </div>
+        <button onclick="window.history.back();" class="btn btn-warning">Go Back</button>
+    </div>
+    <div class="col-xl-3 col-lg-4 order-1 order-lg-2" style="max-width:500px;">
+        <div class="card bg-white">
+        {% if delegate.profile_picture and not delegate.profile_picture_block %}
+        <img src="{{ delegate.profile_picture.url }}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
+        {% elif delegate.user.activated %}
+        <img src="{% static 'img/default-user.jpg' %}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
+        {% else %}
+        <img src="{% static 'img/default-user-not-active.jpg' %}" alt="{{ delegate.user.get_full_name }} (Account Not Activated)" class="img-fluid" />
+        {% endif %}
+        <div class="card-body">
+        <p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">Delegate</span><br/>{{ delegate.user.get_full_name }}</p>
+        <hr class="my-2" />
+        <ul class="list-unstyled my-1 mb-0 text-muted small" style="line-height: normal;">
+            <li>{{ delegate.year_of_study }}</li>
+            <li>{{ delegate.program }}</li>
+            <li><strong>{{ delegate.school }}</strong></li>
+        </ul>
+        {% if delegate.linkedin or delegate.user.email %}
+        <div class="btn-group pt-2">
+            {% if delegate.resume %}
+            <a href="{{ delegate.resume.url }}" class="btn btn-dark" data-toggle="tooltip" data-placement="top" title="Resume"><i class="fas fa-file"></i></a>
+            {% endif %}
+            {% if delegate.linkedin %}
+            <a href="{{ delegate.linkedin }}" class="btn btn-secondary" target="_blank" data-toggle="tooltip" data-placement="top" title="Linkedin Profile"><i class="fab fa-linkedin-in"></i></a>
+            {% endif %}
+            <a href="mailto:{{ delegate.user.email }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Email"><i class="fas fa-at"></i></a>
+        </div>
+        {% endif %}
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/argon.min.js' %}"></script>
+{% endblock %}

@@ -17,6 +17,21 @@ class Team(models.Model):
 	number = models.IntegerField('team number',
 		unique=True)
 
+	place = models.PositiveSmallIntegerField('place',
+		blank=True,
+		null=True,
+		help_text="The team's place in the competition.")
+
+	def get_members_listed(self):
+		delegates = Delegate.objects.filter(team=self.pk)
+		ret_val = ""
+		for delegate in delegates:
+			ret_val += delegate.user.get_full_name() + ", "
+		ret_val = ret_val[:-2]
+		if ret_val == "":
+			ret_val = "No members in this team."
+		return ret_val
+
 	def __str__(self):
 		return 'Team {}'.format(self.number)
 
@@ -46,6 +61,9 @@ class User(AbstractUser):
 			salt=imp.user_activation_urls["salt"],
 			min_length=imp.user_activation_urls["min_length"])
 
+	def __str__(self):
+		return f"{self.get_full_name()} ({self.username})"
+
 class Delegate(models.Model):
 
 	user = models.OneToOneField(User,
@@ -60,6 +78,11 @@ class Delegate(models.Model):
 		upload_to=profile_picture_upload_to,
 		blank=True,
 		max_length=500)
+
+	profile_picture_block = models.BooleanField('block profile picture',
+		default=False,
+		blank=True,
+		help_text="Only block the user's profile picture for partners.")
 
 	school = models.CharField('currently attending',
 		max_length=150,
@@ -166,5 +189,16 @@ class Judge(models.Model):
 		blank=True,
 		help_text="Optional. Room in which this judge is in.")
 
+	def get_assessments(self):
+		from rounds.models.assessments import Assessment
+		assessments = Assessment.objects.filter(judge=self.pk)
+		ret_val = ", ".join(
+			[assessment.get_round_and_team() for assessment in assessments]
+		)
+		if ret_val == "":
+			ret_val = "None chosen."
+		return ret_val
+	get_assessments.short_description = "Assigned Assessments"
+
 	def __str__(self):
-		return f"Judge {str(self.number)}"
+		return f"Judge {str(self.number)} - {self.user.get_full_name()}"

@@ -18,6 +18,7 @@ from .views.activate import (
 	activateInformationView,
 	activateConfirmView,
 )
+from .views.delegates import DelegatesListView, DelegatesDetailView
 
 urlpatterns = [
 	# SIGN IN
@@ -67,4 +68,12 @@ urlpatterns = [
 	path('activate/<str:encoded>',
 		activateInformationView,
 		name="activate-information"),
+	# LISTED DELEGATES
+	path('delegates/listed',
+		DelegatesListView.as_view(),
+		name="delegates-listed"),
+	# DETAIL DELEGATES
+	path('delegates/detail/<pk>',
+		DelegatesDetailView.as_view(),
+		name="delegates-detail"),
 ]

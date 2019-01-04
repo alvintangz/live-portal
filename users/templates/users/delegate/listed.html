@@ -1,0 +1,147 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Delegates{% endblock %}
+{% block contenttitle %}Delegates{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='delegates' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0 text-uppercase">Filter</h3>
+            </div>
+            <div class="card-body">
+                <form method="get">
+                    <div class="form-row">
+                        <div class="form-group col-md-4 mb-3">
+                            <select class="form-control" name="ss">
+                                {% if filters.default.seeking_statuses %}
+                                <option disabled>Seeking Status</option>
+                                {% else %}
+                                <option selected disabled>Seeking Status</option>
+                                {% endif %}
+                                {% for item in filters.seeking_statuses %}
+                                {% if filters.default.seeking_statuses %}
+                                {% if filters.default.seeking_statuses == item.0 %}
+                                <option value="{{ item.0 }}" selected>{{ item.0 }}</option>
+                                {% else %}
+                                <option value="{{ item.0 }}">{{ item.0 }}</option>
+                                {% endif %}
+                                {% else %}
+                                <option value="{{ item.0 }}">{{ item.0 }}</option>
+                                {% endif %}
+                                {% endfor %}}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 mb-3">
+                            <select class="form-control" name="un">
+                                {% if filters.default.universities %}
+                                <option disabled>University</option>
+                                {% else %}
+                                <option selected disabled>University</option>
+                                {% endif %}
+                                {% for item in filters.universities %}
+                                {% if filters.default.universities %}
+                                {% if filters.default.universities == item.0 %}
+                                <option value="{{ item.0 }}" selected>{{ item.0 }}</option>
+                                {% else %}
+                                <option value="{{ item.0 }}">{{ item.0 }}</option>
+                                {% endif %}
+                                {% else %}
+                                <option value="{{ item.0 }}">{{ item.0 }}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4 mb-3">
+                                <select class="form-control" name="st">
+                                    {% if filters.default.student_types %}
+                                    <option disabled>Year of Study</option>
+                                    {% else %}
+                                    <option selected disabled>Year of Study</option>
+                                    {% endif %}
+                                    {% for item in filters.student_types %}
+                                    {% if filters.default.student_types %}
+                                    {% if filters.default.student_types == item.0 %}
+                                    <option value="{{ item.0 }}" selected>{{ item.0 }}</option>
+                                    {% else %}
+                                    <option value="{{ item.0 }}">{{ item.0 }}</option>
+                                    {% endif %}
+                                    {% else %}
+                                    <option value="{{ item.0 }}">{{ item.0 }}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                    </div>
+                    <div class="btn-group">
+                        <input type="submit" value="Filter" class="btn btn-outline-primary">
+                        {% if not filters.none %}
+                        <a href="{% url 'delegates-listed' %}" class="btn btn-dark">Reset</a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+{% for delegate in delegates %}
+    <div class="col-xl-3 col-lg-4 col-sm-6 mb-4">
+        <div class="card bg-white" style="max-width:500px;">
+            {% if delegate.profile_picture and not delegate.profile_picture_block %}
+            <img src="{{ delegate.profile_picture.url }}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
+            {% elif delegate.user.activated %}
+            <img src="{% static 'img/default-user.jpg' %}" alt="{{ delegate.user.get_full_name }}" class="img-fluid" />
+            {% else %}
+            <img src="{% static 'img/default-user-not-active.jpg' %}" alt="{{ delegate.user.get_full_name }} (Account Not Activated)" class="img-fluid" />
+            {% endif %}
+            <div class="card-body">
+                <p class="h2 text-uppercase text-secondary mt-0" style="line-height: normal"><span class="h4 text-uppercase text-primary">Delegate</span><br/>{{ delegate.user.get_full_name }}</p>
+                <hr class="my-2" />
+                <ul class="list-unstyled my-1 mb-0 text-muted small" style="line-height: normal;">
+                    <li>{{ delegate.year_of_study }}</li>
+                    <li>{{ delegate.program }}</li>
+                    <li><strong>{{ delegate.school }}</strong></li>
+                </ul>
+                {% if delegate.linkedin or delegate.user.email %}
+                <div class="btn-group pt-2">
+                    {% if delegate.resume %}
+                    <a href="{{ delegate.resume.url }}" class="btn btn-dark" data-toggle="tooltip" data-placement="top" title="Resume"><i class="fas fa-file"></i></a>
+                    {% endif %}
+                    {% if delegate.linkedin %}
+                    <a href="{{ delegate.linkedin }}" class="btn btn-secondary" target="_blank" data-toggle="tooltip" data-placement="top" title="Linkedin Profile"><i class="fab fa-linkedin-in"></i></a>
+                    {% endif %}
+                    <a href="mailto:{{ delegate.user.email }}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Email"><i class="fas fa-at"></i></a>
+                    <a href="{% url 'delegates-detail' delegate.pk %}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="More Information"><i class="fas fa-info"></i></a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% empty %}
+    <div class="col">
+        <div class="alert alert-danger">
+            {% if not filters.none %}
+            <p class="m-0"><strong>There are no delegates that meet the filtering standards put forward.</strong></p>
+            {% else %}
+            <p class="m-0"><strong>There are no delegates listed at the moment.</strong></p>
+            <p class="m-0 small">If this error persists, please contact us at <a href="mailto:contact@live-competition.org" class="text-white">contact@live-competition.org</a></small>
+            {% endif %}
+            </div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/argon.min.js' %}"></script>
+{% endblock %}

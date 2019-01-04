@@ -26,6 +26,9 @@ def profileView(request):
 	elif is_judge(request):
 		return TemplateView.as_view(
 			template_name="users/judge/profile.html")(request)
+	elif is_partner(request):
+		return TemplateView.as_view(
+			template_name="users/partner/profile.html")(request)
 
 @login_required
 def passwordResetView(request):

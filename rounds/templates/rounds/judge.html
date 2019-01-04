@@ -1,0 +1,99 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Judge: Round {{ ass.rubric.round.number }} - Team {{ ass.team.number }}{% endblock %}
+{% block contenttitle %}Judge: Round {{ ass.rubric.round.number }} - Team {{ ass.team.number }}{% endblock %}
+
+{% block headfiles %}
+<style type="text/css">
+#form .form-group {
+	margin-bottom: 1rem;
+}
+</style>
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='rounds' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<div class="clearfix">
+				<div class="float-sm-left">
+					<p class="mb-sm-0 text-muted">Enter the fields below.</p>
+				</div>
+				<div class="float-sm-right">
+					<a href="{% url 'rounds-judge-listed' ass.rubric.round.encoded_url %}" class="ml-sm-5"><i class="fas fa-arrow-circle-left mr-2"></i>Go Back</a>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-12">
+		{% if form.errors or ass_formset.errors %}
+		<div class="alert alert-danger mb-0">
+			<p class="mb-0"><strong>There are some errors with your fields.</strong> Please fix them.</p>
+			{% if form.errors %}
+				{{ form.errors }}
+			{% endif %}
+		</div>
+		{% endif %}
+		<div class="card">
+			<div class="card-body">
+				<form method="post" id="form">
+					{% csrf_token %}
+					<div class="form-group">
+						<label for="{{ form.rough_notes.id_for_label }}">Rough Notes</label>
+						<textarea class="form-control" id="{{ form.rough_notes.id_for_label }}" name="{{ form.rough_notes.html_name}}" style="resize:none;height:130px">{{ form.rough_notes.value }}</textarea>
+						<small class="form-text text-muted">{{ form.rough_notes.help_text }}</small>
+					</div>
+					{% for mark_form in ass_formset %}
+					{{ mark_form.id }}
+					<div class="form-group">
+						<label for="{{ mark_form.mark.id_for_label }}" class="font-weight-bold">{{ mark_form.mark.label }} <span class="text-danger">*</span></label>
+						{% if mark_form.mark.errors %}
+						<div class="form-row">
+							<div class="col-2">
+								{{ mark_form.mark }}
+							</div>
+						</div>
+						<small class="form-text text-danger">{{ mark_form.mark.errors }}</small>
+						{% else %}
+						<div class="form-row">
+							<div class="col-2">
+								{{ mark_form.mark }}
+							</div>
+						</div>
+						<small class="form-text text-muted">{{ mark_form.mark.help_text }}</small>
+						{% endif %}
+					</div>
+					{% endfor %}
+					{{ ass_formset.management_form }}
+					<input type="submit" value="Submit Evaluation" class="btn btn-outline-primary">
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function mlc(obj) {
+if (obj.value != "") {
+	if (parseInt(obj.value) > parseInt(obj.max)) {
+		alert("Mark can only be between " + obj.min + " to " + obj.max + ". Try again.")
+		obj.value = ""
+	} else if (parseInt(obj.value) < parseInt(obj.min)) {
+		alert("Mark can only be between " + obj.min + " to " + obj.max + ". Try again.")
+		obj.value = ""
+	}
+}
+}
+</script>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}{% if round %}Round {{ round.number }}: {{ round.title }}{% else %}Round Doesn't Exist{% endif %}{% endblock %}
+{% block contenttitle %}{% if round %}Round {{ round.number }}: {{ round.title }}{% else %}Round Doesn't Exist{% endif %}{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='rounds' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col mb-4">
+		<div class="card">
+			<div class="card-body">
+				<div class="clearfix">
+				<div class="float-sm-left">
+					<p class="mb-sm-0 text-muted">Select a Team to Judge.</p>
+				</div>
+				<div class="float-sm-right">
+					<a href="{% url 'rounds' %}" class="ml-sm-5"><i class="fas fa-arrow-circle-left mr-2"></i>Go Back</a>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+{% if "success" in request.path %}
+	<div class="col-12 mb-4">
+		<div class="alert alert-success mb-0">
+			<p class="mb-0"><strong>Success.</strong> You have just submitted judging scores for a team in this round.</p>
+		</div>
+	</div>
+{% endif %}
+{% for team in teams %}
+	<div class="col-12 mb-4">
+		<div class="card bg-white">
+			<div class="card-header">
+                <h2 class="h3 mb-0 text-uppercase text-secondary">Team {{ team.number }}</h2>
+                <small>{{ team.get_members_listed }}</small>
+			</div>
+			<div class="card-body">
+				<div class="btn-group">
+					<a href="#" class="btn btn-primary" title="Judge"><i class="fas fa-clipboard-check m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Judge</span></a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% empty %}
+	{% if round %}
+	<div class="col-12 mb-4">
+		<div class="alert alert-danger">
+			<p class="m-0"><strong>There are no teams to display at the moment.</strong> This could be because you have not been assigned any judging spots for this round. If you think this is a mistake, please contact a LIVE Executive immediately.</p>
+		</div>
+	</div>
+	{% else %}
+	<div class="col-12 mb-4">
+		<div class="alert alert-danger">
+			<p class="m-0"><strong>The round you were looking for does not exist.</strong></p>
+		</div>
+	</div>
+	{% endif %}
+{% endfor %}
+</div>
+<div class="mb--4"></div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

@@ -5,19 +5,19 @@ from django.http import Http404
 from .models import Event, Day
 # helpers
 from users.auth.mixins import TypesRequiredMixin
+from portal.functions import hashid_decode
 
 class DayListView(TypesRequiredMixin, ListView):
     model = Day
     template_name = "itenirary/day_listed.html"
     context_object_name = "days"
     delegate_allowed = True
+    partner_allowed = True
     judge_allowed = True
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context[self.context_object_name] = context[
-            self.context_object_name].filter(release=True).order_by('number')
-        return context
+    def get_queryset(self):
+        original = super().get_queryset()
+        return original.filter(release=True).order_by('number')
 
 class DayDetailView(TypesRequiredMixin, DetailView):
     model = Day
@@ -26,6 +26,7 @@ class DayDetailView(TypesRequiredMixin, DetailView):
     slug_url_kwarg = 'number'
     slug_field = 'number'
     delegate_allowed = True
+    partner_allowed = True
     judge_allowed = True
 
     def get_context_data(self, **kwargs):
@@ -42,6 +43,7 @@ class EventDetailView(TypesRequiredMixin, DetailView):
     template_name = "itenirary/event_detail.html"
     context_object_name = "event_details"
     delegate_allowed = True
+    partner_allowed = True
     judge_allowed = True
 
     def get_context_data(self, **kwargs):

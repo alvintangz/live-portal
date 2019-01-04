@@ -18,7 +18,7 @@ class Round(models.Model):
 
 	visible = models.BooleanField("visible",
 		default=False,
-		help_text="If True, delegates can view the details of the round.")
+		help_text="If True, all parties can view the details of the round.")
 
     # ASIDE: Can be switched to PositiveIntegerField for next implementation
 	number = models.SmallIntegerField("round number",
@@ -56,6 +56,9 @@ class Round(models.Model):
 	@property
 	def encoded_url(self):
 		return hashid_encode(self.pk)
+
+	def round_title(self):
+		return f"#{str(self.number)}: {self.title}"
 
 	def __str__(self):
 		desc = "Round %s: %s (%s)"

@@ -15,7 +15,7 @@ class Rubric(models.Model):
  	of them.
 	"""
 
-	round = models.ForeignKey(Round,
+	round = models.OneToOneField(Round,
 		on_delete=models.SET_NULL,
 		null=True,
 		verbose_name="round")
@@ -26,7 +26,8 @@ class Rubric(models.Model):
 		help_text="Optional.")
 
 	release = models.BooleanField("release rubric",
-		default=False)
+		default=False,
+		help_text="If this is True, then the round is visible to judge.")
 
 	def __str__(self):
 		return f"Rubric: Round {self.round.number}"
@@ -38,7 +39,8 @@ class RubricMark(models.Model):
 
 	rubric = models.ForeignKey(Rubric,
 		on_delete=models.CASCADE,
-		verbose_name="rubric")
+		verbose_name="rubric",
+		related_name="marks")
 
 	title = models.CharField("title",
 		max_length=100,
@@ -51,7 +53,7 @@ class RubricMark(models.Model):
 		verbose_name = "rubric mark"
     
 	def __str__(self):
-		return f"{self.title} - {self.rubric}"
+		return f"{self.title} (out of {str(self.max_mark)}) - {self.rubric}"
 
 class Assessment(models.Model):
 	"""
@@ -73,12 +75,29 @@ class Assessment(models.Model):
 		verbose_name="team")
 
 	rough_notes = models.TextField("rough notes",
-		help_text=("Add any rough notes here. Will NOT be counted in the " +
+		help_text=("Optional. Will NOT be counted in the " +
 			"team's score."),
 		blank=True)
 
 	last_updated = models.DateTimeField("last updated",
-		auto_now=True)
+		auto_now=True,
+		blank=True)
+
+	submitted = models.BooleanField("submitted",
+		help_text=("Whether or not the assessment has been submitted by judge."),
+		default=False)
+
+	def get_round_and_team(self):
+		return f"Round {self.rubric.round.number} - {self.team}"
+
+	def save(self):
+		if self.pk is None:
+			rmarks = self.rubric.marks.all()
+			super().save()
+			for rmark in rmarks:
+				AssessmentMark.objects.create(rubric_mark=rmark, 
+					assessment=self)
+		super().save()
 
 	def __str__(self):
 		return f"{self.judge.user.get_full_name()} - {self.rubric} - {self.team}"
@@ -90,16 +109,23 @@ class AssessmentMark(models.Model):
 	
 	assessment = models.ForeignKey(Assessment,
 		on_delete=models.CASCADE,
-		verbose_name="assessment")
+		verbose_name="assessment",
+		related_name="marks")
 
 	rubric_mark = models.ForeignKey(RubricMark,
-		on_delete=models.CASCADE)
+		on_delete=models.CASCADE,
+		null=True)
 	
 	mark = models.PositiveSmallIntegerField("assessment mark",
-		help_text="The assessment mark cannot be greater than the rubric mark.")
+		help_text="The assessment mark cannot be greater than the rubric mark.",
+		null=True)
 	
 	def clean(self):
 		# Ensure mark is lower or equal to rubric_mark before saving
-		if self.mark > self.rubric_mark.max_mark:
-			raise ValidationError("The assessment mark cannot be greater " +
-                "than the rubric mark.")
+		if self.rubric_mark:
+			if self.mark > self.rubric_mark.max_mark:
+				raise ValidationError("The assessment mark cannot be greater " +
+                	"than the rubric mark.")
+	
+	def __str__(self):
+		return str(self.rubric_mark)

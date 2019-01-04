@@ -1,0 +1,76 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Rounds{% endblock %}
+{% block contenttitle %}Rounds{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='rounds' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+{% for round in rounds %}
+	<div class="col-12 mb-3">
+		<div class="card bg-white">
+			<div class="card-header">
+				{% if round.active or request.user.is_partner or request.user.is_judge %}
+				<h2 class="h3 mb-0 text-uppercase text-secondary">Round {{ round.number }}: {{ round.title }}</h2>	
+				{% else %}
+				<h2 class="h3 mb-0 text-muted text-uppercase">Round {{ round.number }}: {{ round.title }}</h2>	
+				{% endif %}
+			</div>
+			<div class="card-body">
+				{% if round.description %}
+				{% if round.active %}
+				<p>{{ round.description }}</p>
+				{% else %}
+				<p class="text-muted">{{ round.description }}</p>
+				{% endif %}
+				{% endif %}
+				{% if round.show_deadline %}
+				<p class="small">Expected to be due at {{ round.get_expected_deadline }}</p>
+				{% endif %}
+				{% if request.user.is_delegate %}
+				<div class="btn-group">
+					{% if round.details_file %}
+						<a href="{{ round.details_file.url }}" download class="btn btn-dark"><i class="fas fa-file-download m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Download Details</span></a>
+					{% endif %}
+					{% if round.active %}
+						<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary"><i class="fas fa-file-upload m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Submit Solutions</span></a>
+					{% else %}
+						{% if round.survey_link %}
+							<a href="{{ round.survey_link }}" class="btn btn-warning" target="_blank"><i class="fas fa-poll-h m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Complete Survey</span></a>
+						{% endif %}
+						<a href="{% url 'rounds-upload' round.encoded_url %}" class="btn btn-primary"><i class="fas fa-user-lock m-0 mr-sm-2"></i><span class="d-none d-sm-inline">View Submissions</span></a>
+					{% endif %}
+				</div>
+				{% elif request.user.is_judge %}
+					<div class="btn-group">
+						{% if round.details_file %}
+							<a href="{{ round.details_file.url }}" download class="btn btn-dark" title="Download Details"><i class="fas fa-file-download m-0 mr-md-2"></i><span class="d-none d-md-inline">Download Details</span></a>
+						{% endif %}
+						{% if round.rubric.rubric_document %}
+							<a href="{{ round.rubric.rubric_document.url }}" download class="btn btn-secondary" title="Download Rubric"><i class="fas fa-clipboard-list m-0 mr-md-2"></i><span class="d-none d-md-inline">Download Rubric</span></a>
+						{% endif %}
+						<a href="{% url 'rounds-judge-listed' round.encoded_url %}" class="btn btn-primary" title="Judge"><i class="fas fa-clipboard-check m-0 mr-md-2"></i><span class="d-none d-md-inline">Judge</span></a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% empty %}
+	<div class="col">
+		<div class="alert alert-danger">
+			<p class="m-0"><strong>There are no rounds available at the moment.</strong> Check back soon!</p>
+		</div>
+	</div>
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

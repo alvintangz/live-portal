@@ -1,12 +1,16 @@
-from rounds.models.rounds import Round, AcceptedRoundFile
-from rounds.models.submissions import Submission
+# django modules
 from django.views.generic import View
 from django.shortcuts import render, redirect
-from portal.functions import hashid_decode
+# models
+from rounds.models.rounds import Round, AcceptedRoundFile
+from rounds.models.submissions import Submission
+# forms
 from rounds.forms import RoundUploadForm
-from rounds.constants.filetypes import FILETYPES
+# helpers
+from portal.functions import hashid_decode
+from users.auth.mixins import DelegateRequiredMixin
 
-class UploadRoundsView(View):
+class UploadRoundsView(DelegateRequiredMixin, View):
 	template_name = "rounds/upload.html"
 
 	def get(self, request, encoded):

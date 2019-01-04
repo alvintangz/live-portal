@@ -9,4 +9,6 @@ from users.models import Team, User
 admin.site.unregister(Group)
 
 # Register Team
-admin.site.register(Team)
+@admin.register(Team)
+class TeamAdmin(admin.ModelAdmin):
+    ordering = ('number',)

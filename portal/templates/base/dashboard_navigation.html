@@ -66,46 +66,60 @@
 	</li>
 </ul>
 {% elif user.is_partner %}
-<p class="h3 text-uppercase text-primary">Partner</p>
-<p class="h2 text-uppercase text-secondary">{{ user.company_name }}</p>
+<p class="h2 text-uppercase text-secondary mt-0 mb-3 mb-md-0" style="line-height: 0.6;word-wrap: break-word;"><span class="h4 text-uppercase text-primary">Partner</span><br/><span>{{ user.partner.company_name }}</span></p>
 <hr class="my-2">
 <ul class="navbar-nav">
-	<li class="nav-item{% if active_tab == 'A' %} active{% endif %}">
-		<a class="nav-link" href="{% url 'index' %}">What's New</a>
+	<li class="nav-item{% if active_tab == 'whats_new' %} active{% endif %}">
+		<a class="nav-link{% if active_tab == 'whats_new' %} text-secondary{% endif %}" href="{% url 'index' %}">
+			<i class="fas fa-flag"></i>What's New
+		</a>
 	</li>
-	<li class="nav-item{% if active_tab == 'B' %} active{% endif %}">
-		<a class="nav-link" href="{% url 'team' %}">Your Team</a>
+	<li class="nav-item{% if active_tab == 'delegates' %} active{% endif %}">
+		<a class="nav-link{% if active_tab == 'delegates' %} text-secondary{% endif %}" href="{% url 'delegates-listed' %}">
+			<i class="fas fa-user-tie"></i>Delegates
+		</a>
 	</li>
-	{% comment %}
-	<li class="nav-item{% if active_tab == 'C' %} active{% endif %}">
-		<a class="nav-link" href="#">Corporate</a>
+	<li class="nav-item{% if active_tab == 'corporate' %} active{% endif %}">
+			<a class="nav-link{% if active_tab == 'corporate' %} text-secondary{% endif %}" href="{% url 'corporate' %}">
+				<i class="fas fa-users"></i>Teams
+			</a>
+		</li>
+	<li class="nav-item{% if active_tab == 'rounds' %} active{% endif %}">
+		<a class="nav-link{% if active_tab == 'rounds' %} text-secondary{% endif %}" href="{% url 'rounds' %}">
+			<i class="fas fa-file-signature"></i>Rounds
+		</a>
 	</li>
-	<li class="nav-item{% if active_tab == 'D' %} active{% endif %}">
-		<a class="nav-link" href="{% url 'rounds' %}">Rounds</a>
+	<li class="nav-item{% if active_tab == 'rounds' %} active{% endif %}">
+			<a class="nav-link{% if active_tab == 'rounds' %} text-secondary{% endif %}" href="{% url 'rounds' %}">
+				<i class="fas fa-video"></i>Videos
+			</a>
+		</li>
+	<li class="nav-item{% if active_tab == 'itenirary' %} active{% endif %}">
+		<a class="nav-link{% if active_tab == 'itenirary' %} text-secondary{% endif %}" href="{% url 'itenirary' %}">
+			<i class="fas fa-calendar-alt"></i>Itenirary
+		</a>
 	</li>
-	<li class="nav-item{% if active_tab == 'E' %} active{% endif %}">
-		<a class="nav-link" href="#">Itenirary</a>
+	<li class="nav-item{% if active_tab == 'contact_us' %} active{% endif %}">
+		<a class="nav-link{% if active_tab == 'contact_us' %} text-secondary{% endif %}" href="{% url 'contact' %}">
+			<i class="fas fa-users"></i>The LIVE Team
+		</a>
 	</li>
-	<li class="nav-item{% if active_tab == 'F' %} active{% endif %}">
-		<a class="nav-link" href="{% url 'contact' %}">The LIVE Team</a>
-	</li>
-	<li class="nav-item{% if active_tab == 'G' %} active{% endif %}">
-		<a class="nav-link" href="#">Feedback</a>
-	</li>
-	{% endcomment %}
 </ul>
 <hr class="my-2">
 <h6 class="navbar-heading text-muted">Account</h6>
-<small class="navbar-light my-1 text-muted">Your profile is public to all partners. Learn more in our <a href="{% url 'privacy_policy' %}">privacy policy</a>.</small>
 <ul class="navbar-nav mb-md-3">
-	<li class="nav-item">
-		<a class="nav-link" href="{% url 'profile' %}">Profile</a>
+	<li class="nav-item {% if active_tab == 'profile' %}active{% endif %}">
+		<a class="nav-link{% if active_tab == 'profile' %} text-secondary{% endif %}" href="{% url 'profile' %}">
+			<i class="fas fa-user-circle"></i>Profile
+		</a>
+	</li>
+	<li class="nav-item {% if active_tab == 'reset' %}active{% endif %}">
+		<a class="nav-link{% if active_tab == 'reset' %} text-secondary{% endif %}" href="{% url 'reset-password' %}">
+			<i class="fas fa-redo"></i>Reset Password
+		</a>
 	</li>
 	<li class="nav-item">
-		<a class="nav-link" href="{% url 'reset-password' %}">Reset Password</a>
-	</li>
-	<li class="nav-item">
-		<a class="nav-link" href="{% url 'sign-out' %}">Sign Out</a>
+		<a class="nav-link" href="{% url 'sign-out' %}"><i class="fas fa-sign-out-alt"></i>Sign Out</a>
 	</li>
 </ul>
 {% elif user.is_judge %}

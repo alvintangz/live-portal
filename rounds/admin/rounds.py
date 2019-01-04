@@ -15,3 +15,4 @@ class RoundAdmin(admin.ModelAdmin):
 		'expected_deadline'
 	)
 	inlines = (AcceptedRoundFileInline,)
+	ordering = ('number',)

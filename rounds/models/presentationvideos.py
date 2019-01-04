@@ -1,7 +1,10 @@
 # django modules
 from django.db import models
 # helpers
-from rounds.helpers import video_upload_to
+from rounds.helpers import video_upload_to, video_thumbnail_upload_to
+# models
+from users.models import Team
+from rounds.models.rounds import Round
 
 class PresentationVideo(models.Model):
 	"""
@@ -27,8 +30,12 @@ class PresentationVideo(models.Model):
 		"thumbnail",
 		blank=True,
 		upload_to=video_thumbnail_upload_to,
-		"Optional. Thumbnail of the video."
+		help_text="Optional. Thumbnail of the video."
 	)
+
+	class Meta:
+		verbose_name = "Video"
+		verbose_name_plural = "Videos"
 
 	def __str__(self):
 		# i.e. Video: Team 14 in Round 2

@@ -1,6 +1,12 @@
 from django.db import models
-from portal.functions import default_strfonlydate, default_strfonlytime
+from portal.functions import (
+	default_strfonlydate,
+	default_strfonlytime,
+	hashid_encode,
+)
 from datetime import datetime
+# constants
+import portal.variables as imp
 
 class Day(models.Model):
 	"""A day contains multiple events.
@@ -98,6 +104,10 @@ class Event(models.Model):
 	def get_formatted_time(self):
 		return default_strfonlytime(self.time)
 	get_formatted_time.short_description = "Time"
+
+	@property
+	def encoded_url(self):
+		return hashid_encode(self.pk, salt=imp.event_urls["salt"])
 
 	def __str__(self):
 		return f'{self.title} at {self.venue_name} - {default_strfonlytime(self.time)}'

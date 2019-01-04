@@ -19,7 +19,7 @@ class DelegateInline(admin.StackedInline):
 	verbose_name_plural = "Profile Information"
 	fieldsets = (
 		(None, {
-            'fields': ('team', 'is_invisible')
+            'fields': ('team', 'is_invisible', 'profile_picture_block')
         }),
 		('Fields for Delegates to fill in', {
             'classes': ('collapse',),

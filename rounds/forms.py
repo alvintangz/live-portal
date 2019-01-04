@@ -1,11 +1,13 @@
 # django modules
 from django import forms
+from django.forms.models import inlineformset_factory
 from django.core.validators import FileExtensionValidator
 from django.template.defaultfilters import filesizeformat
 from django.conf import settings
 # models
 from rounds.models.rounds import Round, AcceptedRoundFile
 from rounds.models.submissions import Submission
+from rounds.models.assessments import Assessment, AssessmentMark, RubricMark
 # constants
 from rounds.constants.filetypes import FILETYPES
 # helpers
@@ -89,3 +91,29 @@ class RoundUploadForm(forms.ModelForm):
 							latest=True)
 						new_submission.save()
 		return True
+
+class AssessmentMarkForm(forms.ModelForm):
+	class Meta:
+		model = AssessmentMark
+		fields = ('mark',)
+		exclude = ('rubric_mark',)
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		max_mark = self.instance.rubric_mark.max_mark
+		mark_title = self.instance.rubric_mark.title
+		self.fields["mark"].label = (
+			f"{mark_title} (out of {str(max_mark)})")
+		self.fields["mark"].required = True
+		self.fields["mark"].widget.attrs["class"] = "form-control"
+		self.fields["mark"].widget.attrs["min"] = "0"
+		self.fields["mark"].widget.attrs["max"] = str(max_mark)
+		self.fields["mark"].widget.attrs["onkeyup"] = "mlc(this)"
+		self.fields["mark"].widget.attrs["placeholder"] = "__/" + str(max_mark)
+
+AssessmentMarksFormSet = inlineformset_factory(Assessment, 
+	AssessmentMark,
+	extra=0,
+	can_delete=False,
+	fields=('mark',),
+	form=AssessmentMarkForm)

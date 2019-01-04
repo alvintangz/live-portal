@@ -10,6 +10,10 @@ encoded_urls = {
 	"min_length": 8,
 }
 
+event_urls = {
+	"salt": "eventsalt",
+}
+
 email = {
 	"backend": 'django.core.mail.backends.smtp.EmailBackend',
 	#"backend": 'django.core.mail.backends.console.EmailBackend',
