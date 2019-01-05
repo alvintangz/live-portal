@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from users.models import Team, Judge
 from .rounds import Round
 # helpers
+from portal.functions import hashid_encode
 from rounds.helpers import rubric_upload_to
 
 class Rubric(models.Model):
@@ -87,16 +88,21 @@ class Assessment(models.Model):
 		help_text=("Whether or not the assessment has been submitted by judge."),
 		default=False)
 
+	slug = models.SlugField(max_length=8, null=True)
+
 	def get_round_and_team(self):
 		return f"Round {self.rubric.round.number} - {self.team}"
 
 	def save(self):
-		if self.pk is None:
+		if not self.pk:
 			rmarks = self.rubric.marks.all()
 			super().save()
 			for rmark in rmarks:
 				AssessmentMark.objects.create(rubric_mark=rmark, 
 					assessment=self)
+		super().save()
+		if not self.slug:
+			self.slug = hashid_encode(self.pk, salt="assessment", min_length=8)
 		super().save()
 
 	def __str__(self):
@@ -122,7 +128,7 @@ class AssessmentMark(models.Model):
 	
 	def clean(self):
 		# Ensure mark is lower or equal to rubric_mark before saving
-		if self.rubric_mark:
+		if self.rubric_mark and self.mark:
 			if self.mark > self.rubric_mark.max_mark:
 				raise ValidationError("The assessment mark cannot be greater " +
                 	"than the rubric mark.")

@@ -15,7 +15,7 @@ class AssessmentUpdateView(JudgeRequiredMixin, UpdateView):
 	The view where judges assess a team's presentation and round.
 	"""
 	model = Assessment
-	template_name = "rounds/judge.html"
+	template_name = "rounds/assessments_update.html"
 	context_object_name = "ass"
 	fields = ["rough_notes",]
 

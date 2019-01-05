@@ -93,9 +93,6 @@ class Answer(models.Model):
 		verbose_name_plural = "public answers"
 		ordering = ['-updated', '-question__created']
 
-	def __str__(self):
-		return "Answer: %s" % (self.shorten_answer())
-
 	def formatted_updated(self):
 		return default_shortstrftime(self.updated)
 

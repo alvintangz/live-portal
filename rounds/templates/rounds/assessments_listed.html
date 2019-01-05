@@ -18,7 +18,7 @@
 			<div class="card-body">
 				<div class="clearfix">
 				<div class="float-sm-left">
-					<p class="mb-sm-0 text-muted">Select a Team to Judge.</p>
+					<p class="mb-sm-0 text-muted">Please select a team to judge.</p>
 				</div>
 				<div class="float-sm-right">
 					<a href="{% url 'rounds' %}" class="ml-sm-5"><i class="fas fa-arrow-circle-left mr-2"></i>Go Back</a>
@@ -36,16 +36,24 @@
 		</div>
 	</div>
 {% endif %}
-{% for team in teams %}
+{% for assessment in assessments %}
 	<div class="col-12 mb-4">
 		<div class="card bg-white">
 			<div class="card-header">
-                <h2 class="h3 mb-0 text-uppercase text-secondary">Team {{ team.number }}</h2>
-                <small>{{ team.get_members_listed }}</small>
+				{% if assessment.submitted %}
+					<h2 class="h3 mb-0 text-uppercase text-muted">Team {{ assessment.team.number }}</h2>
+				{% else %}
+					<h2 class="h3 mb-0 text-uppercase text-secondary">Team {{ assessment.team.number }}</h2>
+				{% endif %}
+                <small>{{ assessment.team.get_members_listed }}</small>
 			</div>
 			<div class="card-body">
 				<div class="btn-group">
-					<a href="#" class="btn btn-primary" title="Judge"><i class="fas fa-clipboard-check m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Judge</span></a>
+					{% if assessment.submitted %}
+						<a href="{% url 'rounds-judge' assessment.slug %}" class="btn btn-light" title="Judge"><i class="fas fa-clipboard-check m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Judge</span></a>
+					{% else %}
+						<a href="{% url 'rounds-judge' assessment.slug %}" class="btn btn-secondary" title="Judge"><i class="fas fa-clipboard-check m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Judge</span></a>
+					{% endif %}
 				</div>
 			</div>
 		</div>

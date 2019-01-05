@@ -121,6 +121,10 @@ class Delegate(models.Model):
 		help_text="Set this as True if you want to make this delegate " + 
 		"invisible to partners. This option is used for testing purposes.")
 
+	@property
+	def encoded_url(self):
+		return hashid_encode(self.pk)
+
 	def __init__(self, *args, **kwargs):
 		super(Delegate, self).__init__(*args, **kwargs)
 		self.initial_number = self.phone_number

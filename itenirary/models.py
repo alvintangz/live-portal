@@ -12,7 +12,7 @@ class Day(models.Model):
 	"""A day contains multiple events.
 	"""
 
-	number = models.SmallIntegerField('number')
+	number = models.SmallIntegerField('number', unique=True)
 
 	title = models.CharField('title',
 		max_length=100,
@@ -83,6 +83,8 @@ class Event(models.Model):
 		help_text=("The coordinates of the venue (latitude). Useful in maps. " +
 		"Can find coordinates using a tool: https://gps-coordinates.org/."))
 
+	slug = models.SlugField(max_length=8, null=True)
+
 	def get_status(self):
 		"""Status of event.
 		0 -> Event has not started
@@ -105,9 +107,11 @@ class Event(models.Model):
 		return default_strfonlytime(self.time)
 	get_formatted_time.short_description = "Time"
 
-	@property
-	def encoded_url(self):
-		return hashid_encode(self.pk, salt=imp.event_urls["salt"])
+	def save(self):
+		super().save()
+		if self.slug is None:
+			self.slug = hashid_encode(self.pk, salt="event", min_length=8)
+		super().save()
 
 	def __str__(self):
 		return f'{self.title} at {self.venue_name} - {default_strfonlytime(self.time)}'

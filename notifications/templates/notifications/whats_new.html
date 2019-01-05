@@ -37,7 +37,7 @@
 		{% endif %}
 		{% elif widget.text_widget %}
 			<div class="card-body" style="overflow-y:auto; height:300px">
-				<p>{{ widget.text_widget.text }}</p>
+				{{ widget.text_widget.text | safe }}
 				{% if widget.external_link %}
 				<a href="{{ widget.external_link }}" class="btn btn-primary">Learn More</a>
 				{% endif %}

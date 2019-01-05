@@ -1,8 +1,8 @@
 {% extends 'base/dashboard.html' %}
 {% load static %}
 
-{% block title %}Delegates{% endblock %}
-{% block contenttitle %}Delegates{% endblock %}
+{% block title %}Delegate: {{ delegate.user.get_full_name }}{% endblock %}
+{% block contenttitle %}Delegate: {{ delegate.user.get_full_name }}{% endblock %}
 
 {% block headfiles %}
 {% endblock %}

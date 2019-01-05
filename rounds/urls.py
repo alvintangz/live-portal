@@ -1,6 +1,6 @@
 from django.urls import path, include
 from django.views.generic.base import RedirectView
-from .views.listed import ListedRoundsView, TeamsListedView
+from .views.listed import RoundsListView, AssessmentsListView
 from .views.upload import UploadRoundsView
 from .views.judge import AssessmentUpdateView
 
@@ -8,7 +8,7 @@ urlpatterns = [
 	path('', RedirectView.as_view(url='listed'), name='rounds-index'),
 	# LISTED ROUNDS
 	path('listed',
-		ListedRoundsView.as_view(),
+		RoundsListView.as_view(),
 		name='rounds'),
 	# UPLOAD
 	path('upload/<str:encoded>',
@@ -19,14 +19,14 @@ urlpatterns = [
 		name='rounds-upload-success'),
 	# LISTED TEAMS
 	path('<str:encoded>/judge/teams/listed',
-		TeamsListedView.as_view(),
+		AssessmentsListView.as_view(),
 		name='rounds-judge-listed'),
 	# SUCCESS JUDGING -> LISTED TEAMS
 	path('<str:encoded>/judge/teams/listed/success',
-		TeamsListedView.as_view(),
+		AssessmentsListView.as_view(),
 		name='rounds-judge-listed-success'),
 	# JUDGE
-	path('judge/<pk>',
+	path('assessment/<slug>',
 		AssessmentUpdateView.as_view(),
 		name='rounds-judge'),
 ]

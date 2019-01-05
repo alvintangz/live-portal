@@ -5,6 +5,11 @@
 {% block contenttitle %}{% if 'all' in request.path %}Answers to Your Questions{% else %}Answers to Frequently Asked Questions{% endif %}{% endblock %}
 
 {% block headfiles %}
+<style>
+	.answer p, .answer ul {
+		margin:0 !important;
+	}
+</style>
 {% endblock %}
 
 {% block navbar %}
@@ -41,8 +46,8 @@
 				<h3 class="text-uppercase">{{ answer.question.question }}</h3>
 				<p class="mb-0 small text-muted">{{ answer.viewable_meta }}</p>
 			</div>
-			<div class="card-body">
-				<p class="mb-0">{{ answer.answer }}</p>
+			<div class="card-body answer">
+				{{ answer.answer | safe }}
 			</div>
 		</div>
 	</div>

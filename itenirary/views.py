@@ -30,6 +30,9 @@ class DayDetailView(TypesRequiredMixin, DetailView):
     judge_allowed = True
 
     def get_context_data(self, **kwargs):
+        """
+        Return the default context with list of days and events.
+        """
         context = super().get_context_data(**kwargs)
         # Add a context of a list of events for the current day
         context['event_list'] = Event.objects.filter(
@@ -47,6 +50,10 @@ class EventDetailView(TypesRequiredMixin, DetailView):
     judge_allowed = True
 
     def get_context_data(self, **kwargs):
+        """
+        Return the default context but raise 404 error if itenirary for specific
+        day isn't released.
+        """
         context = super().get_context_data(**kwargs)
         if context[self.context_object_name].day.release:
             return context

@@ -14,3 +14,4 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('title', 'get_formatted_time', 'day',)
     order_by = ('day',)
     list_filter = ('day', 'venue_name',)
+    exclude = ('slug',)
