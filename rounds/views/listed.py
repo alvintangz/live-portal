@@ -1,11 +1,14 @@
 # django modules
 from django.views.generic import ListView
+from django.http import Http404
 # models
 from rounds.models.rounds import Round
 from rounds.models.assessments import Rubric, Assessment
-from users.models import Team
 # helpers
-from users.auth.mixins import TypesRequiredMixin, JudgeRequiredMixin
+from users.auth.mixins import (
+	TypesRequiredMixin,
+	JudgeRequiredMixin,
+)
 from portal.functions import hashid_decode
 
 class RoundsListView(TypesRequiredMixin, ListView):

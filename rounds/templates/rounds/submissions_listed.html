@@ -1,0 +1,42 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Round {{ round.number }}: Submissions{% endblock %}
+{% block contenttitle %}Round {{ round.number }}: Submissions{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='rounds' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        {% for team in teams %}
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0 text-uppercase">{{ team }}</h3>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'teams-detail' team.number %}" class="btn btn-primary">About the Team</a>
+                {% for submission in team.submissions.all %}
+                    {% if submission.latest and submission.asc_round.pk == round.pk %}
+                        <a href="{{ submission.submitted_file.url }}" class="btn btn-secondary" download>Submission: {{ submission.asc_round_file.title }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% for video in team.videos.all %}
+                    {% if video.round.pk == round.pk %}
+                        <a href="{% url 'rounds-videos' video.slug %}" class="btn btn-warning">{{ video }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

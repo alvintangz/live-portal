@@ -19,6 +19,7 @@ from .views.activate import (
 	activateConfirmView,
 )
 from .views.delegates import DelegatesListView, DelegatesDetailView
+from .views.team import PartnerTeamListView, PartnerTeamDetailView
 
 urlpatterns = [
 	# SIGN IN
@@ -73,7 +74,15 @@ urlpatterns = [
 		DelegatesListView.as_view(),
 		name="delegates-listed"),
 	# DETAIL DELEGATES
-	path('delegates/detail/<pk>',
+	path('delegate/<pk>',
 		DelegatesDetailView.as_view(),
 		name="delegates-detail"),
+	# LISTING TEAMS
+	path('teams/listed',
+		PartnerTeamListView.as_view(),
+		name="teams-listed"),
+	# DETAIL TEAMS
+	path('team/<slug>',
+		PartnerTeamDetailView.as_view(),
+		name="teams-detail"),
 ]

@@ -4,6 +4,7 @@ from .constants.student_types import STUDENT_TYPES
 from .constants.seeking_statuses import SEEKING_STATUSES
 from .constants.partner_types import PARTNER_TYPES
 import portal.variables as imp
+from django.urls import reverse
 # django modules
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -17,17 +18,28 @@ class Team(models.Model):
 	number = models.IntegerField('team number',
 		unique=True)
 
-	place = models.PositiveSmallIntegerField('place',
+	place = models.PositiveSmallIntegerField('ranking',
 		blank=True,
 		null=True,
-		help_text="The team's place in the competition.")
+		help_text="The team's place (ranking) in the competition.")
 
 	def get_members_listed(self):
 		delegates = Delegate.objects.filter(team=self.pk)
 		ret_val = ""
-		for delegate in delegates:
-			ret_val += delegate.user.get_full_name() + ", "
-		ret_val = ret_val[:-2]
+		ret_val = ", ".join(
+			[delegate.user.get_full_name() for delegate in delegates])
+		if ret_val == "":
+			ret_val = "No members in this team."
+		return ret_val
+
+	def get_members_listed_html(self):
+		delegates = Delegate.objects.filter(team=self.pk)
+		ret_val = ""
+		ret_val = ", ".join(
+			[("<a class=\"text-secondary\" href=\"" + reverse("delegates-detail", 
+				kwargs={"pk": delegate.pk }) + "\">" + 
+				delegate.user.get_full_name() + "</a>") 
+				for delegate in delegates])
 		if ret_val == "":
 			ret_val = "No members in this team."
 		return ret_val
@@ -72,7 +84,8 @@ class Delegate(models.Model):
 
 	team = models.ForeignKey(Team,
 		on_delete=models.SET_NULL,
-		null=True)
+		null=True,
+		related_name="delegates")
 
 	profile_picture = models.ImageField('profile picture',
 		upload_to=profile_picture_upload_to,

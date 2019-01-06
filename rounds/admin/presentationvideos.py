@@ -6,3 +6,4 @@ class PresentationVideoAdmin(admin.ModelAdmin):
     list_display = ('team', 'round',)
     list_filter = ('team', 'round',)
     ordering = ('team', 'round',)
+    exclude = ('slug',)

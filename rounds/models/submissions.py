@@ -16,7 +16,8 @@ class Submission(models.Model):
 	asc_team = models.ForeignKey(Team,
 		on_delete=models.SET_NULL,
 		null=True,
-		verbose_name="team")
+		verbose_name="team",
+		related_name="submissions")
 
 	asc_round_file = models.ForeignKey(AcceptedRoundFile,
 		on_delete=models.SET_NULL,
@@ -26,7 +27,8 @@ class Submission(models.Model):
 	asc_round = models.ForeignKey(Round,
 		on_delete=models.SET_NULL,
 		null=True,
-		verbose_name="round")
+		verbose_name="round",
+		related_name="submissions")
 
 	submitted_by = models.IntegerField("submitted by (id of user)")
 

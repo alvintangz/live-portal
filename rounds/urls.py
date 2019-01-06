@@ -1,8 +1,13 @@
 from django.urls import path, include
 from django.views.generic.base import RedirectView
-from .views.listed import RoundsListView, AssessmentsListView
-from .views.upload import UploadRoundsView
-from .views.judge import AssessmentUpdateView
+from .views import (
+	RoundsListView,
+	AssessmentsListView,
+	UploadRoundsView,
+	AssessmentUpdateView,
+	TeamSubmissionsDetailView,
+	VideoDetailView,
+)
 
 urlpatterns = [
 	path('', RedirectView.as_view(url='listed'), name='rounds-index'),
@@ -29,4 +34,11 @@ urlpatterns = [
 	path('assessment/<slug>',
 		AssessmentUpdateView.as_view(),
 		name='rounds-judge'),
+	# VIEW ROUND SUBMISSIONS FOR PARTNERS
+	path('submissions/<int:slug>',
+		TeamSubmissionsDetailView.as_view(),
+		name='rounds-submissions'),
+	# VIDEOS
+	path('video/<slug>', VideoDetailView.as_view(), 
+		name='rounds-videos'),
 ]

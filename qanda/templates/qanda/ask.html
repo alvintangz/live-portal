@@ -22,11 +22,11 @@
 				<p class="mb-0 text-muted">View questions that other delegates have raised, and ask questions that other delegates might find helpful in this section.</p>
 				<hr class="my-3" />
 				<ul class="nav nav-pills nav-fill flex-column flex-sm-row">
-					<li class="nav-item border border-primary">
-						<a class="nav-link" href="{% url 'qanda-answers-all' %}"><i class="fas fa-comments mr-2"></i>Answers to Your Questions</a>
-						</li>
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'qanda-answers-faq' %}"><i class="fas fa-exclamation-circle mr-2"></i>Answers to Frequently Asked Questions</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'qanda-answers-all' %}"><i class="fas fa-comments mr-2"></i>Answers to Your Questions</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link active" href="{% url 'qanda-ask' %}"><i class="fas fa-hand-paper mr-2"></i>Ask a Question</a>

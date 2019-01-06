@@ -79,8 +79,8 @@
 			<i class="fas fa-user-tie"></i>Delegates
 		</a>
 	</li>
-	<li class="nav-item{% if active_tab == 'corporate' %} active{% endif %}">
-			<a class="nav-link{% if active_tab == 'corporate' %} text-secondary{% endif %}" href="{% url 'corporate' %}">
+	<li class="nav-item{% if active_tab == 'teams' %} active{% endif %}">
+			<a class="nav-link{% if active_tab == 'teams' %} text-secondary{% endif %}" href="{% url 'teams-listed' %}">
 				<i class="fas fa-users"></i>Teams
 			</a>
 		</li>
@@ -89,11 +89,6 @@
 			<i class="fas fa-file-signature"></i>Rounds
 		</a>
 	</li>
-	<li class="nav-item{% if active_tab == 'rounds' %} active{% endif %}">
-			<a class="nav-link{% if active_tab == 'rounds' %} text-secondary{% endif %}" href="{% url 'rounds' %}">
-				<i class="fas fa-video"></i>Videos
-			</a>
-		</li>
 	<li class="nav-item{% if active_tab == 'itenirary' %} active{% endif %}">
 		<a class="nav-link{% if active_tab == 'itenirary' %} text-secondary{% endif %}" href="{% url 'itenirary' %}">
 			<i class="fas fa-calendar-alt"></i>Itenirary

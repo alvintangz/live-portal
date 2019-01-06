@@ -1,0 +1,87 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}{{ video }}{% endblock %}
+{% block contenttitle %}{{ video }}{% endblock %}
+
+{% block headfiles %}
+<link rel="stylesheet" href="https://cdn.plyr.io/3.4.7/plyr.css">
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='rounds' %}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="alert alert-warning" id="bvideocompat" style="display:block">
+            <p class="mb-0"><strong>It seems that you have may have an old browser that does not support the video player.</strong><br/>Please upgrade your browser to view the video.</p>
+        </div>
+        <div class="card mb-4">
+            {% if video.thumbnail %}
+            <video id="player" playsinline controls poster="{{ video.thumbnail.url }}">
+            {% else %}
+            <video id="player" playsinline controls>
+            {% endif %}
+                <source src="{{ video.video.url }}" type="video/mp4">
+            </video>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0 text-uppercase">About the Team</h3>
+            </div>
+            <div class="card-body">
+                <p class="mb-0"><strong>Delegates in Team:</strong> {{ video.team.get_members_listed_html | safe }}</p>
+                {% if video.team.place %}
+                    {% if video.team.place <= 10 %}
+                    <p><strong>Ranking:</strong> {{ video.team.place }} <strong class="text-success">(Top Ten)</strong></p>
+                    {% else %}
+                    <p><strong>Ranking:</strong> {{ video.team.place }}</p>
+                    {% endif %}
+                {% else %}
+                    <p class="mb-0"><strong>Ranking:</strong> Not Yet Decided</p>
+                {% endif %}
+                <hr class="my-3" />
+                <a href="{% url 'teams-detail' video.team.number %}" class="btn btn-secondary"><i class="fas fa-users mr-2"></i>View Team</a>
+            </div>
+        </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="mb-0 text-uppercase">About the Round</h3>
+            </div>
+            <div class="card-body">
+                {% if video.round.description %}
+                    <p class="mb-0"><strong>Description:</strong> {{ video.round.description }}</p>
+                {% else %}
+                    <p class="mb-0"><strong>Description:</strong> Not Available</p>
+                {% endif %}
+				{% if video.round.show_deadline %}
+				<p class="mb-0">Expected to be due at {{ video.round.get_expected_deadline }}</p>
+				{% endif %}
+                <hr class="my-3" />
+                <div class="btn-group">
+                    {% if video.round.details_file %}
+                        <a href="{{ video.round.details_file.url }}" download class="btn btn-dark"><i class="fas fa-file-download m-0 mr-sm-2"></i><span class="d-none d-sm-inline">Download Details</span></a>
+                    {% endif %}
+                    <a href="{% url 'rounds-submissions' video.round.number %}" class="btn btn-secondary">View all Submissions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.plyr.io/3.4.7/plyr.js"></script>
+<script>
+    const player = new Plyr('#player', {
+        volume: 0.75, 
+        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'settings', 'fullscreen']
+    });
+    const supported = Plyr.supported('video', 'html5', true);
+    if (supported) {
+        document.getElementById('bvideocompat').style.display = "none";
+    }
+</script>
+{% endblock %}

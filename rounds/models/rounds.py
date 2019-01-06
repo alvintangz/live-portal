@@ -81,6 +81,7 @@ class AcceptedRoundFile(models.Model):
 	title = models.CharField("title",
 		max_length=80)
 
+	# ASIDE: No point, should be removed.
 	show_title = models.BooleanField("show title",
 		default=True)
 

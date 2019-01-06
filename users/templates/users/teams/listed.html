@@ -1,0 +1,69 @@
+{% extends 'base/dashboard.html' %}
+{% load static %}
+
+{% block title %}Teams{% endblock %}
+{% block contenttitle %}Teams{% endblock %}
+
+{% block headfiles %}
+{% endblock %}
+
+{% block navbar %}
+	{% include 'base/dashboard_navigation.html' with active_tab='teams' %}
+{% endblock %}
+
+{% block content %}
+{% if teams %}
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body border-0">
+               <p class="mb-0 small text-muted">Teams are not ordered in any particular fashion, unless rankings are released.</p>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Team Number</th>
+                            <th scope="col">Delegates in Team</th>
+                            <th scope="col">Ranking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for team in teams %}
+                        <tr>
+                            <td scope="row">{{ team.number }}</td>
+                            <td>
+                                {{ team.get_members_listed_html | safe }}
+                                {% if team.delegates.count > 0 %}
+                                <br/><a href="{% url 'teams-detail' team.number %}" class="font-weight-bold">View All of Them</a>
+                                {% endif %}
+                            </td>
+                            {% if team.place %}
+                            {% if team.place <= 10 %}
+                            <td><strong>{{ team.place }} <span class="text-success">(Top Ten)</span></strong></td>
+                            {% else %}
+                            <td><strong>{{ team.place }}</strong></td>
+                            {% endif %}
+                            {% else %}
+                            <td>Not Yet Decided</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if not teams %}
+    <div class="alert alert-danger">
+        <p class="m-0"><strong>There are no teams listed at the moment.</strong></p>
+        <p class="m-0 small">If this error persists, please contact us at <a href="mailto:contact@live-competition.org" class="text-white">contact@live-competition.org</a></small>
+    </div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
