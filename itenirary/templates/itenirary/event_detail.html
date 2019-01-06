@@ -1,7 +1,7 @@
 {% extends 'base/dashboard.html' %}
 {% load static %}
 
-{% block title %}Itenirary{% endblock %}
+{% block title %}Itinerary{% endblock %}
 {% block contenttitle %}{% if event_details %}{{ event_details.get_formatted_time }} - {{ event_details.title }}{% else %}Event does not exist{% endif %}{% endblock %}
 
 {% block headfiles %}
