@@ -7,8 +7,7 @@ A web application used by both delegates and partners during LIVE Competition in
 Here are lists of basically what partners, delegates, judges, and executives can do.
 <kbd>
 <img src="screenshots/screencapture-127-0-0-1-8000-account-sign-in-2019-01-06-17_26_43.png" width="500px" />
-  </kbd>
-    
+  </kbd><br/><br/>
 Partners are able to:
 - View widgets in the "What's New" section
 - View all delegates and filter them by school, seeking status, and year of study
@@ -18,8 +17,7 @@ Partners are able to:
 - View the itinerary
 <kbd>
 <img src="screenshots/screencapture-127-0-0-1-8000-account-delegates-listed-2019-01-06-17_27_14.png" width="500px" />
-  </kbd>
-
+  </kbd><br/><br/>
 Delegates are able to:
 - View widgets in the "What's New" section
 - View their team
@@ -30,16 +28,14 @@ Delegates are able to:
 - View the itinerary
 <kbd>
 <img src="screenshots/screencapture-127-0-0-1-8000-questions-ask-2019-01-06-17_28_31.png" width="500px" />
-  </kbd>
-
+  </kbd><br/><br/>
 Judges are able to:
 - Judge rounds (make assessments for an assigned round and team)
 - View the itinerary
 - View contact details of LIVE members
 <kbd>
 <img src="screenshots/screencapture-127-0-0-1-8000-rounds-assessment-d7x7mxgv-2019-01-06-17_27_56.png" width="500px" />
-</kbd>
-
+</kbd><br/><br/>
 Executives are able to:
 - Add/change the list of corporate individuals and organizations
 - Add/change the itinerary (days, events)
