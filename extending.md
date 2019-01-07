@@ -7,7 +7,7 @@ I have "ASIDE" comments in some of the code which recommends some changes. I cou
 ## Slugs
 I would recommend having [slug fields](https://docs.djangoproject.com/en/2.1/ref/models/fields/#slugfield) for Rounds, Delegates, etc... models. Afterwards, I would change some of the views' slugs so that the urls would look better and consistent.
 
-# URL Names
+## URL Names
 In the URLConf, I have written names that represents paths to view which look ugly. This could be changed for easier readability.
 
 ## Naming Conventions: Model Fields, Template Filenames, View Filenames, etc...
