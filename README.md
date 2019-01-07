@@ -5,18 +5,16 @@ A web application used by both delegates and partners during LIVE Competition in
 
 ### The Gist of Each Role in Portal
 Here are lists of basically what partners, delegates, judges, and executives can do.
-<img src="screenshots/screencapture-127-0-0-1-8000-account-sign-in-2019-01-06-17_26_43.png" width="500px" />
 
-Partners are able to:
+**Partners are able to:**
 - View widgets in the "What's New" section
 - View all delegates and filter them by school, seeking status, and year of study
 - View all teams and their ranking in the competitions (when released)
 - View rounds that are set visible by an Executive, and each of teams' submissions to those rounds, as well as videos of their presentations
 - View contact details of LIVE members
 - View the itinerary
-<img src="screenshots/screencapture-127-0-0-1-8000-account-delegates-listed-2019-01-06-17_27_14.png" width="500px" />
 
-Delegates are able to:
+**Delegates are able to:**
 - View widgets in the "What's New" section
 - View their team
 - View everything corporate (corporate individuals and organizations participating in the competition)
@@ -24,15 +22,13 @@ Delegates are able to:
 - Ask questions and view questions (and their answers) raised by other delegates
 - View contact details of LIVE members
 - View the itinerary
-<img src="screenshots/screencapture-127-0-0-1-8000-questions-ask-2019-01-06-17_28_31.png" width="500px" />
 
-Judges are able to:
+**Judges are able to:**
 - Judge rounds (make assessments for an assigned round and team)
 - View the itinerary
 - View contact details of LIVE members
-<img src="screenshots/screencapture-127-0-0-1-8000-rounds-assessment-d7x7mxgv-2019-01-06-17_27_56.png" width="500px" />
 
-Executives are able to:
+**Executives are able to:**
 - Add/change the list of corporate individuals and organizations
 - Add/change the itinerary (days, events)
 - Add/change the list of LIVE Executives (aside: code under contacts folder)
@@ -45,7 +41,6 @@ Executives are able to:
 - View assessments by judges and export the assessments as an excel file
 - Add/change videos of presentations per team for each round
 - Create Teams, Partner Users, Delegate Users, Judge Users, Executive Users
-<img src="screenshots/screencapture-127-0-0-1-8000-executive-2019-01-06-17_26_23.png" width="500px" />
 
 ## Prerequisites
 - Python - v3.7.0
