@@ -19,6 +19,9 @@ I haven't completely followed the MVC model. I have allowed some templates to do
 ## Users
 I would recommend somehow integrating Django Permissions and Groups, so that assigning which views are viewable to certain users would be easier (e.g. maybe you don't want to release the itenirary until later, this could help). Right now, everything is hardcoded and depends on if the User Type (e.g. Delegate) is a one-to-one relationship with User (the current user).
 
+## Delegate Profile Pictures
+Currently, delegates can upload their profile pictures but they will automatically be resized to 500px by 500px in RGB Format. This should change, to a much better experience for delegates (i.e. cropping before upload).
+
 ## Forms
 I have hardcoded form fields in templates and in some of the objects that subclass admin.ModelForm so that the bootstrap styling could be implemented. Look into how this can be better implemented so that forms are open for automatic extension when new fields are added in models. Also, some form templates need to do a better job in terms of displaying errors for validation. You can look into the Django REST Framework so forms can be in ajax, if you'd like.
 
