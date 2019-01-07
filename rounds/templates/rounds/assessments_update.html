@@ -62,18 +62,10 @@
 					<div class="form-group">
 						<label for="{{ mark_form.mark.id_for_label }}" class="font-weight-bold">{{ mark_form.mark.label }} <span class="text-danger">*</span></label>
 						{% if mark_form.mark.errors %}
-						<div class="form-row">
-							<div class="col-2">
-								{{ mark_form.mark }}
-							</div>
-						</div>
+						{{ mark_form.mark }}
 						<small class="form-text text-danger">{{ mark_form.mark.errors }}</small>
 						{% else %}
-						<div class="form-row">
-							<div class="col-2">
-								{{ mark_form.mark }}
-							</div>
-						</div>
+						{{ mark_form.mark }}
 						<small class="form-text text-muted">{{ mark_form.mark.help_text }}</small>
 						{% endif %}
 					</div>

@@ -27,7 +27,7 @@ urlpatterns = [
 		TemplateView.as_view(template_name="static/privacy_policy.html"),
 		name='privacy_policy'),
 	path('executive/', admin.site.urls, name='admin'),
-	path('^tinymce/', include('tinymce.urls')),
+	path('tinymce/', include('tinymce.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if not settings.DEBUG:
