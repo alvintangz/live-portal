@@ -61,7 +61,7 @@
                     {% else %}
                     <li><strong>Ranking:</strong> Not Yet Decided</li>
                     {% endif %}
-                    <li><strong>Team members:</strong> {{ delegate.team.get_members_listed_html | safe }}</li>
+                    <li><strong>Team members:</strong>&nbsp;{{ delegate.team.get_members_listed_html | safe }}</li>
                 </ul>
                 <a href="{% url 'teams-detail' delegate.team.number %}" class="btn btn-primary">View All of the Team</a>
             </div>

@@ -27,6 +27,7 @@ class Contact(models.Model):
 	profile_picture = models.ImageField('profile picture',
 		help_text="Please upload a 500x500 square ratio image.")
 
+	# ASIDE: Remove.
 	description = models.TextField('description',
 		max_length=100,
 		help_text=("Will not be shown."),

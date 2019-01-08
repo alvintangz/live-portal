@@ -71,17 +71,17 @@ class Event(models.Model):
 		max_length=200,
 		help_text="i.e. 370 King St W, Toronto, ON M5V 1J9")
 
-	venue_long = models.DecimalField('venue longitude',
-		max_digits=9,
-		decimal_places=6,
-		help_text=("The coordinates of the venue (longitude). Useful in maps." +
-		" Can find coordinates using a tool: https://gps-coordinates.org/."))
-
 	venue_lat = models.DecimalField('venue latitude',
 		max_digits=9,
 		decimal_places=6,
 		help_text=("The coordinates of the venue (latitude). Useful in maps. " +
 		"Can find coordinates using a tool: https://gps-coordinates.org/."))
+
+	venue_long = models.DecimalField('venue longitude',
+		max_digits=9,
+		decimal_places=6,
+		help_text=("The coordinates of the venue (longitude). Useful in maps." +
+		" Can find coordinates using a tool: https://gps-coordinates.org/."))
 
 	slug = models.SlugField(max_length=8, null=True)
 
