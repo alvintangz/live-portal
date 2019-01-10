@@ -28,6 +28,9 @@ I have hardcoded form fields in templates and in some of the objects that subcla
 ## Texts for Delegates
 Allow delegates to opt-out of text message notifications.
 
+## Users Password Change Bug
+I found a bug with resetting the passwords of delegate, partner and judge users on the admin side. I never fixed it.
+
 ## Ending off
 Just play around with the application, especially the administrative side to see what you would change in terms of how models relate to each other, and 
 
