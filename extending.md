@@ -34,6 +34,9 @@ I found a bug with resetting the passwords of delegate, partner and judge users 
 ## Maximum File Size
 I did not completely check for file sizes for all the forms on portal. Modify this.
 
+## Hard-code
+Be wary of short sections of hard-code such as the one in portal/functions.py with the resize_and_convert function that alters a picture and saves it to a blob on Microsoft Azure with a specific blob name. Another example may be having sections of the portal website pretend as if the website is being hosted on portal.live-competition.org. Some hard-code may need to be changed depending on the environment and service in which the portal app is running on.
+
 ## Ending off
 Just play around with the application, especially the administrative side to see what you would change in terms of how models relate to each other, and 
 
