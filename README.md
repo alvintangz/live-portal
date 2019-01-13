@@ -1,7 +1,7 @@
 <img src="/portal/static/branding/logo.png" alt="LIVE Portal" width="220px"/>
 
 ## Description of the Portal
-A web application used by both delegates and partners during LIVE Competition in 2019. This application is sponsored and powered by Microsoft Azure.
+A web application used by delegates, judges and partners during LIVE Competition in 2019. This application is sponsored and powered by Microsoft Azure.
 
 ### The Gist of Each Role in Portal
 Here are lists of basically what partners, delegates, judges, and executives can do.
@@ -60,12 +60,12 @@ Here are lists of basically what partners, delegates, judges, and executives can
 ## The Build (on Windows)
 These are instructions for a development environment:
 1. Open up PowerShell on Windows
-2. Clone the repository
+2. Clone the repository<br/>
 `$ git clone https://github.com/alvintangz/live-portal.git`
-3. Enter a virual environment (instructions are for windows machine below) - Optional
-`$ python3 -m venv env`
+3. Enter a virual environment (instructions are for windows machine below) - Optional<br/>
+`$ python3 -m venv env`<br/>
 `$ env\Scripts\activate`
-4. Install all the required modules listed in requirements.txt
+4. Install all the required modules listed in requirements.txt<br/>
 `$ pip install -r requirements`
 5. Add environment variables
 Environment variables are used to store very sensitive data. Learn more: official [Django Documentation - Django settings]([https://docs.djangoproject.com/en/2.1/topics/settings/#security).
@@ -83,13 +83,13 @@ Environment variables are used to store very sensitive data. Learn more: officia
 - LP_SALTONE: A random salt.
 - LP_SALTTWO: A random salt.
 - LP_AZURE_STORAGE_KEY: Azure Account Key for blob storage.
-6. Make migrations - Optional (for easy extending)
+6. Make migrations - Optional (for easy extending or previously resetted migrations)<br/>
 `$ python manage.py makemigrations`
-7. Migrate
+7. Migrate<br/>
 `$ python manage.py migrate`
-8. Create a superuser
+8. Create a superuser<br/>
 `$ python manage.py createsuperuser` and follow prompts
-9. Run development server
+9. Run development server<br/>
 `$ python manage.py runserver`
 
 ## Owners
@@ -104,3 +104,4 @@ The files under this project does not have a license. As such, these files are n
 * Argon Dashboard - [Github Repository](https://github.com/creativetimofficial/argon-dashboard)
 * Django - [Github Repository](https://github.com/django/django)
 * Django Multiple User Types Example - [Github Repository](https://github.com/sibtc/django-multiple-user-types-example)
+* Plyr - [Github Repository](https://github.com/sampotts/plyr)
